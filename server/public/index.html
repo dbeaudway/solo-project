@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Table Topics</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="vendors/angular.min.js" charset="utf-8"></script>
+    <script src="vendors/angular-route.min.js" charset="utf-8"></script>
+    <!-- Angular Material -->
+    <link href="vendors/angular-material.min.css" rel="stylesheet" type="text/css"></link>
+    <script src="vendors/angular-animate.min.js" charset="utf-8"></script>
+    <script src="vendors/angular-aria.min.js" charset="utf-8"></script>
+    <script src="vendors/angular-messages.min.js" charset="utf-8"></script>
+    <script src="vendors/angular-material.min.js" charset="utf-8"></script>
+    <!-- Client -->
+    <script src="scripts/client.js" charset="utf-8"></script>
+    <!-- Controllers and Services -->
+    <script src="scripts/controllers/home.controller.js" charset="utf-8"></script>
+    <script src="scripts/controllers/profile.controller.js" charset="utf-8"></script>
+    <script src="scripts/controllers/record.controller.js" charset="utf-8"></script>
+    <script src="scripts/controllers/theme.controller.js" charset="utf-8"></script>    
+    <script src="scripts/controllers/topic.controller.js" charset="utf-8"></script>
+    <script src="scripts/controllers/home.controller.js" charset="utf-8"></script>
+    <script src="scripts/controllers/user.controller.js" charset="utf-8"></script>
+    <script src="scripts/controllers/login.controller.js" charset="utf-8"></script>
+    <script src="scripts/services/UserService.js" charset="utf-8"></script>
+    <!-- RecordRTC for in-browser streaming -->
+    <script src="https://cdn.webrtc-experiment.com/RecordRTC.js" charset="utf-8"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js" charset="utf-8"></script>
+    <script src="https://cdn.WebRTC-Experiment.com/getScreenId.js" charset="utf-8"></script>
+</head>
+<body ng-app="app">
+    <header ng-include="'views/partials/header.html'"></header>
+    <div class="container">
+        <main ng-view></main>
+    </div>    
+    <footer ng-include="'views/partials/footer.html'"></footer>
+</body>
+</html>
