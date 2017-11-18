@@ -21,7 +21,8 @@ router.post('/', function(req, res, next) {
   */
     var userToSave = {
       username : req.body.username,
-      password : req.body.password
+      password : req.body.password,
+      date : new Date()
     };
 
 

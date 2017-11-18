@@ -1,5 +1,27 @@
-<div layout="row">
-    <div id="hero">
+<div>
+    <div layout="row" layout-align="center center" id="hero">
         <h1>Home Page Placeholder</h1>
+    </div>
+    <div class="container">
+        <h3>Topics:</h3>
+        <div layout="column">
+            <md-card ng-repeat="topic in vm.topics">
+                    <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{topic.title}}</span>
+                        <span class="md-subhead">{{topic.description}}</span>
+                        <span class="md-subhead">{{topic.tags}}</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-lg card-media">
+                            <video ng-show="topic.url" ng-src={{topic.url}} style="max-width: 150px; height: auto; border-radius: 5px;"></video>
+                        </div>
+                    </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end end">
+                        <md-button href="/#!/topic/{{topic._id}}">View Topic</md-button>
+                        </md-card-actions>
+            </md-card>
+        </div>
     </div>
 </div>

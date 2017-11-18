@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var Users = require('../models/user.js');
 var path = require('path');
 
 // FOCUS ON THIS!! -> req.isAuthenticated() & req.user
@@ -11,10 +12,12 @@ router.get('/', function(req, res) {
   if(req.isAuthenticated()) {
     // send back user object from database
     console.log('logged in', req.user);
-    var userInfo = {
-      username : req.user.username,
-      id : req.user._id
-    };
+    var userInfo = req.user;
+    // {
+    //   username : req.user.username,
+    //   id : req.user._id,
+    //   date : req.user.date
+    // };
     res.send(userInfo);
   } else {
     // failure best handled on the server. do redirect here.
@@ -31,6 +34,24 @@ router.get('/logout', function(req, res) {
   req.logOut();
   res.sendStatus(200);
 });
+
+//PUT Route for user profile changes
+router.put('/:id', function(req,res){
+  let id = req.params.id;
+  let user = req.body;
+  console.log('put /user route, id:', id);
+  console.log(user);
+  Users.findByIdAndUpdate({"_id": id}, {$set: {"location": user.location, "about": user.about, "profileImage": user.profileImage}}, function(err, response){
+    if(err) {
+      console.log('Error updating database', err);
+      res.sendStatus(500);
+    } else {
+      console.log('Success updating database', response);
+      res.sendStatus(200)
+    }
+  })
+
+})
 
 
 module.exports = router;
