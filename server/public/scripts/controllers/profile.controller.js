@@ -6,8 +6,7 @@ app.controller('ProfileController', function (UserService, $http) {
     self.editing = false;
 
     self.getProfile = function () {
-        $http.get('/topic/user/' + self.userObject.id).then(function (response) {
-            console.log(self.userObject.id);
+        $http.get('/topic/user/' + self.userObject.userName).then(function (response) {
             console.log('Retrieved topics:', response.data);
             self.topics = response.data;
         }).catch(function (err) {

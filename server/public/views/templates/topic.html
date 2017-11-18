@@ -1,7 +1,8 @@
 <div ng-cloak class="container">
+    {{vm}}
     <h1>{{vm.topic.title}}</h1>
     <h3>{{vm.topic.description}}</h3>
-    <p>Posted by: {{vm.topic.user}}</p>
+    <p>Posted by: {{vm.topic.username}}</p>
     <p>Tags: {{vm.topic.tags}}</p>
-    <video ng-show="vm.topic.url" ng-src={{vm.topic.url}} controls></video>
+    <video ng-show="vm.topic.url" ng-src={{vm.topic.url}} style="width: 150px; height: auto; border-radius: 5px;" controls></video>
 </div>

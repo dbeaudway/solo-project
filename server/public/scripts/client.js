@@ -19,6 +19,9 @@ app.config(function($routeProvider){
                 return UserService.getuser();
             }
         }
+    }).when('/user/:id',{
+        templateUrl: '../views/templates/user.html',
+        controller: 'UserController as vm',
     }).when('/record',{
         templateUrl: '../views/templates/record.html',
         controller: 'RecordController as vm',
@@ -29,12 +32,10 @@ app.config(function($routeProvider){
         }
     }).when('/topic/:id', {
         templateUrl: '../views/templates/topic.html',
-        controller: 'TopicController as vm',
-
+        controller: 'TopicController as vm'
     }).when('/topic', {
         templateUrl: '../views/templates/topic.html',
-        controller: 'TopicController as vm',
-        
+        controller: 'TopicController as vm'
     }).when('/theme', {
         templateUrl: '../views/templates/theme.html',
         controller: 'ThemeController as vm'

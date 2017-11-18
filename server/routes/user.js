@@ -50,7 +50,18 @@ router.put('/:id', function(req,res){
       res.sendStatus(200)
     }
   })
+})
 
+//GET ROUTE FOR USERS PAGE
+router.get('/:username', function(req, res){
+  let username = req.params.username;
+  Users.findOne({"username": username}, function(err, response){
+    if(err) {
+      res.sendStatus(500);
+    } else {
+      res.send(response);
+    }
+  })
 })
 
 

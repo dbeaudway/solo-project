@@ -1,9 +1,10 @@
-app.controller('RecordController', function($http, UserService){
+app.controller('RecordController', function($http, UserService, UploadService){
     console.log('RecordController loaded');
     let self = this;
     self.userObject = UserService.userObject;
     self.topicToUpload = {
         user: self.userObject.id,
+        username: self.userObject.userName,
         title: '',
         description: '',
         tags: '',
@@ -17,15 +18,6 @@ app.controller('RecordController', function($http, UserService){
     self.videoAvailable = false;
     self.blob = '';
 
-    self.submitTopic = function(){
-        $http.post('/topic', self.topicToUpload).then(function (response){
-            console.log('Successful upload to database');
-            self.getTopics();
-        }).catch(function(error){
-            console.log('Upload to database failed')
-        })
-    }
-
     self.validateSubmission = function() {
         if(!self.topicToUpload.title || !self.topicToUpload.description){
             alert('You must fill out required form fields: Title and Description')
@@ -34,7 +26,7 @@ app.controller('RecordController', function($http, UserService){
         } else if(self.topicToUpload.includeVideo === true && self.videoAvailable === true){
             self.uploadToAmazon()
         }else{
-           self.submitTopic()
+           UploadService.submitTopic()
         }
     }
 
@@ -225,48 +217,10 @@ app.controller('RecordController', function($http, UserService){
             });
         }
     
-    //Amazon Upload functionality below
+    //Amazon Upload
     self.uploadToAmazon = function(){
         self.blob = new Blob(recordedBlobs, {type: 'video/webm'});
-        console.log('uploadToAmazon fired, sending:', self.blob);
-        getSignedRequest(self.blob);
-    }
-    
-    function getSignedRequest(file){
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `/sign-s3?file-name=${self.topicToUpload.title}&file-type=${file.type}`);
-        xhr.onreadystatechange = () => {
-          if(xhr.readyState === 4){
-            if(xhr.status === 200){
-              const response = JSON.parse(xhr.responseText);
-              console.log(response);
-              self.topicToUpload.url = response.url;
-              uploadFile(file, response.signedRequest, response.url);
-            }
-            else{
-              alert('Could not get signed URL.');
-            }
-          }
-        };
-        xhr.send();
-      }
-
-      function uploadFile(file, signedRequest, url){
-        const xhr = new XMLHttpRequest();
-        xhr.open('PUT', signedRequest);
-        xhr.onreadystatechange = () => {
-          if(xhr.readyState === 4){
-            if(xhr.status === 200){
-              console.log('File uploaded');
-              //Submit record to Mongo database
-              self.submitTopic();
-            }
-            else{
-              alert('Could not upload file.');
-            }
-          }
-        };
-        xhr.send(file);
+        UploadService.uploadToAmazon(self.blob, self.topicToUpload);
     }
 
 });

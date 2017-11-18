@@ -1,7 +1,7 @@
 app.factory('UserService', function($http, $location){
     console.log('UserService Loaded');
   
-    var userObject = {};
+    let userObject = {};
   
     return {
       userObject : userObject,
