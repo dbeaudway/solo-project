@@ -1,4 +1,4 @@
-app.controller('ProfileController', function (UserService, $http) {
+app.controller('ProfileController', function (UserService, UploadService, $http) {
     console.log('ProfileController loaded');
     var self = this;
     self.userObject = UserService.userObject;
@@ -23,5 +23,14 @@ app.controller('ProfileController', function (UserService, $http) {
         }).catch(function (err) {
             console.log('Error making updates', err);
         })
+    }
+    
+    self.uploadImageToAmazon = function(){
+        let image = document.getElementById('imageUpload').files[0];
+        let data = {
+            user: self.userObject.id,
+            username: self.userObject.userName
+        }
+        UploadService.uploadImageToAmazon(image, data);
     }
 })

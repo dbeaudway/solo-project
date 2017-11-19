@@ -41,7 +41,22 @@ router.put('/:id', function(req,res){
   let user = req.body;
   console.log('put /user route, id:', id);
   console.log(user);
-  Users.findByIdAndUpdate({"_id": id}, {$set: {"location": user.location, "about": user.about, "profileImage": user.profileImage}}, function(err, response){
+  Users.findByIdAndUpdate({"_id": id}, {$set: {"location": user.location, "about": user.about}}, function(err, response){
+    if(err) {
+      console.log('Error updating database', err);
+      res.sendStatus(500);
+    } else {
+      console.log('Success updating database', response);
+      res.sendStatus(200)
+    }
+  })
+})
+
+//PUT Route for user profile image update
+router.put('/image/:id', function(req,res){
+  let id = req.params.id;
+  let image = req.body.url;
+  Users.findByIdAndUpdate({"_id": id}, {$set: {"profileImage": image}}, function(err, response){
     if(err) {
       console.log('Error updating database', err);
       res.sendStatus(500);
