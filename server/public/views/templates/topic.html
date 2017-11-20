@@ -1,8 +1,47 @@
 <div ng-cloak class="container">
-    {{vm}}
-    <h1>{{vm.topic.title}}</h1>
-    <h3>{{vm.topic.description}}</h3>
-    <p>Posted by: {{vm.topic.username}}</p>
-    <p>Tags: {{vm.topic.tags}}</p>
-    <video ng-show="vm.topic.url" ng-src={{vm.topic.url}} style="width: 150px; height: auto; border-radius: 5px;" controls></video>
+    <div layout="row">
+        <div flex="75">
+            <div layout="column">
+                <div flex>
+                    <h1>{{vm.topic.title}}</h1>
+                    <h3>{{vm.topic.description}}</h3>
+                    <p>Posted by: {{vm.topic.username}}</p>
+                    <p>Tags: {{vm.topic.tags}}</p>
+                    <video ng-show="vm.topic.url" ng-src={{vm.topic.url}}  controls></video>
+                </div>
+                <div flex>
+                    <h2>Post a comment:</h2>
+                    <md-input-container class="md-block">
+                        <label>Comment</label>
+                        <textarea ng-model="vm.commentToAdd.comment" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+                    </md-input-container>
+                    <md-button class="md-raised md-primary" ng-click="vm.postComment()" class="md-primary">Submit Comment</md-button>
+                </div>
+
+            </div>
+        </div>
+        <div flex="25">
+            <md-toolbar layout="row" class="md-hue-3">
+                <div class="md-toolbar-tools">
+                    <span>Comments</span>
+                </div>
+            </md-toolbar>
+
+            <md-content>
+                <md-list flex>
+                    <md-subheader class="md-no-sticky">3 line item, long paragraph (see on mobile)</md-subheader>
+                    <md-list-item ng-repeat="comment in vm.comments" class="md-3-line md-long-text">
+                        <img ng-src="{{comment.userProfileImage}}" class="md-avatar" alt="{{todos[0].who}}" />
+                        <div class="md-list-item-text">
+                            <h3>{{comment.username}}</h3>
+                            <p>
+                                {{comment.comment}}
+                            </p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </div>
+    </div>
+
 </div>

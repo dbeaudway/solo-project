@@ -3,8 +3,9 @@ app.controller('ProfileController', function (UserService, UploadService, $http)
     var self = this;
     self.userObject = UserService.userObject;
     self.topics = '';
+    self.comments = '';
     self.editing = false;
-
+    
     self.getProfile = function () {
         $http.get('/topic/user/' + self.userObject.userName).then(function (response) {
             console.log('Retrieved topics:', response.data);
@@ -14,6 +15,14 @@ app.controller('ProfileController', function (UserService, UploadService, $http)
         })
     }
     self.getProfile();
+
+    self.getComments = function() {
+        $http.get('/comment/user/' + self.userObject.userName).then(function (response){
+            console.log('Retrieved comments:', response.data);
+            self.comments = response.data;
+        })
+    }
+    self.getComments();
 
     self.updateProfile = function () {
         $http.put('/user/' + self.userObject.id, self.userObject).then(function (response) {

@@ -5,12 +5,7 @@ var app = angular.module('app', ['ngRoute', 'ngMaterial', 'ngMessages']);
 app.config(function($routeProvider){
     $routeProvider.when('/home', {
         templateUrl: '../views/templates/home.html',
-        controller: 'HomeController as vm',
-        resolve: {
-            getuser : function(UserService){
-                return UserService.getuser();
-            }
-        }
+        controller: 'HomeController as vm'
     }).when('/profile',{
         templateUrl: '../views/templates/profile.html',
         controller: 'ProfileController as vm',
@@ -30,6 +25,9 @@ app.config(function($routeProvider){
                 return UserService.getuser();
             }
         }
+    }).when('/search',{
+        templateUrl: '../views/templates/search.html',
+        controller: 'SearchController as vm',
     }).when('/topic/:id', {
         templateUrl: '../views/templates/topic.html',
         controller: 'TopicController as vm'
@@ -42,5 +40,8 @@ app.config(function($routeProvider){
     }).when('/register', {
         templateUrl: '../views/templates/register.html',
         controller: 'LoginController as vm'
+    }).when('/', {
+        templateUrl: '../views/templates/home.html',
+        controller: 'HomeController as vm'
     })
 })

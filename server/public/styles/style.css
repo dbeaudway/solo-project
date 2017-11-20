@@ -1,5 +1,6 @@
 .container {
     padding: 0px 40px;
+    min-height: 85vh;
 }
 
 h1 {

@@ -14,6 +14,7 @@ var session = require('express-session');
 var video = require('./routes/video.js');
 var theme = require('./routes/theme.js');
 var topic = require('./routes/topic.js');
+var comment = require('./routes/comment.js');
 var register = require('./routes/register.js')
 var user = require('./routes/user.js');
 var index = require('./routes/index');
@@ -76,6 +77,7 @@ app.get('/sign-s3', (req, res) => {
 app.use('/video', video);
 app.use('/theme', theme);
 app.use('/topic', topic);
+app.use('/comment', comment);
 app.use('/register', register);
 app.use('/user', user);
 app.use('/', index);

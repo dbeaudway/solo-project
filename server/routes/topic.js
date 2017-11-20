@@ -7,16 +7,20 @@ var Topic = mongoose.model('Topic', TopicSchema, 'topics');
 
 //USED TO POST TOPIC
 router.post('/', function(req, res){
-    console.log(req.body);
-    var topicToAdd = new Topic(req.body);
-    topicToAdd.save(function(err, data){
-        if(err) {
-            console.log(err);
-            res.sendStatus(500);
-        } else {
-            res.sendStatus(201);
+    if(req.isAuthenticated()){
+        if(req.user.id === req.body.user){
+            console.log(req.body);
+            var topicToAdd = new Topic(req.body);
+            topicToAdd.save(function(err, data){
+                if(err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(201);
+                }
+            })
         }
-    })
+    }
 })
 
 //USED TO RETRIEVE ALL TOPICS
@@ -47,26 +51,26 @@ router.get('/user/:username', function(req, res){
     })
 })
 
-//USED TO RETRIEVE TOPICS BY USER - PROFILE PAGE
-// router.get('/user/:id', function(req, res){
-//     let userId = req.params.id;
-//     console.log('THIS IS THE USERS ID', userId);
-//     Topic.find({"user": userId}, function(err, foundTopics){
-//         if(err) {
-//             console.log(err);
-//             res.sendStatus(500);
-//         } else {
-//             console.log(foundTopics);
-//             res.send(foundTopics);
-//         }
-//     })
-// })
-
 //USED TO RETRIEVE A SINGLE TOPIC - TOPICS PAGE
 router.get('/item/:id', function(req, res){
     let topicId = req.params.id;
     console.log('THIS IS THE TOPIC ID', topicId);
     Topic.find({"_id": topicId}, function(err, foundTopics){
+        if(err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            console.log(foundTopics);
+            res.send(foundTopics);
+        }
+    })
+})
+
+//USED TO RETRIEVE MATCHING TOPICS - SEARCH PAGE
+router.get('/search/:id', function(req, res){
+    let searchterm = req.params.id;
+    let value = new RegExp(searchterm, 'i');
+    Topic.find({"title": value}, function(err, foundTopics){
         if(err) {
             console.log(err);
             res.sendStatus(500);

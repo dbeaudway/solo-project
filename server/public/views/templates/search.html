@@ -1,0 +1,54 @@
+<div ng-cloak class="container">
+    <h1>Search</h1>
+    {{vm.users}}
+    <md-input-container class="md-block">
+        <label>Search</label>
+        <input ng-model="vm.searchTerm">
+    </md-input-container>
+    <md-button class="md-raised md-primary" ng-click="vm.search()" class="md-primary">Search</md-button>
+
+
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Topics ({{vm.topics.length}})">
+                <md-content class="md-padding">
+                            <md-list flex>
+                                <md-subheader ng-show="vm.topics.length" class="md-no-sticky">{{vm.topics.length}} results found for the term "{{vm.searchTerm}}"</md-subheader>
+                                <md-list-item ng-repeat="topic in vm.topics" class="md-3-line md-long-text">
+                                    <img ng-src="{{topic.url}}" class="md-avatar" />
+                                    <div class="md-list-item-text">
+                                        <a ng-href="/#!/topic/{{topic._id}}">
+                                            <h3>{{topic.title}}</h3>
+                                        </a>
+                                        <p>
+                                            {{topic.description}}
+                                        </p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                </md-content>
+            </md-tab>
+            <md-tab label="Users ({{vm.users.length}})">
+                <md-content class="md-padding">
+                    <md-content class="md-padding">
+                                    <md-list flex>
+                                        <md-subheader ng-show="vm.users.length" class="md-no-sticky">{{vm.users.length}} results found for the term "{{vm.searchTerm}}"</md-subheader>
+                                        <md-list-item ng-repeat="user in vm.users" class="md-3-line md-long-text">
+                                            <img ng-src="{{user.profileImage}}" class="md-avatar" />
+                                            <div class="md-list-item-text">
+                                                <a ng-href="/#!/user/{{user.username}}">
+                                                    <h3>{{user.username}}</h3>
+                                                </a>
+                                                <p>{{user.about}}</p>
+                                                <p>
+                                                    Joined on: {{user.date}}
+                                                </p>
+                                            </div>
+                                        </md-list-item>
+                                    </md-list>
+                        </md-content>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>

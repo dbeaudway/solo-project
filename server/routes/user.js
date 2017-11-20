@@ -39,32 +39,38 @@ router.get('/logout', function(req, res) {
 router.put('/:id', function(req,res){
   let id = req.params.id;
   let user = req.body;
-  console.log('put /user route, id:', id);
-  console.log(user);
-  Users.findByIdAndUpdate({"_id": id}, {$set: {"location": user.location, "about": user.about}}, function(err, response){
-    if(err) {
-      console.log('Error updating database', err);
-      res.sendStatus(500);
-    } else {
-      console.log('Success updating database', response);
-      res.sendStatus(200)
+  if(req.isAuthenticated()){
+    if(req.user.id === user.id){
+      Users.findByIdAndUpdate({"_id": id}, {$set: {"location": user.location, "about": user.about}}, function(err, response){
+        if(err) {
+          console.log('Error updating database', err);
+          res.sendStatus(500);
+        } else {
+          console.log('Success updating database', response);
+          res.sendStatus(200)
+        }
+      })
     }
-  })
+  }
 })
 
 //PUT Route for user profile image update
 router.put('/image/:id', function(req,res){
   let id = req.params.id;
   let image = req.body.url;
-  Users.findByIdAndUpdate({"_id": id}, {$set: {"profileImage": image}}, function(err, response){
-    if(err) {
-      console.log('Error updating database', err);
-      res.sendStatus(500);
-    } else {
-      console.log('Success updating database', response);
-      res.sendStatus(200)
+  if(req.isAuthenticated()){
+    if(req.user.id === id){
+      Users.findByIdAndUpdate({"_id": id}, {$set: {"profileImage": image}}, function(err, response){
+        if(err) {
+          console.log('Error updating database', err);
+          res.sendStatus(500);
+        } else {
+          console.log('Success updating database', response);
+          res.sendStatus(200)
+        }
+      })
     }
-  })
+  }
 })
 
 //GET ROUTE FOR USERS PAGE
@@ -76,6 +82,21 @@ router.get('/:username', function(req, res){
     } else {
       res.send(response);
     }
+  })
+})
+
+//USED TO RETRIEVE MATCHING TOPICS - SEARCH PAGE
+router.get('/search/:id', function(req, res){
+  let user = req.params.id;
+  let value = new RegExp(user, 'i');
+  Users.find({"username": value}, function(err, foundUsers){
+      if(err) {
+          console.log(err);
+          res.sendStatus(500);
+      } else {
+          console.log(foundUsers);
+          res.send(foundUsers);
+      }
   })
 })
 
