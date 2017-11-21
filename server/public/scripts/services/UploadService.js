@@ -38,7 +38,7 @@ app.service('UploadService', function($http){
     function getSignedRequest(file, data){
         const xhr = new XMLHttpRequest();
         // xhr.open('GET', `/sign-s3?user=${self.topicToUpload.username}&file-type=${self.topicToUpload.type}&file-name=${self.topicToUpload.title}`);
-        xhr.open('GET', `/sign-s3?file-name=${self.topicToUpload.username}/${self.topicToUpload.type}/${self.topicToUpload.title}`);        
+        xhr.open('GET', `/sign-s3?file-name=${self.topicToUpload.username}/${self.topicToUpload.type}/${self.topicToUpload.title}`);
         xhr.onreadystatechange = () => {
           if(xhr.readyState === 4){
             if(xhr.status === 200){

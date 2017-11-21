@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var axios = require('axios');
 var path = require('path');
 var aws = require('aws-sdk');
 var port = process.env.PORT || 5002;
@@ -12,10 +13,11 @@ var session = require('express-session');
 
 //Route includes
 var video = require('./routes/video.js');
-var theme = require('./routes/theme.js');
 var topic = require('./routes/topic.js');
 var comment = require('./routes/comment.js');
-var register = require('./routes/register.js')
+var register = require('./routes/register.js');
+var member = require('./routes/member.js');
+var bill = require('./routes/bill.js');
 var user = require('./routes/user.js');
 var index = require('./routes/index');
 
@@ -75,9 +77,10 @@ app.get('/sign-s3', (req, res) => {
 
 //Routes
 app.use('/video', video);
-app.use('/theme', theme);
 app.use('/topic', topic);
 app.use('/comment', comment);
+app.use('/member', member);
+app.use('/bill', bill);
 app.use('/register', register);
 app.use('/user', user);
 app.use('/', index);

@@ -1,0 +1,58 @@
+<div ng-cloak class="container" layout="column" layout-gt-sm="row">
+    <div flex-gt-sm="75">
+        <md-card>
+            <md-card-content layout="column" layout-align="space-between">
+
+                <md-card-title layout="row">
+                    <md-card-title-text>
+                        <h1>{{vm.bill.bill}} -
+                            <a ng-href="{{vm.bill.govtrack_url}}">{{vm.bill.short_title}}</a>
+                        </h1>
+                        <small>{{vm.bill.title}}</small>
+                    </md-card-title-text>
+                </md-card-title>
+
+
+                <a ng-href="/#!/member/{{vm.bill.sponsor_id}}">
+                    Sponsor: {{vm.bill.sponsor_title}} {{vm.bill.sponsor}} ({{vm.bill.sponsor_party}}) - {{vm.bill.sponsor_state}}
+                </a>
+                <p>
+                    <strong>Summary</strong>
+                </p>
+                <p>Subject: {{vm.bill.primary_subject}}</p>
+                <p>{{vm.bill.summary}}</p>
+                <p>Introduced: {{vm.bill.introduced_date | date}}</p>
+                <p>Active: {{vm.bill.active}}</p>
+                <p>Last Vote: {{vm.bill.last_vote}}</p>
+                <p>House Passage: {{vm.bill.house_passage}}</p>
+                <p>Senate Passage: {{vm.bill.senate_passage}}</p>
+                <p>Enacted: {{vm.bill.enacted}}</p>
+                <div>
+                    <p><strong>Votes:</strong></p>
+                    <div ng-repeat="item in vm.bill.votes">
+                            <p>{{item.chamber}} voted on {{item.date}}</p>
+                            <p>Vote Question: {{item.question}} | Result: {{item.result}}</p>
+                            <p>Yes: {{item.total_yes}} | No: {{item.total_no}} | Not Voting: {{item.total_not_voting}}</p>
+                        </div>
+                </div>
+
+            </md-card-content>
+        </md-card>
+    </div>
+    <div flex-gt-sm="25">
+        <div layout="column">
+            <H2>Related Bills</H2>
+            <ul>
+                <li ng-repeat="bill in vm.relatedBills">
+                    <a ng-href="/#!/bill/{{bill.bill_slug}}">{{bill.bill_id | uppercase}}</a>
+                </li>
+            </ul>
+            <H2>Cosponsors</H2>
+            <ul>
+                <li ng-repeat="member in vm.cosponsors.cosponsors">
+                    <a ng-href="/#!/member/{{member.cosponsor_id}}">{{member.cosponsor_title}} {{member.name}} ({{member.cosponsor_party}}) - {{member.cosponsor_state}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

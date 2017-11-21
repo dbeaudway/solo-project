@@ -1,0 +1,25 @@
+<div ng-cloak class="container">
+    <pre>{{ {vm} | json }}</pre>
+    <md-card>
+        <h1>Member</h1>
+        <md-card-content layout="row" layout-align="space-between">
+            <div class="md-media-xl card-media">
+                <img class="profileImage" ng-src="" alt="Profile Image">
+            </div>
+            <md-card-title layout="column">
+                <md-card-title-text>
+                    <span class="md-headline">{{vm.member.first_name}} {{vm.member.last_name}} ({{vm.member.current_party}})</span>
+                    <span>
+                        <a ng-href="{{vm.member.url}}">Website</a>
+                    </span>
+                    <span>
+                        <a ng-href="https://twitter.com/{{vm.member.twitter_account}}">Twitter</a>
+                    </span>
+                    <span>
+                        <a ng-href="https://facebook.com/{{vm.member.facebook_account}}">Facebook</a>
+                    </span>
+                </md-card-title-text>
+            </md-card-title>
+        </md-card-content>
+    </md-card>
+</div>

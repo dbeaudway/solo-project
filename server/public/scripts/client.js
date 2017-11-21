@@ -25,6 +25,12 @@ app.config(function($routeProvider){
                 return UserService.getuser();
             }
         }
+    }).when('/member/:id',{
+        templateUrl: '../views/templates/member.html',
+        controller: 'MemberController as vm',
+    }).when('/bill/:id',{
+        templateUrl: '../views/templates/bill.html',
+        controller: 'BillController as vm',
     }).when('/search',{
         templateUrl: '../views/templates/search.html',
         controller: 'SearchController as vm',
@@ -34,9 +40,6 @@ app.config(function($routeProvider){
     }).when('/topic', {
         templateUrl: '../views/templates/topic.html',
         controller: 'TopicController as vm'
-    }).when('/theme', {
-        templateUrl: '../views/templates/theme.html',
-        controller: 'ThemeController as vm'
     }).when('/register', {
         templateUrl: '../views/templates/register.html',
         controller: 'LoginController as vm'
