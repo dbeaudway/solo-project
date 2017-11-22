@@ -1,0 +1,68 @@
+<div ng-cloak class="container">
+    <div layout="column">
+        <md-content>
+            <h1>
+                <a ng-href="{{vm.bill.govtrack_url}}">{{vm.bill.bill}}</a> {{vm.bill.short_title}}</h1>
+            <p>{{vm.bill.title}}</p>
+            <md-divider></md-divider>
+        </md-content>
+    </div>
+    <div layout="column" layout-gt-sm="row">
+        <div flex-gt-sm="75">
+            <md-content>
+                <md-content class="md-padding">
+                    <h2>Summary</h2>
+                    <p>{{vm.bill.summary}}</p>
+                </md-content>
+        </div>
+        <div flex-gt-sm="25">
+            <div layout="column">
+                <md-content>
+                    <md-list flex>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Subject</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.bill.primary_subject}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Introduced</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.bill.introduced_date | date}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Latest Major Action</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.bill.latest_major_action_date | date}}: {{vm.bill.latest_major_action}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Bill Sponsor</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <a ng-href="/#!/member/{{vm.bill.sponsor_id}}"><p>{{vm.bill.sponsor_title}} {{vm.bill.sponsor}}, {{vm.bill.sponsor_party}} - {{vm.bill.sponsor_state}}</p></a>
+                                </div>
+                            </md-list-item>
+                        </div>
+
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Co-sponsors</md-subheader>
+                            <md-list-item ng-repeat="member in vm.cosponsors.cosponsors">
+                                <div class="md-list-item-text" layout="column">
+                                    <a ng-href="/#!/member/{{member.cosponsor_id}}"><p>{{member.cosponsor_title}} {{member.name}}, {{member.cosponsor_party}} - {{member.cosponsor_state}}</p></a>
+                                </div>
+                    </md-list>
+                    </div>
+
+                </md-content>
+            </div>
+        </div>
+    </div>
+</div>

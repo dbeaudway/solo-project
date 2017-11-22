@@ -1,0 +1,104 @@
+<div ng-cloak class="container">
+    <div layout="column">
+        <md-content>
+            <h1>
+                <a ng-href="/#!/bill-detail/{{vm.votes.votes.vote.bill.bill_id.split('-')[0]}}/{{vm.votes.votes.vote.congress}}">{{vm.votes.votes.vote.bill.number}}</a> {{vm.votes.votes.vote.description}}</h1>
+            <p>{{vm.votes.votes.vote.bill.title}}</p>
+            <md-divider></md-divider>
+        </md-content>
+    </div>
+    <div layout="column" layout-gt-sm="row">
+        <div flex-gt-sm="75">
+            <md-content>
+                <md-content class="md-padding">
+                    <h2>Summary</h2>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Yes</th>
+                            <th>No</th>
+                            <th>Other</th>
+                        </tr>
+                        <tr>
+                            <td>R</td>
+                            <td>{{vm.votes.votes.vote.republican.yes}}</td>
+                            <td>{{vm.votes.votes.vote.republican.no}}</td>
+                            <td>{{vm.votes.votes.vote.republican.present + vm.votes.vote.republican.not_voting}}</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td>{{vm.votes.votes.vote.democratic.yes}}</td>
+                            <td>{{vm.votes.votes.vote.democratic.no}}</td>
+                            <td>{{vm.votes.votes.vote.democratic.present + vm.votes.vote.democratic.not_voting}}</td>
+                        </tr>
+                        <tr>
+                            <td>I</td>
+                            <td>{{vm.votes.votes.vote.total.yes}}</td>
+                            <td>{{vm.votes.votes.vote.independent.no}}</td>
+                            <td>{{vm.votes.votes.vote.independent.present + vm.votes.votes.vote.independent.not_voting}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>{{vm.votes.votes.vote.total.yes}}</td>
+                            <td>{{vm.votes.votes.vote.total.no}}</td>
+                            <td>{{vm.votes.votes.vote.total.present + vm.votes.votes.vote.total.not_voting}}</td>
+                        </tr>
+                    </table>
+                    <h2>Roll Call</h2>
+                    <table>
+                        <tr>
+                            <th>Member</th>
+                            <th>Vote</th>
+                            <th>Party</th>
+                            <th>State</th>
+                        </tr>
+                        <tr ng-repeat="member in vm.votes.votes.vote.positions">
+                            <td><a ng-href="/#!/member/{{member.member_id}}">{{member.name}}</a></td>
+                            <td>{{member.vote_position}}</td>
+                            <td>{{member.party}}</td>
+                            <td>{{member.state}}</td>
+                        </tr>
+                    </table>
+                </md-content>
+        </div>
+        <div flex-gt-sm="25">
+            <div layout="column">
+                <md-content>
+                    <md-list flex>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Chamber</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.votes.votes.vote.chamber}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Date</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.votes.votes.vote.date | date}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Result</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.votes.votes.vote.result}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Latest Major Action</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.votes.votes.vote.bill.latest_action}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                </md-content>
+            </div>
+        </div>
+    </div>
+</div>

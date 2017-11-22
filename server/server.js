@@ -17,7 +17,9 @@ var topic = require('./routes/topic.js');
 var comment = require('./routes/comment.js');
 var register = require('./routes/register.js');
 var member = require('./routes/member.js');
+var billdetail = require('./routes/bill-detail.js');
 var bill = require('./routes/bill.js');
+var votes = require('./routes/votes.js');
 var user = require('./routes/user.js');
 var index = require('./routes/index');
 
@@ -80,6 +82,8 @@ app.use('/video', video);
 app.use('/topic', topic);
 app.use('/comment', comment);
 app.use('/member', member);
+app.use('/bill-detail', billdetail);
+app.use('/votes', votes);
 app.use('/bill', bill);
 app.use('/register', register);
 app.use('/user', user);

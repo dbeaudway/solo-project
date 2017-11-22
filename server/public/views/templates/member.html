@@ -1,25 +1,95 @@
 <div ng-cloak class="container">
-    <pre>{{ {vm} | json }}</pre>
-    <md-card>
-        <h1>Member</h1>
-        <md-card-content layout="row" layout-align="space-between">
-            <div class="md-media-xl card-media">
-                <img class="profileImage" ng-src="" alt="Profile Image">
+    <div layout="column">
+        <md-content>
+            <h1>{{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} ({{vm.member.current_party}})</h1>
+            <md-divider></md-divider>
+        </md-content>
+    </div>
+    <div layout="column" layout-gt-sm="row">
+        <div flex-gt-sm="75">
+            <md-content>
+                <md-content class="md-padding">
+                    <img ng-src="https://theunitedstates.io/images/congress/225x275/{{vm.member.member_id}}.jpg" alt="Image of {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}">
+                    <p>
+                        {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} is currently a {{vm.member.roles[0].title
+                        | lowercase}} in the {{vm.member.roles[0].chamber}} serving for the state of {{vm.member.roles[0].state}}.
+                        {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}'s current term began on {{vm.member.roles[0].start_date
+                        | date}} and ends on {{vm.member.roles[0].end_date | date}}.
+                    </p>
+                    <h2>Activity</h2>
+                    <p>
+                        {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} has sponsored {{vm.member.roles[0].bills_sponsored}}
+                        bills and co-sponsored {{vm.member.roles[0].bills_cosponsored}} bills in the current term.
+                    </p>
+                    <h2>Voting Record</h2>
+                    <p>
+                        {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} has voted along party lines
+                        {{vm.member.roles[0].votes_with_party_pct}}% of the time and has missed {{vm.member.roles[0].missed_votes_pct}}% of votes.
+                    </p>
+                </md-content>
+        </div>
+        <div flex-gt-sm="25">
+            <div layout="column">
+                <md-content>
+                    <md-list flex>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Chamber</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.member.roles[0].chamber}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">State</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.member.roles[0].state}}
+                                        <span ng-show="vm.member.roles[0].district">- District {{vm.member.roles[0].district}}</span>
+                                    </p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Role</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{vm.member.roles[0].title}}</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Current Term</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <p>Started on {{vm.member.roles[0].start_date| date}} and ends {{vm.member.roles[0].end_date | date}}.</p>
+                                </div>
+                            </md-list-item>
+                        </div>
+                        <div class="list-group">
+                            <md-subheader class="md-no-sticky">Contact</md-subheader>
+                            <md-list-item>
+                                <div class="md-list-item-text" layout="column">
+                                    <a ng-href="{{vm.member.url}}">
+                                        <p>Website</p>
+                                    </a>
+                                    <a ng-href="https://twitter.com/{{vm.member.twitter_account}}">
+                                        <p>Twitter</p>
+                                    </a>
+                                    <a ng-href="https://facebook.com/{{vm.member.facebook_account}}">
+                                        <p>Facebook</p>
+                                    </a>
+                                    <a ng-href="https://youtube.com/{{vm.member.youtube_account}}">
+                                        <p>Youtube</p>
+                                    </a>
+                                </div>
+                            </md-list-item>
+                        </div>
+                    </md-list>
+                    </div>
+
+                </md-content>
             </div>
-            <md-card-title layout="column">
-                <md-card-title-text>
-                    <span class="md-headline">{{vm.member.first_name}} {{vm.member.last_name}} ({{vm.member.current_party}})</span>
-                    <span>
-                        <a ng-href="{{vm.member.url}}">Website</a>
-                    </span>
-                    <span>
-                        <a ng-href="https://twitter.com/{{vm.member.twitter_account}}">Twitter</a>
-                    </span>
-                    <span>
-                        <a ng-href="https://facebook.com/{{vm.member.facebook_account}}">Facebook</a>
-                    </span>
-                </md-card-title-text>
-            </md-card-title>
-        </md-card-content>
-    </md-card>
+        </div>
+    </div>
 </div>
