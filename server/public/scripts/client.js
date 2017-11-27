@@ -17,14 +17,6 @@ app.config(function($routeProvider){
     }).when('/user/:id',{
         templateUrl: '../views/templates/user.html',
         controller: 'UserController as vm',
-    }).when('/record',{
-        templateUrl: '../views/templates/record.html',
-        controller: 'RecordController as vm',
-        resolve: {
-            getuser : function(UserService){
-                return UserService.getuser();
-            }
-        }
     }).when('/member/:id',{
         templateUrl: '../views/templates/member.html',
         controller: 'MemberController as vm',
@@ -40,12 +32,6 @@ app.config(function($routeProvider){
     }).when('/search',{
         templateUrl: '../views/templates/search.html',
         controller: 'SearchController as vm',
-    }).when('/topic/:id', {
-        templateUrl: '../views/templates/topic.html',
-        controller: 'TopicController as vm'
-    }).when('/topic', {
-        templateUrl: '../views/templates/topic.html',
-        controller: 'TopicController as vm'
     }).when('/register', {
         templateUrl: '../views/templates/register.html',
         controller: 'LoginController as vm'

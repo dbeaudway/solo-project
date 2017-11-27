@@ -3,8 +3,6 @@ var router = express.Router();
 var axios = require('axios');
 var key = process.env.PROPUBLICA_KEY;
 
-// /congress/v1/{congress}/{chamber}/sessions/{session-number}/votes/{roll-call-number}.json
-
 //Retrieve a specific bills voting roll call
 router.get('/:congress/:chamber/:session/:rollcall', function(req, res){
     let congress = req.params.congress;

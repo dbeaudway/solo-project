@@ -49,6 +49,23 @@
                         </md-content>
                 </md-content>
             </md-tab>
+            <md-tab label="Bills ({{vm.bills.length}})">
+                    <md-content class="md-padding">
+                        <md-content class="md-padding">
+                                        <md-list flex>
+                                            <md-subheader ng-show="vm.bills.length" class="md-no-sticky">{{vm.bills.length}} results found for the term "{{vm.searchTerm}}"</md-subheader>
+                                            <md-list-item ng-repeat="bill in vm.bills" class="md-3-line md-long-text">
+                                                <div class="md-list-item-text">
+                                                    <a ng-href="/#!/bill-detail/{{bill.bill_slug}}/115">
+                                                        <h3>{{bill.short_title}}</h3>
+                                                    </a>
+                                                    <a ng-href="/#!/bill-details/{{bill.bill_slug}}"><p>{{bill.bill_id | uppercase}}</p></a>
+                                                </div>
+                                            </md-list-item>
+                                        </md-list>
+                            </md-content>
+                    </md-content>
+                </md-tab>
         </md-tabs>
     </md-content>
 </div>

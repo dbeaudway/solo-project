@@ -2,19 +2,9 @@ app.controller('ProfileController', function (UserService, UploadService, $http)
     console.log('ProfileController loaded');
     var self = this;
     self.userObject = UserService.userObject;
-    self.topics = '';
     self.comments = '';
     self.editing = false;
     
-    self.getProfile = function () {
-        $http.get('/topic/user/' + self.userObject.userName).then(function (response) {
-            console.log('Retrieved topics:', response.data);
-            self.topics = response.data;
-        }).catch(function (err) {
-            console.log('Error retrieving topics:', err);
-        })
-    }
-    self.getProfile();
 
     self.getComments = function() {
         $http.get('/comment/user/' + self.userObject.userName).then(function (response){

@@ -1,67 +1,112 @@
 <div ng-cloak class="container">
     <div layout="column">
-        <md-content>
-            <h1>
-                <a ng-href="{{vm.bill.govtrack_url}}">{{vm.bill.bill}}</a> {{vm.bill.short_title}}</h1>
-            <p>{{vm.bill.title}}</p>
-            <md-divider></md-divider>
-        </md-content>
+        <h1>
+            <a ng-href="{{vm.bill.govtrack_url}}">{{vm.bill.bill}}</a>
+        </h1>
+        <p>{{vm.bill.title}}</p>
+        <br>
+        <h2>Bill Description</h2>
+        <p>{{vm.bill.summary}}</p>
     </div>
     <div layout="column" layout-gt-sm="row">
-        <div flex-gt-sm="75">
-            <md-content>
-                <md-content class="md-padding">
-                    <h2>Summary</h2>
-                    <p>{{vm.bill.summary}}</p>
-                </md-content>
-        </div>
-        <div flex-gt-sm="25">
-            <div layout="column">
-                <md-content>
-                    <md-list flex>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Subject</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <p>{{vm.bill.primary_subject}}</p>
-                                </div>
-                            </md-list-item>
+        <div class="padded" flex-gt-sm="75">
+            <div class="commentContainer">
+                <div>
+                    <div>
+                        <h2>Post Comment</h2>
+                        <textarea ng-model="vm.commentToAdd.comment" rows="3" placeholder="Share your opinion..."></textarea>
+                        <div ng-show="vm.commentToAdd.video">
+                            <video class="comment-video" id="videoPlayer" autoplay muted></video>
+                            <div layout="row" layout-align="start start">
+                                <button ng-click="vm.startRecording()" ng-show="!vm.recording" id="record">Record</button>
+                                <button ng-click="vm.stopRecording()" ng-show="vm.recording" id="stop">Stop Recording</button>
+                                <button ng-click="vm.play()" id="play" ng-disabled="!vm.videoAvailable">Play</button>
+                            </div>
                         </div>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Introduced</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <p>{{vm.bill.introduced_date | date}}</p>
-                                </div>
-                            </md-list-item>
+                        <div layout="row" layout-align="start center" ng-model="vm.commentToAdd.position">
+                            <input type="radio" name="position" value="support">Support
+                            <input type="radio" name="position" value="oppose">Oppose
+                            <input type="radio" name="position" value="undecided">Undecided
                         </div>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Latest Major Action</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <p>{{vm.bill.latest_major_action_date | date}}: {{vm.bill.latest_major_action}}</p>
-                                </div>
-                            </md-list-item>
-                        </div>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Bill Sponsor</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <a ng-href="/#!/member/{{vm.bill.sponsor_id}}"><p>{{vm.bill.sponsor_title}} {{vm.bill.sponsor}}, {{vm.bill.sponsor_party}} - {{vm.bill.sponsor_state}}</p></a>
-                                </div>
-                            </md-list-item>
-                        </div>
-
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Co-sponsors</md-subheader>
-                            <md-list-item ng-repeat="member in vm.cosponsors.cosponsors">
-                                <div class="md-list-item-text" layout="column">
-                                    <a ng-href="/#!/member/{{member.cosponsor_id}}"><p>{{member.cosponsor_title}} {{member.name}}, {{member.cosponsor_party}} - {{member.cosponsor_state}}</p></a>
-                                </div>
-                    </md-list>
                     </div>
-
-                </md-content>
+                    <md-switch class="md-primary" md-no-ink aria-label="Include Video Switch" ng-model="vm.commentToAdd.video" ng-click="vm.accessCamera()">
+                        Include Video
+                    </md-switch>
+                </div>
+                <button ng-click="vm.validateSubmission()">Submit Comment</button>
+            </div>
+            <div class="comment-list">
+                <h2>Comments</h2>
+                <br>
+                <div class="comment" ng-repeat="comment in vm.comments" layout="row">
+                    <div flex="10">
+                        <img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo">
+                    </div>
+                    <div layout="column" flex>
+                        <div flex class="comment-user">
+                            <span>Posted by {{comment.username}} on {{comment.date | date}}</span>
+                        </div>
+                        <div layout="column">
+                            <p>{{comment.comment}}</p>
+                            <video class="comment-video" ng-show="comment.url" ng-src="{{comment.url}}" controls></video>
+                        </div>
+                    </div>
+                    <div layout="column" layout-align="start center">
+                        <i class="material-icons comment-icon" ng-show="{{vm.userObject.id === comment.user}}" ng-click="vm.deleteComment(comment)">not_interested</i>
+                        {{comment.likes}}
+                        <i class="material-icons comment-icon" ng-show="{{vm.userObject.id}}" ng-click="vm.likeComment(comment)">add</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="padded" flex-gt-sm="25">
+            <div layout="column">
+                <div flex class="list-group">
+                    <div>
+                        <h3>Subject</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.bill.primary_subject}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Introduced</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.bill.introduced_date | date}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Latest Major Action</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.bill.latest_major_action_date | date}}: {{vm.bill.latest_major_action}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Bill Sponsor</h3>
+                        <div>
+                            <div layout="column">
+                                <a ng-href="/#!/member/{{vm.bill.sponsor_id}}">
+                                    <p>{{vm.bill.sponsor_title}} {{vm.bill.sponsor}}, {{vm.bill.sponsor_party}} - {{vm.bill.sponsor_state}}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="vm.cosponsors.cosponsors[0]">
+                        <h3>Co-sponsors</h3>
+                        <div ng-repeat="member in vm.cosponsors.cosponsors">
+                            <div layout="column">
+                                <a ng-href="/#!/member/{{member.cosponsor_id}}">
+                                    <p>{{member.cosponsor_title}} {{member.name}}, {{member.cosponsor_party}} - {{member.cosponsor_state}}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

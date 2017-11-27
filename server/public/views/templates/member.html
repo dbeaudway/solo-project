@@ -1,94 +1,100 @@
-<div ng-cloak class="container">
+<div ng-cloak ng-show="vm.member" class="container">
     <div layout="column">
-        <md-content>
+        <div>
             <h1>{{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} ({{vm.member.current_party}})</h1>
-            <md-divider></md-divider>
-        </md-content>
-    </div>
-    <div layout="column" layout-gt-sm="row">
-        <div flex-gt-sm="75">
-            <md-content>
-                <md-content class="md-padding">
-                    <img ng-src="https://theunitedstates.io/images/congress/225x275/{{vm.member.member_id}}.jpg" alt="Image of {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}">
-                    <p>
-                        {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} is currently a {{vm.member.roles[0].title
-                        | lowercase}} in the {{vm.member.roles[0].chamber}} serving for the state of {{vm.member.roles[0].state}}.
-                        {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}'s current term began on {{vm.member.roles[0].start_date
-                        | date}} and ends on {{vm.member.roles[0].end_date | date}}.
-                    </p>
-                    <h2>Activity</h2>
-                    <p>
-                        {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} has sponsored {{vm.member.roles[0].bills_sponsored}}
-                        bills and co-sponsored {{vm.member.roles[0].bills_cosponsored}} bills in the current term.
-                    </p>
-                    <h2>Voting Record</h2>
-                    <p>
-                        {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} has voted along party lines
-                        {{vm.member.roles[0].votes_with_party_pct}}% of the time and has missed {{vm.member.roles[0].missed_votes_pct}}% of votes.
-                    </p>
-                </md-content>
         </div>
-        <div flex-gt-sm="25">
+    </div>
+    <div layout="row">
+        <div flex-gt-sm="25" class="padded">
             <div layout="column">
-                <md-content>
-                    <md-list flex>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Chamber</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <p>{{vm.member.roles[0].chamber}}</p>
-                                </div>
-                            </md-list-item>
+                <div flex>
+                    <img ng-src="https://theunitedstates.io/images/congress/225x275/{{vm.member.member_id}}.jpg" alt="Image of {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}">
+                    <div class="list-group">
+                        <h3>Chamber</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.member.roles[0].chamber}}</p>
+                            </div>
                         </div>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">State</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <p>{{vm.member.roles[0].state}}
-                                        <span ng-show="vm.member.roles[0].district">- District {{vm.member.roles[0].district}}</span>
-                                    </p>
-                                </div>
-                            </md-list-item>
-                        </div>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Role</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <p>{{vm.member.roles[0].title}}</p>
-                                </div>
-                            </md-list-item>
-                        </div>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Current Term</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <p>Started on {{vm.member.roles[0].start_date| date}} and ends {{vm.member.roles[0].end_date | date}}.</p>
-                                </div>
-                            </md-list-item>
-                        </div>
-                        <div class="list-group">
-                            <md-subheader class="md-no-sticky">Contact</md-subheader>
-                            <md-list-item>
-                                <div class="md-list-item-text" layout="column">
-                                    <a ng-href="{{vm.member.url}}">
-                                        <p>Website</p>
-                                    </a>
-                                    <a ng-href="https://twitter.com/{{vm.member.twitter_account}}">
-                                        <p>Twitter</p>
-                                    </a>
-                                    <a ng-href="https://facebook.com/{{vm.member.facebook_account}}">
-                                        <p>Facebook</p>
-                                    </a>
-                                    <a ng-href="https://youtube.com/{{vm.member.youtube_account}}">
-                                        <p>Youtube</p>
-                                    </a>
-                                </div>
-                            </md-list-item>
-                        </div>
-                    </md-list>
                     </div>
-
-                </md-content>
+                    <div class="list-group">
+                        <h3>State</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.member.roles[0].state}}
+                                    <span ng-show="vm.member.roles[0].district">- District {{vm.member.roles[0].district}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group">
+                        <h3>Role</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.member.roles[0].title}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group">
+                        <h3>Current Term</h3>
+                        <div>
+                            <div layout="column">
+                                <p>Started on {{vm.member.roles[0].start_date| date}} and ends {{vm.member.roles[0].end_date
+                                    | date}}.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group">
+                        <h3>Contact</h3>
+                        <div>
+                            <div layout="column">
+                                <a ng-href="{{vm.member.url}}">
+                                    <p>Website</p>
+                                </a>
+                                <a ng-href="https://twitter.com/{{vm.member.twitter_account}}">
+                                    <p>Twitter</p>
+                                </a>
+                                <a ng-href="https://facebook.com/{{vm.member.facebook_account}}">
+                                    <p>Facebook</p>
+                                </a>
+                                <a ng-href="https://youtube.com/{{vm.member.youtube_account}}">
+                                    <p>Youtube</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="column" layout-gt-sm="row">
+            <div flex-gt-sm="75" class="padded">
+                <p>
+                    {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} is currently a {{vm.member.roles[0].title
+                    | lowercase}} in the {{vm.member.roles[0].chamber}} serving for the state of {{vm.member.roles[0].state}}.
+                    {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}'s current term began on {{vm.member.roles[0].start_date
+                    | date}} and ends on {{vm.member.roles[0].end_date | date}}.
+                </p>
+                <h2>Activity</h2>
+                <p>
+                    {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} has sponsored {{vm.member.roles[0].bills_sponsored}}
+                    bills and co-sponsored {{vm.member.roles[0].bills_cosponsored}} bills in the current term.
+                </p>
+                <h2>Voting Record</h2>
+                <p>
+                    {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} has voted along party lines
+                    {{vm.member.roles[0].votes_with_party_pct}}% of the time and has missed {{vm.member.roles[0].missed_votes_pct}}%
+                    of votes.
+                </p>
+                <h2>Recent Votes</h2>
+                <div ng-repeat="vote in vm.memberVotes.votes">
+                    <p ng-show="vote.description">
+                        <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}:</a> {{vote.description}}</p>
+                    <p>Voted "{{vote.position}}" and the bill {{vote.result | lowercase}}</p>
+                    <p>
+                        <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">View the bill</a>
+                        <a href="/#!/votes/{{vote.congress}}/{{vote.chamber}}/{{vote.session}}/{{vote.roll_call}}">View the Vote</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

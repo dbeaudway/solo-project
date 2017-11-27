@@ -12,8 +12,6 @@ var passport = require('./strategies/userStrategy');
 var session = require('express-session');
 
 //Route includes
-var video = require('./routes/video.js');
-var topic = require('./routes/topic.js');
 var comment = require('./routes/comment.js');
 var register = require('./routes/register.js');
 var member = require('./routes/member.js');
@@ -72,14 +70,8 @@ app.get('/sign-s3', (req, res) => {
         res.end();
     });
 });
-//Part of S3 upload that has been unused
-// app.post('/save-details', (req, res) => {
-//     //TODO: Read Posted form data and do something
-// });
 
 //Routes
-app.use('/video', video);
-app.use('/topic', topic);
 app.use('/comment', comment);
 app.use('/member', member);
 app.use('/bill-detail', billdetail);

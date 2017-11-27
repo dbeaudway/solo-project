@@ -1,49 +1,50 @@
 <div ng-cloak class="container">
     <div layout="column">
-        <h2>Recent Votes</h2>
-        <div ng-repeat="bill in vm.bills.votes" layout-gt-xs="row">
-            <div flex="10">{{bill.date}}</div>
-            <div flex="60">              
-                {{bill.description}}
-                <p ng-show={{bill.bill}}>
-                    <a 
-                    ng-href="/#!/votes/{{bill.congress}}/{{bill.chamber}}/{{bill.session}}/{{bill.roll_call}}">
-                    {{bill.bill.bill_id | uppercase}}</a></p>
-                <p ng-show={{bill.nomination}}><a ng-href="">{{bill.nomination.nomination_id | uppercase}}</a></p>      
-            </div>
-            <div flex="30">
-                <table>
-                    <tr>
-                        <th>Party</th>
-                        <th>Yes</th>
-                        <th>No</th>
-                        <th>No Vote</th>
-                        <th>Party Position</th>
-                    </tr>
-                    <tr>
-                        <td>R</td>
-                        <td>{{bill.republican.yes}}</td>
-                        <td>{{bill.republican.no}}</td>
-                        <td>{{bill.republican.not_voting}}</td>
-                        <td>{{bill.republican.majority_position}}</td>
-                    </tr>
-                    <tr>
-                        <td>D</td>
-                        <td>{{bill.democratic.yes}}</td>
-                        <td>{{bill.democratic.no}}</td>
-                        <td>{{bill.democratic.not_voting}}</td>
-                        <td>{{bill.democratic.majority_position}}</td>
-                    </tr>
-                    <tr>
-                        <td>I</td>
-                        <td>{{bill.independent.yes}}</td>
-                        <td>{{bill.independent.no}}</td>
-                        <td>{{bill.independent.not_voting}}</td>
-                        <td>{{bill.independent.majority_position}}</td>
-                    </tr>
-                </table>
+            <md-content>
+                <h1>Title</h1>
+                <md-divider></md-divider>
+            </md-content>
+        </div>
+        <div layout="column" layout-gt-sm="row">
+                <div class="padded" flex-gt-sm="50">
+                        <h2>Upcoming Bills in the House</h2>
+                        <div ng-repeat="bill in vm.upcomingHouseBills[0].bills" layout-gt-xs="row">
+                            <div flex>
+                                <p>
+                                    <a ng-href="/#!/bill-detail/{{bill.bill_slug}}/{{bill.congress}}">
+                                        {{bill.bill_id | uppercase}}</a>
+                                </p>
+                                {{bill.description}}
+                            </div>
+                        </div><h2>Upcoming Bills in the Senate</h2>
+                        <div ng-repeat="bill in vm.upcomingSenateBills[0].bills" layout-gt-xs="row">
+                            <div flex>
+                                <p>
+                                    <a ng-href="/#!/bill-detail/{{bill.bill_slug}}/{{bill.congress}}">
+                                        {{bill.bill_id | uppercase}}</a>
+                                </p>
+                                {{bill.description}}
+                            </div>
+                        </div>
+                    </div>
+            <div class="padded" flex-gt-sm="50">
+                    <h2>Recent Votes</h2>
+                    <div ng-repeat="bill in vm.bills.votes" layout-gt-xs="row">
+                        <div flex="10">{{bill.date}}</div>
+                        <div flex="60">
+                            {{bill.description}}
+                            <p ng-show={{bill.bill}}>
+                                <a ng-href="/#!/votes/{{bill.congress}}/{{bill.chamber}}/{{bill.session}}/{{bill.roll_call}}">
+                                    {{bill.bill.bill_id | uppercase}}</a>
+                            </p>
+                            <p ng-show={{bill.nomination}}>
+                                <a ng-href="">{{bill.nomination.nomination_id | uppercase}}</a>
+                            </p>
+                        </div>
+                        <div flex="30">
+                            {{bill.result}}
+                        </div>
+                    </div>
             </div>
         </div>
-    </div>
-
 </div>

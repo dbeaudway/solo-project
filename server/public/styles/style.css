@@ -1,37 +1,42 @@
+body {
+    margin: 0 auto;
+    max-width: 1100px;
+    font-size: 14px;
+}
 .container {
     padding: 0px 40px;
     min-height: 85vh;
 }
 
+.padded {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
 h1 {
     font-weight: 300;
 }
-h2, h3 {
+
+h2, h3, h4, h5, h6 {
     font-weight: 200;
+    margin: 0px;
 }
+
+p, span {
+    margin: 5px 0px;
+}
+
 a {
     text-decoration: none;
 }
 
-footer {
-    /* position: absolute;
-    bottom: 0; */
-    width: 100%;
-    height: 20px;
-    background-color: rgba(0,0,0, .1);
+a:visited {
+    color: #1c0dee
 }
 
-#hero {
-    height: 80vh;
-    width: 100%;
-    background-image: url('../../styles/images/districts.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
-}
 
 video {
-    box-shadow: 0px 2px 2px rgba(0,0,0,.64);
+    border: 1px solid rgba(0, 0, 0, .24);   
     margin: 5px 0px;
 }
 
@@ -42,10 +47,12 @@ video {
 
 .list-group{
     border: 1px solid rgba(0, 0, 0, .24);
-    margin-bottom: 10px;
-}
-.md-subheader-inner{
-    border-bottom: 1px solid rgba(0,0,0,.2)
+    box-shadow: 1px 1px 1px rgba(0,0,0,.24);
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    margin: 5px 0px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 table{
@@ -59,4 +66,51 @@ table{
 td{
     border: 1px solid rgba(0,0,0,0.1);
     margin: 0px 0px;
+}
+
+.commentContainer{
+    box-shadow: 1px 1px 1px rgba(0,0,0,.24);
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, .24);   
+    padding: 5px;
+    margin: 5px 0px;
+}
+
+.comment-list{
+    padding: 5px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.24);
+    border: 1px solid rgba(0,0,0,.24);
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    margin: 5px 0px;
+}
+
+.comment{
+    border-bottom: 1px dotted rgba(0,0,0,.24);
+    margin-bottom: 5px 0px;
+}
+
+.commentProfileImage{
+    width:50px;
+}
+
+.comment-video{
+    max-width: 300px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,.24);
+}
+
+.home-map path:hover{
+    fill: rgba(0,0,0,0.44);
+    stroke: rgba(0,0,0,0.44);
+    cursor: pointer;
+    transition: all .3s;
+}
+
+textarea{
+    width:95%;
+    max-width: 95%;
+    border: 1px solid rgba(0,0,0,.1);
+    resize: none
 }

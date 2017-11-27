@@ -1,50 +1,64 @@
 app.service('UploadService', function($http){
     console.log('UploadService loaded');
     let self = this;
-    self.topicToUpload = {
-        user: '',
-        username: '',
-        title: '',
-        description: '',
-        tags: '',
-        date: '',
-        url: '',
-        includeVideo: '',
-        type: ''
-    };
+    // self.topicToUpload = {
+    //     user: '',
+    //     username: '',
+    //     title: '',
+    //     description: '',
+    //     tags: '',
+    //     date: '',
+    //     url: '',
+    //     includeVideo: '',
+    //     type: ''
+    // };
+    self.commentToAdd = {
+      user: '',
+      username: '',
+      userProfileImage: '',
+      billId: '',
+      congress: '',
+      comment: '',
+      position: '',
+      date: '',
+      url: '',
+      video: false,
+      type: ''
+  };
 
     //Amazon Upload Video Functionality Below
     //Initiate the file to send to Amazon
     self.uploadToAmazon = function(file, data){
-        self.topicToUpload.user = data.user;
-        self.topicToUpload.username = data.username;
-        self.topicToUpload.title = data.title;
-        self.topicToUpload.description = data.description;
-        self.topicToUpload.tags = data.tags;
-        self.topicToUpload.includeVideo = data.includeVideo;
-        self.topicToUpload.type = data.videoType;
-        getSignedRequest(file, self.topicToUpload);
+        self.commentToAdd.user = data.user;
+        self.commentToAdd.username = data.username;
+        self.commentToAdd.billId = data.billId;
+        self.commentToAdd.congress = data.congress;
+        self.commentToAdd.comment = data.comment;
+        self.commentToAdd.position = data.position;
+        self.commentToAdd.video = data.video;
+        self.commentToAdd.type = 'comment';
+        getSignedRequest(file, self.commentToAdd);
     }
 
-    self.uploadImageToAmazon = function(file, data){
-        self.topicToUpload.user = data.user;
-        self.topicToUpload.username = data.username;
-        self.topicToUpload.title = file.name;
-        self.topicToUpload.type = 'image';
-        getSignedRequest(file);
-    }
+    // self.uploadImageToAmazon = function(file, data){
+    //     self.topicToUpload.user = data.user;
+    //     self.topicToUpload.username = data.username;
+    //     self.topicToUpload.title = file.name;
+    //     self.topicToUpload.type = 'image';
+    //     getSignedRequest(file);
+    // }
     
     //Get the signed request to receive permission to submit to Amazon
     function getSignedRequest(file, data){
         const xhr = new XMLHttpRequest();
         // xhr.open('GET', `/sign-s3?user=${self.topicToUpload.username}&file-type=${self.topicToUpload.type}&file-name=${self.topicToUpload.title}`);
-        xhr.open('GET', `/sign-s3?file-name=${self.topicToUpload.username}/${self.topicToUpload.type}/${self.topicToUpload.title}`);
+        xhr.open('GET', `/sign-s3?file-name=${self.commentToAdd.username}/${self.commentToAdd.type}/${self.commentToAdd.congress}/${self.commentToAdd.billId}}`);
         xhr.onreadystatechange = () => {
           if(xhr.readyState === 4){
             if(xhr.status === 200){
               const response = JSON.parse(xhr.responseText);
-              self.topicToUpload.url = response.url;
-              console.log(self.topicToUpload.url);
+              self.commentToAdd.url = response.url;
+              console.log(self.commentToAdd.url);
               uploadFile(file, response.signedRequest, response.url);
             }
             else{
@@ -62,10 +76,10 @@ app.service('UploadService', function($http){
           if(xhr.readyState === 4){
             if(xhr.status === 200){
               //Submit record to Mongo database
-              if(self.topicToUpload.type === 'image'){
+              if(self.commentToAdd.type === 'image'){
                 self.submitImage();
-              } else{
-                self.submitTopic();
+              } else if(self.commentToAdd.type === 'comment'){
+                self.postComment();
               }
             }
             else{
@@ -77,25 +91,39 @@ app.service('UploadService', function($http){
     }
 
       //Following successful Amazon upload, add submission to database
-      self.submitTopic = function() {
-        self.topicToUpload.date = new Date();
-        $http.post('/topic', self.topicToUpload).then(function (response){
-            console.log('Successful upload to database');
-            self.topicToUpload = '';
-        }).catch(function(error){
-            console.log('Upload to database failed')
-        })
-    }
+    //   self.submitTopic = function() {
+    //     self.topicToUpload.date = new Date();
+    //     $http.post('/topic', self.topicToUpload).then(function (response){
+    //         console.log('Successful upload to database');
+    //         self.topicToUpload = '';
+    //     }).catch(function(error){
+    //         console.log('Upload to database failed')
+    //     })
+    // }
 
     //Following successful Amazon upload, add image to users profile
-    self.submitImage = function() {
-        console.log('Topic to upload:', self.topicToUpload);
-        self.topicToUpload.date = new Date();
-        $http.put('/user/image/' + self.topicToUpload.user, self.topicToUpload).then(function(response){
-            console.log('Image added to users profile in database', response);
-        }).catch(function(error){
-            console.log('Error adding image to users profile in database', error);
-        })
-    }
+    // self.submitImage = function() {
+    //     console.log('Topic to upload:', self.topicToUpload);
+    //     self.topicToUpload.date = new Date();
+    //     $http.put('/user/image/' + self.topicToUpload.user, self.topicToUpload).then(function(response){
+    //         console.log('Image added to users profile in database', response);
+    //     }).catch(function(error){
+    //         console.log('Error adding image to users profile in database', error);
+    //     })
+    // }
+
+    //POST COMMENT TO A BILL PAGE
+    self.postComment = function() {
+      self.commentToAdd.date = new Date();
+      console.log('INFORMATION BEING SENT',self.commentToAdd);
+      $http.post('/bill-detail', self.commentToAdd).then(function(response){
+          console.log('Comment added', response);
+          //THIS SHOULD BE REPLACED WITH THE RETRIEVE COMMENTS FROM SERVICE self.retrieveComments();
+      }).catch(function(err){
+          console.log('Error posting comments:', err)
+      });
+  }
+
+    
 
 })
