@@ -1,21 +1,20 @@
-<div ng-cloak ng-show="vm.member" class="container">
-    {{vm.commentToAdd}}
+<div ng-cloak class="container">
     <div layout="column">
         <div>
-            <h1>{{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} ({{vm.member.current_party}}) - {{vm.member.roles[0].state}}</h1>
+            <h1>{{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} ({{vm.memberInfo.member.current_party}}) - {{vm.memberInfo.member.roles[0].state}}</h1>
         </div>
     </div>
     <div layout="row">
         <div flex-gt-sm="25" class="padded">
             <div layout="column">
                 <div flex>
-                    <img ng-src="https://theunitedstates.io/images/congress/225x275/{{vm.member.member_id}}.jpg" alt="Image of {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}">
+                    <img ng-src="https://theunitedstates.io/images/congress/225x275/{{vm.memberInfo.member.member_id}}.jpg" alt="Image of {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}">
                     <div class="list-group">
                         <div class="list-item">
                             <h3>Chamber</h3>
                             <div>
                                 <div layout="column">
-                                    <p>{{vm.member.roles[0].chamber}}</p>
+                                    <p>{{vm.memberInfo.member.roles[0].chamber}}</p>
                                 </div>
                             </div>
                         </div>
@@ -23,8 +22,8 @@
                             <h3>State</h3>
                             <div>
                                 <div layout="column">
-                                    <p>{{vm.member.roles[0].state}}
-                                        <span ng-show="vm.member.roles[0].district">- District {{vm.member.roles[0].district}}</span>
+                                    <p>{{vm.memberInfo.member.roles[0].state}}
+                                        <span ng-show="vm.memberInfo.member.roles[0].district">- District {{vm.memberInfo.member.roles[0].district}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -33,7 +32,7 @@
                             <h3>Role</h3>
                             <div>
                                 <div layout="column">
-                                    <p>{{vm.member.roles[0].title}}</p>
+                                    <p>{{vm.memberInfo.member.roles[0].title}}</p>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +40,7 @@
                             <h3>Current Term</h3>
                             <div>
                                 <div layout="column">
-                                    <p>Started on {{vm.member.roles[0].start_date| date}} and ends {{vm.member.roles[0].end_date
+                                    <p>Started on {{vm.memberInfo.member.roles[0].start_date| date}} and ends {{vm.memberInfo.member.roles[0].end_date
                                         | date}}.</p>
                                 </div>
                             </div>
@@ -50,16 +49,16 @@
                             <h3>Contact</h3>
                             <div>
                                 <div layout="column">
-                                    <a ng-href="{{vm.member.url}}">
+                                    <a ng-href="{{vm.memberInfo.member.url}}">
                                         <p>Website</p>
                                     </a>
-                                    <a ng-href="https://twitter.com/{{vm.member.twitter_account}}">
+                                    <a ng-href="https://twitter.com/{{vm.memberInfo.member.twitter_account}}">
                                         <p>Twitter</p>
                                     </a>
-                                    <a ng-href="https://facebook.com/{{vm.member.facebook_account}}">
+                                    <a ng-href="https://facebook.com/{{vm.memberInfo.member.facebook_account}}">
                                         <p>Facebook</p>
                                     </a>
-                                    <a ng-href="https://youtube.com/{{vm.member.youtube_account}}">
+                                    <a ng-href="https://youtube.com/{{vm.memberInfo.member.youtube_account}}">
                                         <p>Youtube</p>
                                     </a>
                                 </div>
@@ -72,23 +71,23 @@
         <div layout="column" flex="50">
             <div flex class="padded">
                 <p>
-                    {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} is currently a {{vm.member.roles[0].title
-                    | lowercase}} in the {{vm.member.roles[0].chamber}} serving for the state of {{vm.member.roles[0].state}}.
-                    {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}'s current term began on {{vm.member.roles[0].start_date
-                    | date}} and ends on {{vm.member.roles[0].end_date | date}}.
+                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} is currently a {{vm.memberInfo.member.roles[0].title
+                    | lowercase}} in the {{vm.memberInfo.member.roles[0].chamber}} serving for the state of {{vm.memberInfo.member.roles[0].state}}.
+                    {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}'s current term began on {{vm.memberInfo.member.roles[0].start_date
+                    | date}} and ends on {{vm.memberInfo.member.roles[0].end_date | date}}.
                 </p>
                 <h2>Activity</h2>
                 <p>
-                    {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} has sponsored {{vm.member.roles[0].bills_sponsored}}
-                    bills and co-sponsored {{vm.member.roles[0].bills_cosponsored}} bills in the current term.
+                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} has sponsored {{vm.memberInfo.member.roles[0].bills_sponsored}}
+                    bills and co-sponsored {{vm.memberInfo.member.roles[0].bills_cosponsored}} bills in the current term.
                 </p>
                 <h2>Voting Record</h2>
                 <p>
-                    {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} has voted along party lines
-                    {{vm.member.roles[0].votes_with_party_pct}}% of the time and has missed {{vm.member.roles[0].missed_votes_pct}}%
+                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} has voted along party lines
+                    {{vm.memberInfo.member.roles[0].votes_with_party_pct}}% of the time and has missed {{vm.memberInfo.member.roles[0].missed_votes_pct}}%
                     of votes.
                 </p>
-                <div class="commentContainer" >
+                <div class="commentContainer">
                         <div>
                             <div>
                                 <h2>Post Comment</h2>
@@ -113,12 +112,42 @@
                         </div>
                         <button ng-click="vm.validateSubmission()">Submit Comment</button>
                     </div>
+                    <div>
+                            <h2>Comments</h2>
+                            <div class="comment-list" ng-repeat="comment in vm.comments">
+                                <div class="comment-content" layout="row">
+                                    <div flex="10">
+                                            <a ng-href="/#!/user/{{comment.username}}"><img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo"></a>
+                                    </div>
+                                    <div layout="column" flex>
+                                        <div flex class="comment-user">
+                                            <span>Posted by <a ng-href="/#!/user/{{comment.username}}">{{comment.username}}</a> on {{comment.date | date}}</span>
+                                        </div>
+                                        <div layout="column">
+                                            <p>{{comment.comment}}</p>
+                                            <video class="comment-video" ng-show="comment.url" ng-src="{{comment.url}}" controls></video>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="comment-button-bar" layout="row">
+                                    <div flex>
+                                        This comment has {{comment.likes || 0}} likes.
+                                    </div>
+                                    <div flex>
+                                            <i class="material-icons comment-icon" ng-show="{{vm.userObject.id}}" ng-click="vm.likeComment(comment)">add</i>
+                                            <i class="material-icons comment-icon" ng-show="{{vm.userObject.id === comment.user}}" ng-click="vm.deleteComment(comment)">not_interested</i>
+                                    </div>
+                                </div>
+            
+                            </div>
+                        </div>
             </div>
         </div>
         <div flex>
             <h2>Recent Votes</h2>
             <div class="vote-list">
-                <div class="comment-list" ng-repeat="vote in vm.memberVotes.votes">
+                <div class="comment-list" ng-repeat="vote in vm.memberInfo.votes.votes">
                     <div class="comment-content" layout="row">
                         <div>
                             <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}</a>

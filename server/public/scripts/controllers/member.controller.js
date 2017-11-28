@@ -1,14 +1,11 @@
-app.controller('MemberController', function (UserService, UploadService, $http) {
+app.controller('MemberController', function (UserService, UploadService, CommentService, MemberService, $http) {
     console.log('MemberController loaded');
     var self = this;
     self.userObject = UserService.userObject;
-    self.member = '';
-    self.memberVotes = '';
+    self.memberInfo = MemberService.memberInfo;
+    self.comments = '';
+    self.billInfo = CommentService.billInfo;
     self.memberId = location.hash.split('/')[2];
-    self.memberCongress = '';
-    self.url = location.hash.split('/');
-    self.billId = self.url[2];
-    self.congress = self.url[3];
     self.commentToAdd = {
         user: self.userObject.id,
         username: self.userObject.userName,
@@ -25,36 +22,34 @@ app.controller('MemberController', function (UserService, UploadService, $http) 
     self.recording = false;
     self.videoAvailable = false;
 
-    $http.get('/member/' + self.memberId).then(function(response){
-        self.member = response.data.results[0];
-        self.commentToAdd.congress = response.data.results[0].roles[0].congress;
-        console.log('Member result:', self.member);        
-    }).catch(function(error){
-        console.log('Error', error);
-    })
+    //RETRIEVE MEMBER INFORMATION
+    MemberService.retrieveMember(self.memberId);
 
-    $http.get('/member/votes/' + self.memberId).then(function(response){
-        self.memberVotes = response.data.results[0];
-        console.log('Member votes:', self.memberVotes);
-    }).catch(function(error){
-        console.log('Error', error);
-    })
+    //RETRIEVE MEMBER VOTES
+    MemberService.retrieveMemberVotes(self.memberId);
 
+
+    //Validate whether the comment is a video or text response
+    self.validateSubmission = function() {
+        if(self.commentToAdd.video === true && self.videoAvailable === true){
+            console.log('Upload to amazon fired');
+            self.uploadToAmazon();
+        } else {
+            console.log('CommentService.postComment called');
+            self.postComment();
+        }
+    }
+    
      //POST COMMENT TO A MEMBER
-     self.postComment = function() {
+    self.postComment = function() {
         self.commentToAdd.date = new Date();
-        console.log('INFORMATION BEING SENT', self.commentToAdd);
-        $http.post('/comment', self.commentToAdd).then(function(response){
-            console.log('Comment added', response);
-            self.retrieveComments();
-        }).catch(function(err){
-            console.log('Error posting comments:', err)
-        });
+        CommentService.postComment(self.commentToAdd);
     }
 
     //RETRIEVE COMMENTS FOR MEMBER
     self.retrieveComments = function() {
         let route = `/comment/member/${self.memberId}/${self.memberCongress}`;
+        console.log('THIS IS THE CONGRESS', self.memberCongress);
         $http.get(route).then(function(response){
             console.log('Retrieved comments:', response);
             self.comments = response.data;
@@ -63,7 +58,10 @@ app.controller('MemberController', function (UserService, UploadService, $http) 
             console.log('Error retrieving comments:', err);
         })
     }
-    self.retrieveComments();
+    // self.retrieveComments = function() {
+    //     CommentService.retrieveComments();
+    // }
+    // self.retrieveComments();
 
     //LIKE A COMMENT
     self.likeComment = function(value) {

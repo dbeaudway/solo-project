@@ -1,21 +1,12 @@
 app.service('UploadService', function($http){
     console.log('UploadService loaded');
     let self = this;
-    // self.topicToUpload = {
-    //     user: '',
-    //     username: '',
-    //     title: '',
-    //     description: '',
-    //     tags: '',
-    //     date: '',
-    //     url: '',
-    //     includeVideo: '',
-    //     type: ''
-    // };
+
     self.commentToAdd = {
       user: '',
       username: '',
       userProfileImage: '',
+      member: '',
       billId: '',
       congress: '',
       comment: '',
@@ -113,7 +104,7 @@ app.service('UploadService', function($http){
 
     //POST COMMENT TO A BILL PAGE
     self.postComment = function() {
-      self.commentToAdd.date = new Date();
+      //self.commentToAdd.date = new Date();
       console.log('INFORMATION BEING SENT',self.commentToAdd);
       $http.post('/comment', self.commentToAdd).then(function(response){
           console.log('Comment added', response);

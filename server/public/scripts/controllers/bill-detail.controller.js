@@ -1,13 +1,12 @@
-app.controller('BillDetailController', function (UserService, UploadService, $http) {
+app.controller('BillDetailController', function (UserService, UploadService, CommentService, $http) {
     console.log('BillDetailController loaded');
     var self = this;
     self.userObject = UserService.userObject;
     self.bill = '';
     self.cosponsors = '';
-    self.comments = '';
-    self.url = location.hash.split('/');
-    self.billId = self.url[2];
-    self.congress = self.url[3];
+    self.comments = CommentService.comments;
+    self.billId = location.hash.split('/')[2];
+    self.congress = location.hash.split('/')[3];
     self.commentToAdd = {
         user: self.userObject.id,
         username: self.userObject.userName,
@@ -25,9 +24,7 @@ app.controller('BillDetailController', function (UserService, UploadService, $ht
     self.videoAvailable = false;
 
     //GET BILL DETAILS
-    let route = `/bill-detail/${self.billId}/${self.congress}`;
-    console.log(route);
-    $http.get(route).then(function(response){
+    $http.get(`/bill-detail/${self.billId}/${self.congress}`).then(function(response){
         self.bill = response.data.results[0];
         console.log('Bill details', self.bill);        
     }).catch(function(error){
@@ -35,60 +32,33 @@ app.controller('BillDetailController', function (UserService, UploadService, $ht
     })
 
     //GET BILL CO-SPONSORS
-    let route2 = `/bill-detail/cosponsors/${self.billId}/${self.congress}`;
-    $http.get(route2).then(function(response){
+    $http.get(`/bill-detail/cosponsors/${self.billId}/${self.congress}`).then(function(response){
         self.cosponsors = response.data.results[0];
         console.log('Cosponsors:', self.cosponsors);
     }).catch(function(error){
         console.log('Error', error);
     })
 
-    //POST COMMENT TO A BILL
+    //POST A COMMENT
     self.postComment = function() {
         self.commentToAdd.date = new Date();
-        console.log('INFORMATION BEING SENT',self.commentToAdd);
-        $http.post('/comment', self.commentToAdd).then(function(response){
-            console.log('Comment added', response);
-            self.retrieveComments();
-        }).catch(function(err){
-            console.log('Error posting comments:', err)
-        });
+        CommentService.postComment(self.commentToAdd, self.billId, self.congress);
     }
 
     //RETRIEVE COMMENTS FOR BILL
     self.retrieveComments = function() {
-        let route = `/comment/${self.billId}/${self.congress}`;
-        $http.get(route).then(function(response){
-            console.log('Retrieved comments:', response);
-            self.comments = response.data;
-            console.log('Comments:', self.comments);
-        }).catch(function(err){
-            console.log('Error retrieving comments:', err);
-        })
+        CommentService.retrieveComments(self.billId, self.congress);
     }
     self.retrieveComments();
 
-    //LIKE A COMMENT
-    self.likeComment = function(value) {
-        let comment = value;
-        $http.put('/comment', comment).then(function(response){
-            console.log('Liked a comment', response);
-            self.retrieveComments();
-        }).catch(function(error){
-            console.log('Error liking the comment');
-        })
+    //LIKE A BILL COMMENT
+    self.likeComment = function(value){
+        CommentService.likeComment(value);
     }
 
     //DELETE A COMMENT
-    self.deleteComment = function(value) {
-        let comment = value;
-        console.log(comment);
-        $http.put('/comment/delete', comment).then(function(response){
-            console.log('Deleted a comment', response);
-            self.retrieveComments();
-        }).catch(function(error){
-            console.log('Error deleting comment');
-        })
+    self.deleteComment = function(value){
+        CommentService.deleteComment(value);
     }
 
     //VIDEO RECORDING FUNCTIONALITY BELOW//
@@ -99,7 +69,7 @@ app.controller('BillDetailController', function (UserService, UploadService, $ht
             console.log('Upload to amazon fired');
             self.uploadToAmazon();
         } else {
-            console.log('UploadService.postComment called');
+            console.log('CommentService.postComment called');
             self.postComment();
         }
     }

@@ -12,7 +12,7 @@
     </div>
     <div layout="column" layout-gt-sm="row">
         <div class="padded" flex-gt-sm="75">
-            <div class="commentContainer" ng-show="{{vm.userObject.id}}">
+            <div class="commentContainer" ng-show="vm.userObject.id">
                 <div>
                     <div>
                         <h2>Post Comment</h2>
@@ -39,7 +39,7 @@
             </div>
             <div>
                 <h2>Comments</h2>
-                <div class="comment-list" ng-repeat="comment in vm.comments">
+                <div class="comment-list" ng-repeat="comment in vm.comments.data">
                     <div class="comment-content" layout="row">
                         <div flex="10">
                                 <a ng-href="/#!/user/{{comment.username}}"><img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo"></a>
@@ -60,8 +60,8 @@
                             This comment has {{comment.likes || 0}} likes.
                         </div>
                         <div flex>
-                                <i class="material-icons comment-icon" ng-show="{{vm.userObject.id}}" ng-click="vm.likeComment(comment)">add</i>
-                                <i class="material-icons comment-icon" ng-show="{{vm.userObject.id === comment.user}}" ng-click="vm.deleteComment(comment)">not_interested</i>
+                                <button ng-show="vm.userObject.id" ng-click="vm.likeComment(comment)">Like</button>
+                                <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
                         </div>
                     </div>
 
