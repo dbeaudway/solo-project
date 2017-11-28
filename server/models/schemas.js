@@ -23,6 +23,22 @@ var CommentSchema = new Schema({
     url: String
 });
 
+var BillCommentSchema = new Schema({ 
+    user: String, 
+    username: String, 
+    userProfileImage: String,
+    member: String, 
+    billId: String, 
+    congress: Number, 
+    comment: String, 
+    date: Date, 
+    position: String, 
+    likes: Number, 
+    url: String, 
+    video: Boolean 
+});
+
+
 module.exports = {
     topic: mongoose.model('Topic', TopicSchema, 'topics'),
     comment: mongoose.model('Comment', CommentSchema, 'comments')

@@ -1,16 +1,18 @@
 <div ng-cloak class="container">
-    <div layout="column">
+    <div>
         <h1>
             <a ng-href="{{vm.bill.govtrack_url}}">{{vm.bill.bill}}</a>
         </h1>
         <p>{{vm.bill.title}}</p>
         <br>
-        <h2>Bill Description</h2>
-        <p>{{vm.bill.summary}}</p>
+        <div ng-show="vm.bill.summary">
+            <h2>Bill Description</h2>
+            <p>{{vm.bill.summary}}</p>
+        </div>
     </div>
     <div layout="column" layout-gt-sm="row">
         <div class="padded" flex-gt-sm="75">
-            <div class="commentContainer">
+            <div class="commentContainer" ng-show="{{vm.userObject.id}}">
                 <div>
                     <div>
                         <h2>Post Comment</h2>
@@ -35,34 +37,41 @@
                 </div>
                 <button ng-click="vm.validateSubmission()">Submit Comment</button>
             </div>
-            <div class="comment-list">
+            <div>
                 <h2>Comments</h2>
-                <br>
-                <div class="comment" ng-repeat="comment in vm.comments" layout="row">
-                    <div flex="10">
-                        <img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo">
-                    </div>
-                    <div layout="column" flex>
-                        <div flex class="comment-user">
-                            <span>Posted by {{comment.username}} on {{comment.date | date}}</span>
+                <div class="comment-list" ng-repeat="comment in vm.comments">
+                    <div class="comment-content" layout="row">
+                        <div flex="10">
+                                <a ng-href="/#!/user/{{comment.username}}"><img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo"></a>
                         </div>
-                        <div layout="column">
-                            <p>{{comment.comment}}</p>
-                            <video class="comment-video" ng-show="comment.url" ng-src="{{comment.url}}" controls></video>
+                        <div layout="column" flex>
+                            <div flex class="comment-user">
+                                <span>Posted by <a ng-href="/#!/user/{{comment.username}}">{{comment.username}}</a> on {{comment.date | date}}</span>
+                            </div>
+                            <div layout="column">
+                                <p>{{comment.comment}}</p>
+                                <video class="comment-video" ng-show="comment.url" ng-src="{{comment.url}}" controls></video>
+                            </div>
                         </div>
                     </div>
-                    <div layout="column" layout-align="start center">
-                        <i class="material-icons comment-icon" ng-show="{{vm.userObject.id === comment.user}}" ng-click="vm.deleteComment(comment)">not_interested</i>
-                        {{comment.likes}}
-                        <i class="material-icons comment-icon" ng-show="{{vm.userObject.id}}" ng-click="vm.likeComment(comment)">add</i>
+
+                    <div class="comment-button-bar" layout="row">
+                        <div flex>
+                            This comment has {{comment.likes || 0}} likes.
+                        </div>
+                        <div flex>
+                                <i class="material-icons comment-icon" ng-show="{{vm.userObject.id}}" ng-click="vm.likeComment(comment)">add</i>
+                                <i class="material-icons comment-icon" ng-show="{{vm.userObject.id === comment.user}}" ng-click="vm.deleteComment(comment)">not_interested</i>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
         <div class="padded" flex-gt-sm="25">
             <div layout="column">
                 <div flex class="list-group">
-                    <div>
+                    <div class="list-item">
                         <h3>Subject</h3>
                         <div>
                             <div layout="column">
@@ -70,7 +79,7 @@
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div class="list-item">
                         <h3>Introduced</h3>
                         <div>
                             <div layout="column">
@@ -78,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div class="list-item">
                         <h3>Latest Major Action</h3>
                         <div>
                             <div layout="column">
@@ -86,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div class="list-item">
                         <h3>Bill Sponsor</h3>
                         <div>
                             <div layout="column">
@@ -96,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-show="vm.cosponsors.cosponsors[0]">
+                    <div class="list-item" ng-show="vm.cosponsors.cosponsors[0]">
                         <h3>Co-sponsors</h3>
                         <div ng-repeat="member in vm.cosponsors.cosponsors">
                             <div layout="column">

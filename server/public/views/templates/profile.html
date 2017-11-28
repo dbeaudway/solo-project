@@ -39,49 +39,4 @@
             </md-card-title>
         </md-card-content>
     </md-card>
-
-
-
-    <div layout="row">
-        <div flex="50">
-            <h3>Topics:</h3>
-            <md-card ng-repeat="topic in vm.topics">
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">{{topic.title}}</span>
-                        <span class="md-subhead">{{topic.description}}</span>
-                        <span class="md-subhead">{{topic.tags}}</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media">
-                            <video ng-show="topic.url" ng-src={{topic.url}} style="max-width: 150px; height: auto; border-radius: 5px;"></video>
-                        </div>
-                    </md-card-title-media>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end end">
-                    <md-button href="/#!/topic/{{topic._id}}">View Topic</md-button>
-                </md-card-actions>
-            </md-card>
-        </div>
-        <div flex>
-            <h3>Responses:</h3>
-            <md-card ng-repeat="comment in vm.comments">
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">{{comment.topicTitle}}</span>
-                        <span class="md-subhead">{{comment.comment}}</span>
-                        <span class="md-subhead">{{comment.date | date}}</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media">
-                            <video ng-show="topic.url" ng-src={{topic.url}} style="max-width: 150px; height: auto; border-radius: 5px;"></video>
-                        </div>
-                    </md-card-title-media>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end end">
-                    <md-button href="/#!/topic/{{topic._id}}">View Topic</md-button>
-                </md-card-actions>
-            </md-card>
-        </div>
-    </div>
 </div>

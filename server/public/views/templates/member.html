@@ -1,7 +1,8 @@
 <div ng-cloak ng-show="vm.member" class="container">
+    {{vm.commentToAdd}}
     <div layout="column">
         <div>
-            <h1>{{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} ({{vm.member.current_party}})</h1>
+            <h1>{{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} ({{vm.member.current_party}}) - {{vm.member.roles[0].state}}</h1>
         </div>
     </div>
     <div layout="row">
@@ -10,64 +11,66 @@
                 <div flex>
                     <img ng-src="https://theunitedstates.io/images/congress/225x275/{{vm.member.member_id}}.jpg" alt="Image of {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}}">
                     <div class="list-group">
-                        <h3>Chamber</h3>
-                        <div>
-                            <div layout="column">
-                                <p>{{vm.member.roles[0].chamber}}</p>
+                        <div class="list-item">
+                            <h3>Chamber</h3>
+                            <div>
+                                <div layout="column">
+                                    <p>{{vm.member.roles[0].chamber}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="list-group">
-                        <h3>State</h3>
-                        <div>
-                            <div layout="column">
-                                <p>{{vm.member.roles[0].state}}
-                                    <span ng-show="vm.member.roles[0].district">- District {{vm.member.roles[0].district}}</span>
-                                </p>
+                        <div class="list-item">
+                            <h3>State</h3>
+                            <div>
+                                <div layout="column">
+                                    <p>{{vm.member.roles[0].state}}
+                                        <span ng-show="vm.member.roles[0].district">- District {{vm.member.roles[0].district}}</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="list-group">
-                        <h3>Role</h3>
-                        <div>
-                            <div layout="column">
-                                <p>{{vm.member.roles[0].title}}</p>
+                        <div class="list-item">
+                            <h3>Role</h3>
+                            <div>
+                                <div layout="column">
+                                    <p>{{vm.member.roles[0].title}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="list-group">
-                        <h3>Current Term</h3>
-                        <div>
-                            <div layout="column">
-                                <p>Started on {{vm.member.roles[0].start_date| date}} and ends {{vm.member.roles[0].end_date
-                                    | date}}.</p>
+                        <div class="list-item">
+                            <h3>Current Term</h3>
+                            <div>
+                                <div layout="column">
+                                    <p>Started on {{vm.member.roles[0].start_date| date}} and ends {{vm.member.roles[0].end_date
+                                        | date}}.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="list-group">
-                        <h3>Contact</h3>
-                        <div>
-                            <div layout="column">
-                                <a ng-href="{{vm.member.url}}">
-                                    <p>Website</p>
-                                </a>
-                                <a ng-href="https://twitter.com/{{vm.member.twitter_account}}">
-                                    <p>Twitter</p>
-                                </a>
-                                <a ng-href="https://facebook.com/{{vm.member.facebook_account}}">
-                                    <p>Facebook</p>
-                                </a>
-                                <a ng-href="https://youtube.com/{{vm.member.youtube_account}}">
-                                    <p>Youtube</p>
-                                </a>
+                        <div class="list-item">
+                            <h3>Contact</h3>
+                            <div>
+                                <div layout="column">
+                                    <a ng-href="{{vm.member.url}}">
+                                        <p>Website</p>
+                                    </a>
+                                    <a ng-href="https://twitter.com/{{vm.member.twitter_account}}">
+                                        <p>Twitter</p>
+                                    </a>
+                                    <a ng-href="https://facebook.com/{{vm.member.facebook_account}}">
+                                        <p>Facebook</p>
+                                    </a>
+                                    <a ng-href="https://youtube.com/{{vm.member.youtube_account}}">
+                                        <p>Youtube</p>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div layout="column" layout-gt-sm="row">
-            <div flex-gt-sm="75" class="padded">
+        <div layout="column" flex="50">
+            <div flex class="padded">
                 <p>
                     {{vm.member.title}} {{vm.member.first_name}} {{vm.member.middle_name}} {{vm.member.last_name}} is currently a {{vm.member.roles[0].title
                     | lowercase}} in the {{vm.member.roles[0].chamber}} serving for the state of {{vm.member.roles[0].state}}.
@@ -85,17 +88,58 @@
                     {{vm.member.roles[0].votes_with_party_pct}}% of the time and has missed {{vm.member.roles[0].missed_votes_pct}}%
                     of votes.
                 </p>
-                <h2>Recent Votes</h2>
-                <div ng-repeat="vote in vm.memberVotes.votes">
-                    <p ng-show="vote.description">
-                        <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}:</a> {{vote.description}}</p>
-                    <p>Voted "{{vote.position}}" and the bill {{vote.result | lowercase}}</p>
-                    <p>
-                        <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">View the bill</a>
-                        <a href="/#!/votes/{{vote.congress}}/{{vote.chamber}}/{{vote.session}}/{{vote.roll_call}}">View the Vote</a>
-                    </p>
+                <div class="commentContainer" >
+                        <div>
+                            <div>
+                                <h2>Post Comment</h2>
+                                <textarea ng-model="vm.commentToAdd.comment" rows="3" placeholder="Share your opinion..."></textarea>
+                                <div ng-show="vm.commentToAdd.video">
+                                    <video class="comment-video" id="videoPlayer" autoplay muted></video>
+                                    <div layout="row" layout-align="start start">
+                                        <button ng-click="vm.startRecording()" ng-show="!vm.recording" id="record">Record</button>
+                                        <button ng-click="vm.stopRecording()" ng-show="vm.recording" id="stop">Stop Recording</button>
+                                        <button ng-click="vm.play()" id="play" ng-disabled="!vm.videoAvailable">Play</button>
+                                    </div>
+                                </div>
+                                <div layout="row" layout-align="start center" ng-model="vm.commentToAdd.position">
+                                    <input type="radio" name="position" value="support">Support
+                                    <input type="radio" name="position" value="oppose">Oppose
+                                    <input type="radio" name="position" value="undecided">Undecided
+                                </div>
+                            </div>
+                            <md-switch class="md-primary" md-no-ink aria-label="Include Video Switch" ng-model="vm.commentToAdd.video" ng-click="vm.accessCamera()">
+                                Include Video
+                            </md-switch>
+                        </div>
+                        <button ng-click="vm.validateSubmission()">Submit Comment</button>
+                    </div>
+            </div>
+        </div>
+        <div flex>
+            <h2>Recent Votes</h2>
+            <div class="vote-list">
+                <div class="comment-list" ng-repeat="vote in vm.memberVotes.votes">
+                    <div class="comment-content" layout="row">
+                        <div>
+                            <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}</a>
+                            <p ng-show="vote.description">{{vote.description}}</p>
+                        </div>
+                    </div>
+                    <div class="comment-button-bar" layout="row">
+                        <div flex>
+                            <p>
+                                <strong>Voted</strong>
+                            </p>
+                            {{vote.position}}
+                        </div>
+                        <div flex>
+                            <p>
+                                <strong>Result</strong>
+                            </p>
+                            <a href="/#!/votes/{{vote.congress}}/{{vote.chamber}}/{{vote.session}}/{{vote.roll_call}}">{{vote.result}}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

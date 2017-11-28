@@ -51,8 +51,7 @@ app.service('UploadService', function($http){
     //Get the signed request to receive permission to submit to Amazon
     function getSignedRequest(file, data){
         const xhr = new XMLHttpRequest();
-        // xhr.open('GET', `/sign-s3?user=${self.topicToUpload.username}&file-type=${self.topicToUpload.type}&file-name=${self.topicToUpload.title}`);
-        xhr.open('GET', `/sign-s3?file-name=${self.commentToAdd.username}/${self.commentToAdd.type}/${self.commentToAdd.congress}/${self.commentToAdd.billId}}`);
+        xhr.open('GET', `/sign-s3?file-name=${self.commentToAdd.billId}/${self.commentToAdd.congress}/${self.commentToAdd.type}/${self.commentToAdd.username}`);
         xhr.onreadystatechange = () => {
           if(xhr.readyState === 4){
             if(xhr.status === 200){
@@ -116,7 +115,7 @@ app.service('UploadService', function($http){
     self.postComment = function() {
       self.commentToAdd.date = new Date();
       console.log('INFORMATION BEING SENT',self.commentToAdd);
-      $http.post('/bill-detail', self.commentToAdd).then(function(response){
+      $http.post('/comment', self.commentToAdd).then(function(response){
           console.log('Comment added', response);
           //THIS SHOULD BE REPLACED WITH THE RETRIEVE COMMENTS FROM SERVICE self.retrieveComments();
       }).catch(function(err){

@@ -3,9 +3,14 @@ body {
     max-width: 1100px;
     font-size: 14px;
 }
+
+img {
+    border-radius: 3px;
+    width:100%;
+}
+
 .container {
-    padding: 0px 40px;
-    min-height: 85vh;
+    padding: 0px 10px;
 }
 
 .padded {
@@ -23,7 +28,7 @@ h2, h3, h4, h5, h6 {
 }
 
 p, span {
-    margin: 5px 0px;
+    margin: 0px 0px;
 }
 
 a {
@@ -46,13 +51,18 @@ video {
 
 
 .list-group{
-    border: 1px solid rgba(0, 0, 0, .24);
-    box-shadow: 1px 1px 1px rgba(0,0,0,.24);
+    /* border: 1px solid rgba(0, 0, 0, .24); */
+    box-shadow: 0px 1px 1px rgba(0,0,0,.24);
     border-radius: 3px;
     background-color: #FFFFFF;
     margin: 5px 0px;
     padding-left: 5px;
     padding-right: 5px;
+}
+
+.list-item {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    padding: 10px 0px;
 }
 
 table{
@@ -68,27 +78,26 @@ td{
     margin: 0px 0px;
 }
 
+.vote-list{
+    padding:5px;
+}
+
+
 .commentContainer{
-    box-shadow: 1px 1px 1px rgba(0,0,0,.24);
+    box-shadow: 0px 1px 1px rgba(0,0,0,.24);
     border-radius: 3px;
     background-color: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, .24);   
+    /* border: 1px solid rgba(0, 0, 0, .24);    */
     padding: 5px;
     margin: 5px 0px;
 }
 
 .comment-list{
-    padding: 5px;
-    box-shadow: 1px 1px 1px rgba(0,0,0,.24);
-    border: 1px solid rgba(0,0,0,.24);
+    box-shadow: 0px 1px 1px rgba(0,0,0,.24);
+    /* border: 1px solid rgba(0,0,0,.24); */
     border-radius: 3px;
     background-color: #FFFFFF;
     margin: 5px 0px;
-}
-
-.comment{
-    border-bottom: 1px dotted rgba(0,0,0,.24);
-    margin-bottom: 5px 0px;
 }
 
 .commentProfileImage{
@@ -98,7 +107,17 @@ td{
 .comment-video{
     max-width: 300px;
     border-radius: 3px;
-    border: 1px solid rgba(0,0,0,.24);
+    /* border: 1px solid rgba(0,0,0,.24); */
+}
+
+.comment-content{
+    padding: 5px;
+}
+
+.comment-button-bar {
+    padding: 5px;
+    background-color: rgba(0,0,0,.05);
+    min-height:30px;
 }
 
 .home-map path:hover{

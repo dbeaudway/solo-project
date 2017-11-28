@@ -12,6 +12,7 @@ app.controller('BillDetailController', function (UserService, UploadService, $ht
         user: self.userObject.id,
         username: self.userObject.userName,
         userProfileImage: self.userObject.profileImage,
+        member: '',
         billId: self.billId,
         congress: self.congress,
         comment: '',
@@ -46,7 +47,7 @@ app.controller('BillDetailController', function (UserService, UploadService, $ht
     self.postComment = function() {
         self.commentToAdd.date = new Date();
         console.log('INFORMATION BEING SENT',self.commentToAdd);
-        $http.post('/bill-detail', self.commentToAdd).then(function(response){
+        $http.post('/comment', self.commentToAdd).then(function(response){
             console.log('Comment added', response);
             self.retrieveComments();
         }).catch(function(err){
@@ -56,7 +57,7 @@ app.controller('BillDetailController', function (UserService, UploadService, $ht
 
     //RETRIEVE COMMENTS FOR BILL
     self.retrieveComments = function() {
-        let route = `/bill-detail/comments/${self.billId}/${self.congress}`;
+        let route = `/comment/${self.billId}/${self.congress}`;
         $http.get(route).then(function(response){
             console.log('Retrieved comments:', response);
             self.comments = response.data;
@@ -67,10 +68,10 @@ app.controller('BillDetailController', function (UserService, UploadService, $ht
     }
     self.retrieveComments();
 
-    //LIKE A BILL COMMENT
+    //LIKE A COMMENT
     self.likeComment = function(value) {
         let comment = value;
-        $http.put('/bill-detail/comments/', comment).then(function(response){
+        $http.put('/comment', comment).then(function(response){
             console.log('Liked a comment', response);
             self.retrieveComments();
         }).catch(function(error){
@@ -78,11 +79,11 @@ app.controller('BillDetailController', function (UserService, UploadService, $ht
         })
     }
 
-    //DELETE A BILL COMMENT
+    //DELETE A COMMENT
     self.deleteComment = function(value) {
         let comment = value;
         console.log(comment);
-        $http.put('/bill-detail/comments/delete', comment).then(function(response){
+        $http.put('/comment/delete', comment).then(function(response){
             console.log('Deleted a comment', response);
             self.retrieveComments();
         }).catch(function(error){

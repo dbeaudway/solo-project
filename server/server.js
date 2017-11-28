@@ -12,11 +12,11 @@ var passport = require('./strategies/userStrategy');
 var session = require('express-session');
 
 //Route includes
-var comment = require('./routes/comment.js');
 var register = require('./routes/register.js');
 var member = require('./routes/member.js');
 var billdetail = require('./routes/bill-detail.js');
 var bill = require('./routes/bill.js');
+var comment = require('./routes/comment.js');
 var votes = require('./routes/votes.js');
 var user = require('./routes/user.js');
 var index = require('./routes/index');
@@ -72,9 +72,9 @@ app.get('/sign-s3', (req, res) => {
 });
 
 //Routes
-app.use('/comment', comment);
 app.use('/member', member);
 app.use('/bill-detail', billdetail);
+app.use('/comment', comment);
 app.use('/votes', votes);
 app.use('/bill', bill);
 app.use('/register', register);

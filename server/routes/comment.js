@@ -1,18 +1,20 @@
 var express = require('express');
 var router = express.Router();
+var axios = require('axios');
+var key = process.env.PROPUBLICA_KEY;
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var CommentSchema = new Schema({user: String, username: String, userProfileImage: String, topic: String, topicTitle: String, comment: String, tags: String, date: Date, url: String});
+var CommentSchema = new Schema({ user: String, username: String, userProfileImage: String, member: String, billId: String, congress: Number, comment: String, date: Date, position: String, likes: Number, url: String, video: Boolean });
 var Comment = mongoose.model('Comment', CommentSchema, 'comments');
 
 //USED TO POST COMMENT
-router.post('/', function(req, res){
-    if(req.isAuthenticated()){
-        if(req.user.id === req.body.user){
+router.post('/', function (req, res) {
+    if (req.isAuthenticated()) {
+        if (req.user.id === req.body.user) {
             console.log(req.body);
             var commentToAdd = new Comment(req.body);
-            commentToAdd.save(function(err, data){
-                if(err) {
+            commentToAdd.save(function (err, data) {
+                if (err) {
                     console.log(err);
                     res.sendStatus(500);
                 } else {
@@ -23,12 +25,44 @@ router.post('/', function(req, res){
     }
 })
 
-//USED TO RETRIEVE COMMENTS BY USER - USER PAGE
-router.get('/user/:username', function(req, res){
-    let username = req.params.username;
-    console.log('THIS IS THE USERS ID', username);
-    Comment.find({"username": username}, function(err, foundComments){
-        if(err) {
+//USED TO LIKE A COMMENT
+router.put('/', function (req, res) {
+    let comment = req.body;
+    if (req.isAuthenticated()) {
+        Comment.findByIdAndUpdate({ "_id": comment._id }, { $inc: { likes: 1 } }, function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            } else {
+                res.sendStatus(200);
+            }
+        })
+    }
+})
+
+//USED TO DELETE A COMMENT
+router.put('/delete', function (req, res) {
+    let comment = req.body;
+    if (req.isAuthenticated()) {
+        if (req.user.id === comment.user) {
+            Comment.findByIdAndRemove({ "_id": comment._id }, function (err, data) {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            })
+        }
+    }
+})
+
+//USED TO RETRIEVE A COMMENTS FOR A BILL
+router.get('/:bill/:congress', function (req, res) {
+    let bill = req.params.bill;
+    let congress = req.params.congress;
+    Comment.find({ "billId": bill, "congress": congress }, function (err, foundComments) {
+        if (err) {
             console.log(err);
             res.sendStatus(500);
         } else {
@@ -38,12 +72,12 @@ router.get('/user/:username', function(req, res){
     })
 })
 
-//USED TO RETRIEVE A COMMENTS FOR A TOPIC - TOPICS PAGE
-router.get('/:id', function(req, res){
-    let topicId = req.params.id;
-    console.log('THIS IS THE COMMENT ID', topicId);
-    Comment.find({"topic": topicId}, function(err, foundComments){
-        if(err) {
+//USED TO RETRIEVE A COMMENTS FOR A Member
+router.get('/member/:member/:congress', function (req, res) {
+    let member = req.params.member;
+    let congress = req.params.congress;
+    Comment.find({ "member": member, "congress": congress }, function (err, foundComments) {
+        if (err) {
             console.log(err);
             res.sendStatus(500);
         } else {
