@@ -114,7 +114,7 @@
                     </div>
                     <div>
                             <h2>Comments</h2>
-                            <div class="comment-list" ng-repeat="comment in vm.comments">
+                            <div class="comment-list" ng-repeat="comment in vm.comments.data">
                                 <div class="comment-content" layout="row">
                                     <div flex="10">
                                             <a ng-href="/#!/user/{{comment.username}}"><img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo"></a>

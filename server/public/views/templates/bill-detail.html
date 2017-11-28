@@ -1,13 +1,13 @@
 <div ng-cloak class="container">
     <div>
         <h1>
-            <a ng-href="{{vm.bill.govtrack_url}}">{{vm.bill.bill}}</a>
+            <a ng-href="{{vm.bill.bill.govtrack_url}}">{{vm.bill.bill.bill}}</a>
         </h1>
         <p>{{vm.bill.title}}</p>
         <br>
-        <div ng-show="vm.bill.summary">
+        <div ng-show="vm.bill.bill.summary">
             <h2>Bill Description</h2>
-            <p>{{vm.bill.summary}}</p>
+            <p>{{vm.bill.bill.summary}}</p>
         </div>
     </div>
     <div layout="column" layout-gt-sm="row">
@@ -75,7 +75,7 @@
                         <h3>Subject</h3>
                         <div>
                             <div layout="column">
-                                <p>{{vm.bill.primary_subject}}</p>
+                                <p>{{vm.bill.bill.primary_subject}}</p>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                         <h3>Introduced</h3>
                         <div>
                             <div layout="column">
-                                <p>{{vm.bill.introduced_date | date}}</p>
+                                <p>{{vm.bill.bill.introduced_date | date}}</p>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                         <h3>Latest Major Action</h3>
                         <div>
                             <div layout="column">
-                                <p>{{vm.bill.latest_major_action_date | date}}: {{vm.bill.latest_major_action}}</p>
+                                <p>{{vm.bill.bill.latest_major_action_date | date}}: {{vm.bill.bill.latest_major_action}}</p>
                             </div>
                         </div>
                     </div>
@@ -99,13 +99,13 @@
                         <h3>Bill Sponsor</h3>
                         <div>
                             <div layout="column">
-                                <a ng-href="/#!/member/{{vm.bill.sponsor_id}}">
-                                    <p>{{vm.bill.sponsor_title}} {{vm.bill.sponsor}}, {{vm.bill.sponsor_party}} - {{vm.bill.sponsor_state}}</p>
+                                <a ng-href="/#!/member/{{vm.bill.bill.sponsor_id}}">
+                                    <p>{{vm.bill.bill.sponsor_title}} {{vm.bill.bill.sponsor}}, {{vm.bill.bill.sponsor_party}} - {{vm.bill.bill.sponsor_state}}</p>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="list-item" ng-show="vm.cosponsors.cosponsors[0]">
+                    <div class="list-item" ng-show="vm.bill.cosponsors.cosponsors[0]">
                         <h3>Co-sponsors</h3>
                         <div ng-repeat="member in vm.cosponsors.cosponsors">
                             <div layout="column">

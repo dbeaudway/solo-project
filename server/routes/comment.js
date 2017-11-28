@@ -58,7 +58,7 @@ router.put('/delete', function (req, res) {
 })
 
 //USED TO RETRIEVE A COMMENTS FOR A BILL
-router.get('/:bill/:congress', function (req, res) {
+router.get('/bill/:bill/:congress', function (req, res) {
     let bill = req.params.bill;
     let congress = req.params.congress;
     Comment.find({ "billId": bill, "congress": congress }, function (err, foundComments) {
@@ -73,10 +73,9 @@ router.get('/:bill/:congress', function (req, res) {
 })
 
 //USED TO RETRIEVE A COMMENTS FOR A Member
-router.get('/member/:member/:congress', function (req, res) {
+router.get('/member/:member', function (req, res) {
     let member = req.params.member;
-    let congress = req.params.congress;
-    Comment.find({ "member": member, "congress": congress }, function (err, foundComments) {
+    Comment.find({"member": member}, function (err, foundComments) {
         if (err) {
             console.log(err);
             res.sendStatus(500);

@@ -1,19 +1,16 @@
-app.controller('BillDetailController', function (UserService, UploadService, CommentService, $http) {
+app.controller('BillDetailController', function (UserService, UploadService, CommentService, BillService, $http) {
     console.log('BillDetailController loaded');
     var self = this;
     self.userObject = UserService.userObject;
-    self.bill = '';
-    self.cosponsors = '';
+    self.bill = BillService.data;
     self.comments = CommentService.comments;
-    self.billId = location.hash.split('/')[2];
-    self.congress = location.hash.split('/')[3];
     self.commentToAdd = {
         user: self.userObject.id,
         username: self.userObject.userName,
         userProfileImage: self.userObject.profileImage,
         member: '',
-        billId: self.billId,
-        congress: self.congress,
+        billId: '',
+        congress: '',
         comment: '',
         position: '',
         date: '',
@@ -24,30 +21,20 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
     self.videoAvailable = false;
 
     //GET BILL DETAILS
-    $http.get(`/bill-detail/${self.billId}/${self.congress}`).then(function(response){
-        self.bill = response.data.results[0];
-        console.log('Bill details', self.bill);        
-    }).catch(function(error){
-        console.log('Error', error);
-    })
+    BillService.getBill();
 
     //GET BILL CO-SPONSORS
-    $http.get(`/bill-detail/cosponsors/${self.billId}/${self.congress}`).then(function(response){
-        self.cosponsors = response.data.results[0];
-        console.log('Cosponsors:', self.cosponsors);
-    }).catch(function(error){
-        console.log('Error', error);
-    })
+    BillService.getCosponsors();
 
     //POST A COMMENT
     self.postComment = function() {
         self.commentToAdd.date = new Date();
-        CommentService.postComment(self.commentToAdd, self.billId, self.congress);
+        CommentService.postBillComment(self.commentToAdd);
     }
 
     //RETRIEVE COMMENTS FOR BILL
     self.retrieveComments = function() {
-        CommentService.retrieveComments(self.billId, self.congress);
+        CommentService.retrieveBillComments();
     }
     self.retrieveComments();
 

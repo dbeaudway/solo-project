@@ -3,9 +3,8 @@ app.controller('MemberController', function (UserService, UploadService, Comment
     var self = this;
     self.userObject = UserService.userObject;
     self.memberInfo = MemberService.memberInfo;
-    self.comments = '';
+    self.comments = CommentService.comments;
     self.billInfo = CommentService.billInfo;
-    self.memberId = location.hash.split('/')[2];
     self.commentToAdd = {
         user: self.userObject.id,
         username: self.userObject.userName,
@@ -23,7 +22,7 @@ app.controller('MemberController', function (UserService, UploadService, Comment
     self.videoAvailable = false;
 
     //RETRIEVE MEMBER INFORMATION
-    MemberService.retrieveMember(self.memberId);
+    MemberService.retrieveMember();
 
     //RETRIEVE MEMBER VOTES
     MemberService.retrieveMemberVotes(self.memberId);
@@ -43,25 +42,14 @@ app.controller('MemberController', function (UserService, UploadService, Comment
      //POST COMMENT TO A MEMBER
     self.postComment = function() {
         self.commentToAdd.date = new Date();
-        CommentService.postComment(self.commentToAdd);
+        CommentService.postMemberComment(self.commentToAdd);
     }
 
     //RETRIEVE COMMENTS FOR MEMBER
     self.retrieveComments = function() {
-        let route = `/comment/member/${self.memberId}/${self.memberCongress}`;
-        console.log('THIS IS THE CONGRESS', self.memberCongress);
-        $http.get(route).then(function(response){
-            console.log('Retrieved comments:', response);
-            self.comments = response.data;
-            console.log('Comments:', self.comments);
-        }).catch(function(err){
-            console.log('Error retrieving comments:', err);
-        })
+        CommentService.retrieveMemberComments();
     }
-    // self.retrieveComments = function() {
-    //     CommentService.retrieveComments();
-    // }
-    // self.retrieveComments();
+    self.retrieveComments();
 
     //LIKE A COMMENT
     self.likeComment = function(value) {

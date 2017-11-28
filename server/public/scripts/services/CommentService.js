@@ -1,44 +1,77 @@
 app.service('CommentService', function ($http) {
     console.log('CommentService loaded');
     let self = this;
+    self.billId = '';
+    self.congress = '';
+    self.memberId = '';
     self.comments = {
         data: ''
     };
 
+    //Set page variables
+    self.setVariables = function() {
+        if(location.hash.indexOf('member') > 0){
+            self.billId = '';
+            self.memberId = location.hash.split('/')[2];
+            self.congress = '';
+        } else if(location.hash.indexOf('bill-detail') > 0){
+            self.billId = location.hash.split('/')[2];
+            self.memberId = '';
+            self.congress = location.hash.split('/')[3];
+        }
+    }
+
     //POST COMMENT TO A BILL
-    self.postComment = function(value, billId, congress) {
+    self.postBillComment = function(value) {
         self.commentToAdd = value;
+        self.commentToAdd.billId = self.billId;
+        self.commentToAdd.congress = self.congress;
         $http.post('/comment', self.commentToAdd).then(function(response){
             console.log('Comment added', response);
-            self.retrieveComments(billId, congress);
+            self.retrieveBillComments();
+        }).catch(function(err){
+            console.log('Error posting comments:', err)
+        });
+    }
+
+    //POST COMMENT TO A MEMBER
+    self.postMemberComment = function(value) {
+        self.commentToAdd = value;
+        self.commentToAdd.member = self.memberId;
+        self.commentToAdd.congress = self.congress;
+        console.log('COMMENT BEING ADDED', self.commentToAdd);
+        $http.post('/comment', self.commentToAdd).then(function(response){
+            console.log('Comment added', response);
+            self.retrieveMemberComments();
         }).catch(function(err){
             console.log('Error posting comments:', err)
         });
     }
 
     //RETRIEVE COMMENTS FOR BILL
-    self.retrieveComments = function(billId, congress) {
-        let route = '/comment/' + billId + '/' + congress;
+    self.retrieveBillComments = function() {
+        self.setVariables();
+        let route = '/comment/bill/' + self.billId + '/' + self.congress;
         $http.get(route).then(function(response){
             self.comments.data = response.data;
             console.log('Comments:', self.comments.data);
         }).catch(function(err){
-            console.log('Error retrieving comments:', err);
+            console.log('Error retrieving bill comments:', err);
         })
     }
 
     //RETRIEVE COMMENTS FOR MEMBER
-    // self.retrieveMemberComments = function() {
-    //     let route = `/comment/member/${self.memberId}/${self.memberCongress}`;
-    //     console.log('THIS IS THE CONGRESS', self.memberCongress);
-    //     $http.get(route).then(function(response){
-    //         console.log('Retrieved comments:', response);
-    //         self.comments = response.data;
-    //         console.log('Comments:', self.comments);
-    //     }).catch(function(err){
-    //         console.log('Error retrieving comments:', err);
-    //     })
-    // }
+    self.retrieveMemberComments = function() {
+        self.setVariables();
+        let route = '/comment/member/' + self.memberId;
+        console.log('THIS IS THE ROUTE', route);
+        $http.get(route).then(function(response){
+            self.comments.data = response.data;
+            console.log('Comments:', self.comments.data);
+        }).catch(function(err){
+            console.log('Error retrieving member comments:', err);
+        })
+    }
 
     //LIKE A COMMENT
     self.likeComment = function(value) {
@@ -51,6 +84,7 @@ app.service('CommentService', function ($http) {
         })
     }
 
+    //DELETE A COMMENT
     self.deleteComment = function(value) {
         $http.put('/comment/delete', value).then(function(response){
             console.log('Deleted a comment', response);
