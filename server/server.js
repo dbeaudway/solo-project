@@ -22,8 +22,8 @@ var user = require('./routes/user.js');
 var index = require('./routes/index');
 
 //Body parser middleware
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 //Load index.html
 app.use(express.static('server/public'));

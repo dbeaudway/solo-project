@@ -28,14 +28,14 @@ app.controller('LoginController', function($http, $location, UserService) {
           if(response.data.username) {
             console.log('LoginController -- login -- success: ', response.data);
             // location works with SPA (ng-route)
-            $location.path('/home');
+            $location.path('/profile');
           } else {
             console.log('LoginController -- login -- failure: ', response);
-            self.message = "Wrong!!";
+            self.message = "Your credentials didn't match our records, please try again.";
           }
         },function(response){
           console.log('LoginController -- registerUser -- failure: ', response);
-          self.message = "Wrong!!";
+          self.message = "Your credentials didn't match our records, please try again.";
         });
       }
     };

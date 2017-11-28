@@ -19,7 +19,6 @@ app.service('MemberService', function ($http) {
         self.memberInfo.member = '';
         $http.get('/member/' + self.memberId).then(function (response) {
             self.memberInfo.member = response.data.results[0];
-            //self.commentToAdd.congress = response.data.results[0].roles[0].congress;
             self.memberInfo.congress = response.data.results[0].roles[0].congress;
             console.log('Member result:', self.memberInfo.member);
         }).catch(function (error) {

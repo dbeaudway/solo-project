@@ -1,6 +1,7 @@
-app.controller('HomeController', function ($http) {
+app.controller('HomeController', function (UserService, $http) {
     console.log('HomeController loaded');
     var self = this;
+    self.userObject = UserService.userObject;
     self.bills = '';
     self.upcomingHouseBills = '';
     self.upcomingSenateBills = '';

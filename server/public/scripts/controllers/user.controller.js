@@ -1,6 +1,7 @@
-app.controller('UserController', function ($http) {
+app.controller('UserController', function ($http, UserService) {
   console.log('UserController created');
   var self = this;
+  self.userObject = UserService.userObject;
   self.user = '';
   self.userName = location.hash.split('/')[2]; //THIS NEEDS TO BE UPDATED, NOT A SUSTAINABLE SOLUTION
 

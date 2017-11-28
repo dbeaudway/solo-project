@@ -105,9 +105,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="list-item" ng-show="vm.bill.cosponsors.cosponsors[0]">
+                    <div class="list-item" ng-show="vm.bill.cosponsors.cosponsors">
                         <h3>Co-sponsors</h3>
-                        <div ng-repeat="member in vm.cosponsors.cosponsors">
+                        <div ng-repeat="member in vm.bill.cosponsors.cosponsors">
                             <div layout="column">
                                 <a ng-href="/#!/member/{{member.cosponsor_id}}">
                                     <p>{{member.cosponsor_title}} {{member.name}}, {{member.cosponsor_party}} - {{member.cosponsor_state}}</p>

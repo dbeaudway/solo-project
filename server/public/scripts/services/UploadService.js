@@ -1,7 +1,6 @@
 app.service('UploadService', function($http){
     console.log('UploadService loaded');
     let self = this;
-
     self.commentToAdd = {
       user: '',
       username: '',

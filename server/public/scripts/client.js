@@ -5,7 +5,7 @@ var app = angular.module('app', ['ngRoute', 'ngMaterial', 'ngMessages']);
 app.config(function($routeProvider){
     $routeProvider.when('/home', {
         templateUrl: '../views/templates/home.html',
-        controller: 'HomeController as vm'
+        controller: 'HomeController as vm',
     }).when('/profile',{
         templateUrl: '../views/templates/profile.html',
         controller: 'ProfileController as vm',
@@ -34,7 +34,7 @@ app.config(function($routeProvider){
         controller: 'SearchController as vm',
     }).when('/register', {
         templateUrl: '../views/templates/register.html',
-        controller: 'LoginController as vm'
+        controller: 'LoginController as vm',
     }).when('/', {
         templateUrl: '../views/templates/home.html',
         controller: 'HomeController as vm'

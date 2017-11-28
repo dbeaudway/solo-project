@@ -27,7 +27,6 @@ app.service('CommentService', function ($http) {
         self.commentToAdd.billId = self.billId;
         self.commentToAdd.congress = self.congress;
         $http.post('/comment', self.commentToAdd).then(function(response){
-            console.log('Comment added', response);
             self.retrieveBillComments();
         }).catch(function(err){
             console.log('Error posting comments:', err)
@@ -39,7 +38,6 @@ app.service('CommentService', function ($http) {
         self.commentToAdd = value;
         self.commentToAdd.member = self.memberId;
         self.commentToAdd.congress = self.congress;
-        console.log('COMMENT BEING ADDED', self.commentToAdd);
         $http.post('/comment', self.commentToAdd).then(function(response){
             console.log('Comment added', response);
             self.retrieveMemberComments();
@@ -54,7 +52,6 @@ app.service('CommentService', function ($http) {
         let route = '/comment/bill/' + self.billId + '/' + self.congress;
         $http.get(route).then(function(response){
             self.comments.data = response.data;
-            console.log('Comments:', self.comments.data);
         }).catch(function(err){
             console.log('Error retrieving bill comments:', err);
         })
@@ -64,10 +61,8 @@ app.service('CommentService', function ($http) {
     self.retrieveMemberComments = function() {
         self.setVariables();
         let route = '/comment/member/' + self.memberId;
-        console.log('THIS IS THE ROUTE', route);
         $http.get(route).then(function(response){
             self.comments.data = response.data;
-            console.log('Comments:', self.comments.data);
         }).catch(function(err){
             console.log('Error retrieving member comments:', err);
         })
@@ -76,9 +71,13 @@ app.service('CommentService', function ($http) {
     //LIKE A COMMENT
     self.likeComment = function(value) {
         let comment = value;
+        console.log(comment);
         $http.put('/comment', comment).then(function(response){
-            console.log('Liked a comment', response);
-            self.retrieveComments();
+            if(self.memberId){
+                self.retrieveMemberComments();
+            } else {
+                self.retrieveBillComments();
+            }
         }).catch(function(error){
             console.log('Error liking the comment');
         })
@@ -87,8 +86,11 @@ app.service('CommentService', function ($http) {
     //DELETE A COMMENT
     self.deleteComment = function(value) {
         $http.put('/comment/delete', value).then(function(response){
-            console.log('Deleted a comment', response);
-            self.retrieveComments();
+            if(self.memberId){
+                self.retrieveMemberComments();
+            } else {
+                self.retrieveBillComments();
+            }
         }).catch(function(error){
             console.log('Error deleting comment');
         })

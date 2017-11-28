@@ -31,9 +31,10 @@ router.put('/', function (req, res) {
     if (req.isAuthenticated()) {
         Comment.findByIdAndUpdate({ "_id": comment._id }, { $inc: { likes: 1 } }, function (err, data) {
             if (err) {
-                console.log(err);
+                console.log('Like Comment Error',err);
                 res.sendStatus(500);
             } else {
+                console.log('Like Comment Success');
                 res.sendStatus(200);
             }
         })

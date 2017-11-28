@@ -1,7 +1,8 @@
 <div ng-cloak class="container">
     <div layout="column">
         <div>
-            <h1>{{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} ({{vm.memberInfo.member.current_party}}) - {{vm.memberInfo.member.roles[0].state}}</h1>
+            <h1>{{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} ({{vm.memberInfo.member.current_party}})
+                - {{vm.memberInfo.member.roles[0].state}}</h1>
         </div>
     </div>
     <div layout="row">
@@ -71,77 +72,82 @@
         <div layout="column" flex="50">
             <div flex class="padded">
                 <p>
-                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} is currently a {{vm.memberInfo.member.roles[0].title
-                    | lowercase}} in the {{vm.memberInfo.member.roles[0].chamber}} serving for the state of {{vm.memberInfo.member.roles[0].state}}.
-                    {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}'s current term began on {{vm.memberInfo.member.roles[0].start_date
+                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}
+                    is currently a {{vm.memberInfo.member.roles[0].title | lowercase}} in the {{vm.memberInfo.member.roles[0].chamber}}
+                    serving for the state of {{vm.memberInfo.member.roles[0].state}}. {{vm.memberInfo.member.first_name}}
+                    {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}'s current term began on {{vm.memberInfo.member.roles[0].start_date
                     | date}} and ends on {{vm.memberInfo.member.roles[0].end_date | date}}.
                 </p>
                 <h2>Activity</h2>
                 <p>
-                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} has sponsored {{vm.memberInfo.member.roles[0].bills_sponsored}}
-                    bills and co-sponsored {{vm.memberInfo.member.roles[0].bills_cosponsored}} bills in the current term.
+                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}
+                    has sponsored {{vm.memberInfo.member.roles[0].bills_sponsored}} bills and co-sponsored {{vm.memberInfo.member.roles[0].bills_cosponsored}}
+                    bills in the current term.
                 </p>
                 <h2>Voting Record</h2>
                 <p>
-                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} has voted along party lines
-                    {{vm.memberInfo.member.roles[0].votes_with_party_pct}}% of the time and has missed {{vm.memberInfo.member.roles[0].missed_votes_pct}}%
-                    of votes.
+                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}
+                    has voted along party lines {{vm.memberInfo.member.roles[0].votes_with_party_pct}}% of the time and has
+                    missed {{vm.memberInfo.member.roles[0].missed_votes_pct}}% of votes.
                 </p>
-                <div class="commentContainer">
-                        <div>
-                            <div>
-                                <h2>Post Comment</h2>
-                                <textarea ng-model="vm.commentToAdd.comment" rows="3" placeholder="Share your opinion..."></textarea>
-                                <div ng-show="vm.commentToAdd.video">
-                                    <video class="comment-video" id="videoPlayer" autoplay muted></video>
-                                    <div layout="row" layout-align="start start">
-                                        <button ng-click="vm.startRecording()" ng-show="!vm.recording" id="record">Record</button>
-                                        <button ng-click="vm.stopRecording()" ng-show="vm.recording" id="stop">Stop Recording</button>
-                                        <button ng-click="vm.play()" id="play" ng-disabled="!vm.videoAvailable">Play</button>
-                                    </div>
-                                </div>
-                                <div layout="row" layout-align="start center" ng-model="vm.commentToAdd.position">
-                                    <input type="radio" name="position" value="support">Support
-                                    <input type="radio" name="position" value="oppose">Oppose
-                                    <input type="radio" name="position" value="undecided">Undecided
-                                </div>
-                            </div>
-                            <md-switch class="md-primary" md-no-ink aria-label="Include Video Switch" ng-model="vm.commentToAdd.video" ng-click="vm.accessCamera()">
-                                Include Video
-                            </md-switch>
-                        </div>
-                        <button ng-click="vm.validateSubmission()">Submit Comment</button>
-                    </div>
+                <div ng-show="vm.userObject.userName" class="commentContainer">
                     <div>
-                            <h2>Comments</h2>
-                            <div class="comment-list" ng-repeat="comment in vm.comments.data">
-                                <div class="comment-content" layout="row">
-                                    <div flex="10">
-                                            <a ng-href="/#!/user/{{comment.username}}"><img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo"></a>
-                                    </div>
-                                    <div layout="column" flex>
-                                        <div flex class="comment-user">
-                                            <span>Posted by <a ng-href="/#!/user/{{comment.username}}">{{comment.username}}</a> on {{comment.date | date}}</span>
-                                        </div>
-                                        <div layout="column">
-                                            <p>{{comment.comment}}</p>
-                                            <video class="comment-video" ng-show="comment.url" ng-src="{{comment.url}}" controls></video>
-                                        </div>
-                                    </div>
+                        <div>
+                            <h2>Post Comment</h2>
+                            <textarea ng-model="vm.commentToAdd.comment" rows="3" placeholder="Share your opinion..."></textarea>
+                            <div ng-show="vm.commentToAdd.video">
+                                <video class="comment-video" id="videoPlayer" autoplay muted></video>
+                                <div layout="row" layout-align="start start">
+                                    <button ng-click="vm.startRecording()" ng-show="!vm.recording" id="record">Record</button>
+                                    <button ng-click="vm.stopRecording()" ng-show="vm.recording" id="stop">Stop Recording</button>
+                                    <button ng-click="vm.play()" id="play" ng-disabled="!vm.videoAvailable">Play</button>
                                 </div>
-            
-                                <div class="comment-button-bar" layout="row">
-                                    <div flex>
-                                        This comment has {{comment.likes || 0}} likes.
-                                    </div>
-                                    <div flex>
-                                            <i class="material-icons comment-icon" ng-show="{{vm.userObject.id}}" ng-click="vm.likeComment(comment)">add</i>
-                                            <i class="material-icons comment-icon" ng-show="{{vm.userObject.id === comment.user}}" ng-click="vm.deleteComment(comment)">not_interested</i>
-                                    </div>
-                                </div>
-            
+                            </div>
+                            <div layout="row" layout-align="start center" ng-model="vm.commentToAdd.position">
+                                <input type="radio" name="position" value="support">Support
+                                <input type="radio" name="position" value="oppose">Oppose
+                                <input type="radio" name="position" value="undecided">Undecided
                             </div>
                         </div>
+                        <md-switch class="md-primary" md-no-ink aria-label="Include Video Switch" ng-model="vm.commentToAdd.video" ng-click="vm.accessCamera()">
+                            Include Video
+                        </md-switch>
+                    </div>
+                    <button ng-click="vm.validateSubmission()">Submit Comment</button>
+                </div>
+                <div>
+                    <h2>Comments</h2>
+                    <div class="comment-list" ng-repeat="comment in vm.comments.data">
+                        <div class="comment-content" layout="row">
+                            <div flex="10">
+                                <a ng-href="/#!/user/{{comment.username}}">
+                                    <img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo">
+                                </a>
+                            </div>
+                            <div layout="column" flex>
+                                <div flex class="comment-user">
+                                    <span>Posted by
+                                        <a ng-href="/#!/user/{{comment.username}}">{{comment.username}}</a> on {{comment.date | date}}</span>
+                                </div>
+                                <div layout="column">
+                                    <p>{{comment.comment}}</p>
+                                    <video class="comment-video" ng-show="comment.url" ng-src="{{comment.url}}" controls></video>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-button-bar" layout="row">
+                            <div flex>
+                                This comment has {{comment.likes || 0}} likes.
+                            </div>
+                            <div flex>
+                                <button ng-show="vm.userObject.id" ng-click="vm.likeComment(comment)">Like</button>
+                                <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
         <div flex>
