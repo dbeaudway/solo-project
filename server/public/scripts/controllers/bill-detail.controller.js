@@ -5,8 +5,6 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
     self.bill = BillService.data;
     self.comments = CommentService.comments;
     self.setComment = function () {
-        // let test = self.userObject;
-        // console.log('TESTING:', test);
         self.commentToAdd = {
             user: self.userObject.id,
             username: self.userObject.userName,
@@ -23,6 +21,7 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
     self.setComment();
     self.video = VideoService.video;
     self.stream = false;
+    self.offset = 0;
 
     //GET BILL DETAILS
     BillService.getBill();
@@ -39,7 +38,7 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
 
     //RETRIEVE COMMENTS FOR BILL
     self.retrieveComments = function () {
-        CommentService.retrieveBillComments();
+        CommentService.retrieveBillComments(self.offset);
     }
     self.retrieveComments();
 
@@ -133,8 +132,10 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
     
     document.addEventListener("scroll", function (event) {
         if (getDocHeight() == getScrollXY()[1] + window.innerHeight) {
-                if(self.comments.offset < self.comments.limit){
-                    self.retrieveComments();
+                if(self.offset < self.comments.limit){
+                    self.offset += 10;
+                    CommentService.appendBillComments(self.offset);
+                    console.log('CONTROLLER, offset:', self.offset, 'limit:', self.comments.limit);
                 }
         }
     });

@@ -4,7 +4,7 @@ var axios = require('axios');
 var key = process.env.PROPUBLICA_KEY;
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var CommentSchema = new Schema({ user: String, username: String, userProfileImage: String, member: String, billId: String, congress: Number, comment: String, date: Date, position: String, likes: Number, url: String});
+var CommentSchema = new Schema({ user: String, username: String, userProfileImage: String, member: String, billId: String, congress: Number, comment: String, date: Date, position: String, likes: Number, url: String });
 var Comment = mongoose.model('Comment', CommentSchema, 'comments');
 
 //USED TO POST COMMENT
@@ -31,7 +31,7 @@ router.put('/', function (req, res) {
     if (req.isAuthenticated()) {
         Comment.findByIdAndUpdate({ "_id": comment._id }, { $inc: { likes: 1 } }, function (err, data) {
             if (err) {
-                console.log('Like Comment Error',err);
+                console.log('Like Comment Error', err);
                 res.sendStatus(500);
             } else {
                 console.log('Like Comment Success');
@@ -64,10 +64,10 @@ router.get('/bill/:bill/:congress', function (req, res) {
     let congress = req.params.congress;
     let offset = parseInt(req.query.offset);
     let total = '';
-    Comment.find({ "billId": bill, "congress": congress }).count(function(err, count){
+    Comment.find({ "billId": bill, "congress": congress }).count(function (err, count) {
         console.log("Number of docs:", count)
         total = count;
-    }).then(Comment.find({ "billId": bill, "congress": congress }, null, {skip: offset, limit: 5, sort: {"date": -1}}, function (err, foundComments) {
+    }).then(Comment.find({ "billId": bill, "congress": congress }, null, { skip: offset, limit: 10, sort: { "date": -1 } }, function (err, foundComments) {
         if (err) {
             console.log(err);
             res.sendStatus(500);
@@ -79,21 +79,29 @@ router.get('/bill/:bill/:congress', function (req, res) {
             res.send(data);
         }
     })
-)
+        )
 })
 
 //USED TO RETRIEVE A COMMENTS FOR A MEMBER
 router.get('/member/:member', function (req, res) {
     let member = req.params.member;
-    Comment.find({"member": member}, function (err, foundComments) {
+    let offset = parseInt(req.query.offset);
+    let total = '';
+    Comment.find({ "member": member }).count(function (err, count) {
+        total = count;
+    }).then(Comment.find({ "member": member }, null, { skip: offset, limit: 10, sort: { "date": -1 } }, function (err, foundComments) {
         if (err) {
             console.log(err);
             res.sendStatus(500);
         } else {
-            console.log(foundComments);
-            res.send(foundComments);
+            let data = {
+                comments: foundComments,
+                results: total
+            }
+            res.send(data);
         }
     })
+        )
 })
 
 module.exports = router;

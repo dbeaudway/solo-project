@@ -6,7 +6,6 @@ app.service('CommentService', function ($http, UserService) {
     self.memberId = '';
     self.comments = {
         data: [],
-        offset: 0,
         limit: ''
     };
 
@@ -50,28 +49,52 @@ app.service('CommentService', function ($http, UserService) {
     }
 
     //RETRIEVE COMMENTS FOR BILL
-    self.retrieveBillComments = function() {
+    self.retrieveBillComments = function(value) {
         self.setVariables();
-        let route = '/comment/bill/' + self.billId + '/' + self.congress + '?offset=' + self.comments.offset;
+        let route = '/comment/bill/' + self.billId + '/' + self.congress + '?offset=' + value;
+        $http.get(route).then(function(response){
+            self.comments.data = response.data.comments;
+            self.comments.limit = response.data.results;
+        }).catch(function(err){
+            console.log('Error retrieving bill comments:', err);
+        })
+    }
+    
+    //APPEND COMMENTS FOR BILL
+    self.appendBillComments = function(value) {
+        let route = '/comment/bill/' + self.billId + '/' + self.congress + '?offset=' + value;
         $http.get(route).then(function(response){
             response.data.comments.forEach(function(comment){
                 self.comments.data.push(comment);
             });
             self.comments.limit = response.data.results;
-            self.comments.offset += 5;
         }).catch(function(err){
             console.log('Error retrieving bill comments:', err);
         })
     }
 
     //RETRIEVE COMMENTS FOR MEMBER
-    self.retrieveMemberComments = function() {
+    self.retrieveMemberComments = function(value) {
         self.setVariables();
-        let route = '/comment/member/' + self.memberId;
+        let route = '/comment/member/' + self.memberId + '?offset=' + value;
         $http.get(route).then(function(response){
-            self.comments.data = response.data;
+            self.comments.data = response.data.comments;
+            self.comments.limit = response.data.results;
         }).catch(function(err){
             console.log('Error retrieving member comments:', err);
+        })
+    }
+
+    //APPEND COMMENTS FOR BILL
+    self.appendMemberComments = function(value) {
+        let route = '/comment/member/' + self.memberId + '?offset=' + value;
+        $http.get(route).then(function(response){
+            response.data.comments.forEach(function(comment){
+                self.comments.data.push(comment);
+            });
+            self.comments.limit = response.data.results;
+        }).catch(function(err){
+            console.log('Error retrieving bill comments:', err);
         })
     }
 
@@ -102,5 +125,6 @@ app.service('CommentService', function ($http, UserService) {
             console.log('Error deleting comment');
         })
     }
+
 
 })
