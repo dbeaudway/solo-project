@@ -1,15 +1,16 @@
 app.service('VideoService', function($http){
     console.log('VideoService loaded');
     let self = this;
-    self.video = {
-        recording: false,
-        videoAvailable: false,
-        recordedBlobs: ''
+    self.video = {};
+    self.setVideo = function() {
+        self.video.recording = false;
+        self.video.videoAvailable = false;
+        self.video.recordedBlobs = '';
     }
+    self.setVideo();
  
     //VIDEO RECORDING FUNCTIONALITY BELOW//
     self.accessCamera = function(){
-        console.log('fired');
         navigator.mediaDevices.getUserMedia({audio: true, video: true}).
         then(handleSuccess).catch(handleError);
     }
@@ -114,7 +115,8 @@ app.service('VideoService', function($http){
         self.video.recording = false;
         self.video.videoAvailable = true;
         recordButton.disabled = false;
-        mediaRecorder.stop();
+        window.stream.getTracks()[0].stop()
+        window.stream.getTracks()[1].stop()
         console.log('Recorded Blobs: ', self.video.recordedBlobs);
     }
 
@@ -123,8 +125,4 @@ app.service('VideoService', function($http){
         videoPlayer.src = window.URL.createObjectURL(superBuffer);
     }
 
-    self.uploadToAmazon = function(){
-        self.blob = new Blob(self.video.recordedBlobs, {type: 'video/webm'});
-        UploadService.uploadToAmazon(self.blob, self.commentToAdd);
-    }
 })

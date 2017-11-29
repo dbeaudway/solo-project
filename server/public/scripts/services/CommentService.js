@@ -1,4 +1,4 @@
-app.service('CommentService', function ($http) {
+app.service('CommentService', function ($http, UserService) {
     console.log('CommentService loaded');
     let self = this;
     self.billId = '';
@@ -27,7 +27,7 @@ app.service('CommentService', function ($http) {
         self.commentToAdd.billId = self.billId;
         self.commentToAdd.congress = self.congress;
         self.commentToAdd.date = new Date();
-        $http.post('/comment', self.commentToAdd).then(function(response){
+        return $http.post('/comment', self.commentToAdd).then(function(response){
             self.retrieveBillComments();
         }).catch(function(err){
             console.log('Error posting comments:', err)
@@ -40,8 +40,7 @@ app.service('CommentService', function ($http) {
         self.commentToAdd.member = self.memberId;
         self.commentToAdd.congress = self.congress;
         self.commentToAdd.date = new Date();
-        $http.post('/comment', self.commentToAdd).then(function(response){
-            console.log('Comment added', response);
+        return $http.post('/comment', self.commentToAdd).then(function(response){
             self.retrieveMemberComments();
         }).catch(function(err){
             console.log('Error posting comments:', err)

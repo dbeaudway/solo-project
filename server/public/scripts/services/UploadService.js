@@ -2,6 +2,16 @@ app.service('UploadService', function (CommentService, $http) {
   console.log('UploadService loaded');
   let self = this;
 
+  //Generate random string to create unique video files
+  function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4();
+  }
+
   // ----------------------Amazon Video Upload Below----------------------//
   //Initiate the file to send to Amazon
   self.uploadToAmazon = function (file, data) {
@@ -24,11 +34,12 @@ app.service('UploadService', function (CommentService, $http) {
 
   //Get the signed request to receive permission to submit to Amazon
   function getSignedRequest(file, data) {
+    let uniqueId = guid();
     const xhr = new XMLHttpRequest();
     if (location.hash.indexOf('member') > 0) {
-      xhr.open('GET', `/sign-s3?file-name=members/${self.commentToAdd.memberId}/${self.commentToAdd.user}`);
+      xhr.open('GET', `/sign-s3?file-name=members/${self.commentToAdd.memberId}/${self.commentToAdd.user}/${uniqueId}`);
     } else if(location.hash.indexOf('bill-detail') > 0){
-      xhr.open('GET', `/sign-s3?file-name=bills/${self.commentToAdd.billId}/${self.commentToAdd.congress}/${self.commentToAdd.user}`);
+      xhr.open('GET', `/sign-s3?file-name=bills/${self.commentToAdd.billId}/${self.commentToAdd.congress}/${self.commentToAdd.user}/${uniqueId}`);
     }
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
@@ -77,7 +88,9 @@ app.service('UploadService', function (CommentService, $http) {
 
   //Get the signed request to receive permission to submit to Amazon
   function getSignedImageRequest(file, data) {
+  
     const xhr = new XMLHttpRequest();
+    let uniqueId
     xhr.open('GET', `/sign-s3?file-name=profiles/${data.user}/${data.type}/${data.title}`);
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {

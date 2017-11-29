@@ -4,19 +4,25 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
     self.userObject = UserService.userObject;
     self.bill = BillService.data;
     self.comments = CommentService.comments;
-    self.commentToAdd = {
-        user: self.userObject.id,
-        username: self.userObject.userName,
-        userProfileImage: self.userObject.profileImage,
-        member: '',
-        billId: '',
-        congress: '',
-        comment: '',
-        position: '',
-        date: '',
-        url: '',
+    self.setComment = function () {
+        // let test = self.userObject;
+        // console.log('TESTING:', test);
+        self.commentToAdd = {
+            user: self.userObject.id,
+            username: self.userObject.userName,
+            userProfileImage: self.userObject.profileImage,
+            member: '',
+            billId: '',
+            congress: '',
+            comment: '',
+            position: '',
+            date: '',
+            url: '',
+        }
     };
+    self.setComment();
     self.video = VideoService.video;
+    self.stream = false;
 
     //GET BILL DETAILS
     BillService.getBill();
@@ -25,33 +31,40 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
     BillService.getCosponsors();
 
     //POST A COMMENT
-    self.postComment = function() {
-        CommentService.postBillComment(self.commentToAdd);
+    self.postComment = function () {
+        CommentService.postBillComment(self.commentToAdd).then(function () {
+            self.setComment();
+        })
     }
 
     //RETRIEVE COMMENTS FOR BILL
-    self.retrieveComments = function() {
+    self.retrieveComments = function () {
         CommentService.retrieveBillComments();
     }
     self.retrieveComments();
 
     //LIKE A BILL COMMENT
-    self.likeComment = function(value){
+    self.likeComment = function (value) {
         CommentService.likeComment(value);
     }
 
     //DELETE A COMMENT
-    self.deleteComment = function(value){
+    self.deleteComment = function (value) {
         CommentService.deleteComment(value);
     }
 
     //VIDEO RECORDING FUNCTIONALITY BELOW//
 
     //CHECK IF COMMENT CONTAINS A VIDEO
-    self.validateSubmission = function() {
-        if(self.video.videoAvailable === true){
+    self.validateSubmission = function () {
+        self.commentToAdd.user = self.userObject.id;
+        self.commentToAdd.username = self.userObject.userName;
+        self.commentToAdd.userProfileImage = self.userObject.profileImage;
+        if (self.video.videoAvailable === true) {
             console.log('Upload to amazon fired');
             self.uploadToAmazon();
+            self.setComment();
+            VideoService.setVideo();
         } else {
             console.log('CommentService.postComment called');
             self.postComment();
@@ -59,28 +72,34 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
     }
 
     //UPLOAD RECORDED VIDEO TO AMAZON S3
-    self.uploadToAmazon = function(){
-        self.blob = new Blob(self.video.recordedBlobs, {type: 'video/webm'});
+    self.uploadToAmazon = function () {
+        self.blob = new Blob(self.video.recordedBlobs, { type: 'video/webm' });
         UploadService.uploadToAmazon(self.blob, self.commentToAdd);
     }
 
     //REQUEST DEVICE CAMERA PERMISSIONS
-    self.accessCamera = function(){
-        VideoService.accessCamera();
+    self.accessCamera = function () {
+        if(self.stream === false){
+            self.stream = !self.stream;
+            VideoService.accessCamera();
+        } else {
+            window.stream.getTracks()[0].stop();
+            window.stream.getTracks()[1].stop();
+        }
     }
 
     //START RECORDING
-    self.startRecording = function(){
+    self.startRecording = function () {
         VideoService.startRecording();
     }
 
     //STOP RECORDING
-    self.stopRecording = function() {
+    self.stopRecording = function () {
         VideoService.stopRecording();
     }
 
     //PLAY RECORDED VIDEO
-    self.play = function() {
+    self.play = function () {
         VideoService.play();
     }
 
