@@ -21,6 +21,7 @@ app.service('BillService', function ($http) {
     self.getBill = function() {
         self.setVariables();
         $http.get(`/bill-detail/${self.data.billId}/${self.data.congress}`).then(function(response){
+            console.log('This is the bill:', response);
             self.data.bill = response.data.results[0];
             console.log('Bill details', self.data.bill);        
         }).catch(function(error){
@@ -32,6 +33,7 @@ app.service('BillService', function ($http) {
     self.getCosponsors = function() {
         self.setVariables();
         $http.get(`/bill-detail/cosponsors/${self.data.billId}/${self.data.congress}`).then(function(response){
+            console.log('These are the cosponsors:', response);
             self.data.cosponsors = response.data.results[0];
             console.log('Cosponsors:', self.data.cosponsors);
         }).catch(function(error){

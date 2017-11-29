@@ -89,6 +89,16 @@
                         </div>
                     </div>
                     <div class="list-item">
+                            <h3>Latest Vote</h3>
+                            <div>
+                                <div layout="column">
+                                    <a ng-href="/#!/votes/{{vm.bill.bill.congress}}/{{vm.bill.bill.votes[0].chamber}}/1/{{vm.bill.bill.votes[0].roll_call}}">
+                                        <p>{{vm.bill.bill.votes[0].question}}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="list-item">
                         <h3>Latest Major Action</h3>
                         <div>
                             <div layout="column">

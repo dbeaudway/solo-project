@@ -7,6 +7,7 @@ app.factory('UserService', function($http, $location){
     // Used when the service is created.
     function checkUser() {
       $http.get('/user').then(function(response) {
+        console.log('CHECKING USER', response);
         if(response.data.username) {
             // user has a current session on the server
             userObject.userName = response.data.username;

@@ -19,8 +19,6 @@ app.service('UploadService', function (CommentService, $http) {
       self.commentToAdd.congress = location.hash.split('/')[3];
       self.commentToAdd.type = 'bill-comment';
     }
-
-    console.log('UPLOAD SERVICE COMMENTTOADD:', self.commentToAdd);
     getSignedRequest(file, self.commentToAdd);
   }
 
@@ -38,7 +36,6 @@ app.service('UploadService', function (CommentService, $http) {
           const response = JSON.parse(xhr.responseText);
           self.commentToAdd.url = response.url;
           uploadFile(file, response.signedRequest, response.url);
-          console.log('COMMENT TO ADD FROM SERVICE', self.commentToAdd);
         }
         else {
           alert('Could not get signed URL.');
