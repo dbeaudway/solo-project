@@ -8,7 +8,7 @@ app.service('CommentService', function ($http) {
         data: ''
     };
 
-    //Set page variables
+    //SET PAGE VARIABLES THAT DETERMINES WHETHER MEMBER OR BILL COMMENT
     self.setVariables = function() {
         if(location.hash.indexOf('member') > 0){
             self.billId = '';
@@ -26,6 +26,7 @@ app.service('CommentService', function ($http) {
         self.commentToAdd = value;
         self.commentToAdd.billId = self.billId;
         self.commentToAdd.congress = self.congress;
+        self.commentToAdd.date = new Date();
         $http.post('/comment', self.commentToAdd).then(function(response){
             self.retrieveBillComments();
         }).catch(function(err){
@@ -38,6 +39,7 @@ app.service('CommentService', function ($http) {
         self.commentToAdd = value;
         self.commentToAdd.member = self.memberId;
         self.commentToAdd.congress = self.congress;
+        self.commentToAdd.date = new Date();
         $http.post('/comment', self.commentToAdd).then(function(response){
             console.log('Comment added', response);
             self.retrieveMemberComments();

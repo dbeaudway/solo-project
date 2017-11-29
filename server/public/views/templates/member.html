@@ -98,15 +98,15 @@
                             <div ng-show="vm.commentToAdd.video">
                                 <video class="comment-video" id="videoPlayer" autoplay muted></video>
                                 <div layout="row" layout-align="start start">
-                                    <button ng-click="vm.startRecording()" ng-show="!vm.recording" id="record">Record</button>
-                                    <button ng-click="vm.stopRecording()" ng-show="vm.recording" id="stop">Stop Recording</button>
-                                    <button ng-click="vm.play()" id="play" ng-disabled="!vm.videoAvailable">Play</button>
+                                    <button ng-click="vm.startRecording()" ng-show="!vm.video.recording" id="record">Record</button>
+                                    <button ng-click="vm.stopRecording()" ng-show="vm.video.recording" id="stop">Stop Recording</button>
+                                    <button ng-click="vm.play()" id="play" ng-disabled="!vm.video.videoAvailable">Play</button>
                                 </div>
                             </div>
-                            <div layout="row" layout-align="start center" ng-model="vm.commentToAdd.position">
-                                <input type="radio" name="position" value="support">Support
-                                <input type="radio" name="position" value="oppose">Oppose
-                                <input type="radio" name="position" value="undecided">Undecided
+                            <div layout="row" layout-align="start center">
+                                <input type="radio" ng-model="vm.commentToAdd.position" name="position" value="support">Support
+                                <input type="radio" ng-model="vm.commentToAdd.position" name="position" value="oppose">Oppose
+                                <input type="radio" ng-model="vm.commentToAdd.position" name="position" value="undecided">Undecided
                             </div>
                         </div>
                         <md-switch class="md-primary" md-no-ink aria-label="Include Video Switch" ng-model="vm.commentToAdd.video" ng-click="vm.accessCamera()">

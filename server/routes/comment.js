@@ -4,7 +4,7 @@ var axios = require('axios');
 var key = process.env.PROPUBLICA_KEY;
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var CommentSchema = new Schema({ user: String, username: String, userProfileImage: String, member: String, billId: String, congress: Number, comment: String, date: Date, position: String, likes: Number, url: String, video: Boolean });
+var CommentSchema = new Schema({ user: String, username: String, userProfileImage: String, member: String, billId: String, congress: Number, comment: String, date: Date, position: String, likes: Number, url: String});
 var Comment = mongoose.model('Comment', CommentSchema, 'comments');
 
 //USED TO POST COMMENT
@@ -73,7 +73,7 @@ router.get('/bill/:bill/:congress', function (req, res) {
     })
 })
 
-//USED TO RETRIEVE A COMMENTS FOR A Member
+//USED TO RETRIEVE A COMMENTS FOR A MEMBER
 router.get('/member/:member', function (req, res) {
     let member = req.params.member;
     Comment.find({"member": member}, function (err, foundComments) {

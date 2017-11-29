@@ -1,4 +1,4 @@
-app.controller('MemberController', function (UserService, UploadService, CommentService, MemberService, $http) {
+app.controller('MemberController', function (UserService, UploadService, CommentService, MemberService, VideoService, $http) {
     console.log('MemberController loaded');
     var self = this;
     self.userObject = UserService.userObject;
@@ -16,31 +16,17 @@ app.controller('MemberController', function (UserService, UploadService, Comment
         position: '',
         date: '',
         url: '',
-        video: false
     };
-    self.recording = false;
-    self.videoAvailable = false;
+    self.video = VideoService.video;
 
     //RETRIEVE MEMBER INFORMATION
     MemberService.retrieveMember();
 
     //RETRIEVE MEMBER VOTES
     MemberService.retrieveMemberVotes(self.memberId);
-
-    //Validate whether the comment is a video or text response
-    self.validateSubmission = function() {
-        if(self.commentToAdd.video === true && self.videoAvailable === true){
-            console.log('Upload to amazon fired');
-            self.uploadToAmazon();
-        } else {
-            console.log('CommentService.postComment called');
-            self.postComment();
-        }
-    }
     
      //POST COMMENT TO A MEMBER
     self.postComment = function() {
-        self.commentToAdd.date = new Date();
         CommentService.postMemberComment(self.commentToAdd);
     }
 
@@ -58,6 +44,43 @@ app.controller('MemberController', function (UserService, UploadService, Comment
     //DELETE A COMMENT
     self.deleteComment = function(value) {
         CommentService.deleteComment(value);
+    }
+
+    //CHECK IF COMMENT CONTAINS A VIDEO
+    self.validateSubmission = function() {
+        if(self.video.videoAvailable === true){
+            console.log('Upload to amazon fired');
+            self.uploadToAmazon();
+        } else {
+            console.log('CommentService.postComment called');
+            self.postComment();
+        }
+    }
+
+    //UPLOAD RECORDED VIDEO TO AMAZON S3
+    self.uploadToAmazon = function(){
+        self.blob = new Blob(self.video.recordedBlobs, {type: 'video/webm'});
+        UploadService.uploadToAmazon(self.blob, self.commentToAdd);
+    }
+
+    //REQUEST DEVICE CAMERA PERMISSIONS
+    self.accessCamera = function(){
+        VideoService.accessCamera();
+    }
+
+    //START RECORDING
+    self.startRecording = function(){
+        VideoService.startRecording();
+    }
+
+    //STOP RECORDING
+    self.stopRecording = function() {
+        VideoService.stopRecording();
+    }
+
+    //PLAY RECORDED VIDEO
+    self.play = function() {
+        VideoService.play();
     }
 
 })
