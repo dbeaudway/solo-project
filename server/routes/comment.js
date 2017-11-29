@@ -62,15 +62,24 @@ router.put('/delete', function (req, res) {
 router.get('/bill/:bill/:congress', function (req, res) {
     let bill = req.params.bill;
     let congress = req.params.congress;
-    Comment.find({ "billId": bill, "congress": congress }, function (err, foundComments) {
+    let offset = parseInt(req.query.offset);
+    let total = '';
+    Comment.find({ "billId": bill, "congress": congress }).count(function(err, count){
+        console.log("Number of docs:", count)
+        total = count;
+    }).then(Comment.find({ "billId": bill, "congress": congress }, null, {skip: offset, limit: 5, sort: {"date": -1}}, function (err, foundComments) {
         if (err) {
             console.log(err);
             res.sendStatus(500);
         } else {
-            console.log(foundComments);
-            res.send(foundComments);
+            let data = {
+                comments: foundComments,
+                results: total
+            }
+            res.send(data);
         }
     })
+)
 })
 
 //USED TO RETRIEVE A COMMENTS FOR A MEMBER

@@ -5,7 +5,9 @@ app.service('CommentService', function ($http, UserService) {
     self.congress = '';
     self.memberId = '';
     self.comments = {
-        data: ''
+        data: [],
+        offset: 0,
+        limit: ''
     };
 
     //SET PAGE VARIABLES THAT DETERMINES WHETHER MEMBER OR BILL COMMENT
@@ -50,9 +52,13 @@ app.service('CommentService', function ($http, UserService) {
     //RETRIEVE COMMENTS FOR BILL
     self.retrieveBillComments = function() {
         self.setVariables();
-        let route = '/comment/bill/' + self.billId + '/' + self.congress;
+        let route = '/comment/bill/' + self.billId + '/' + self.congress + '?offset=' + self.comments.offset;
         $http.get(route).then(function(response){
-            self.comments.data = response.data;
+            response.data.comments.forEach(function(comment){
+                self.comments.data.push(comment);
+            });
+            self.comments.limit = response.data.results;
+            self.comments.offset += 5;
         }).catch(function(err){
             console.log('Error retrieving bill comments:', err);
         })
