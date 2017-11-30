@@ -8,6 +8,7 @@ app.controller('HomeController', function (UserService, $http) {
     self.chamber = 'both';
     self.stateSenate = '';
     self.stateHouse = '';
+    self.displaySearchResults = false;
     var states = document.querySelectorAll('path');
 
     //GET RECENTLY VOTED ON BILLS
@@ -36,23 +37,26 @@ app.controller('HomeController', function (UserService, $http) {
 
     Array.from(states).forEach(link => {
         link.addEventListener('click', function (event) {
-            console.log('Fired', this.id)
+            self.displaySearchResults = true;
+
             let state = this.id;
             $http.get('/member/house/' + state).then(function (response) {
                 self.stateHouse = response.data;
-                console.log(self.stateHouse);
             }).catch(function (error) {
                 console.log('Error', error);
             })
 
             $http.get('/member/senate/' + state).then(function (response) {
                 self.stateSenate = response.data;
-                console.log(self.stateSenate);
             }).catch(function (error) {
                 console.log('Error', error);
             })
         });
     });
+
+    self.closeSearchResults = function() {
+        self.displaySearchResults = false;
+    }
 
 
 })

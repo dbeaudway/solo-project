@@ -1,4 +1,8 @@
     <div ng-cloak class="container">
+        <div class="home-banner" layout="column" layout-align="center center">
+            <h1>Table Topics</h1>
+            <h2>Stay informed, inform others.</h2>
+        </div>
         <div class="home-map" layout="row" layout-align="center center">
             <svg width="959" height="593">
                 <title>Blank US states map</title>
@@ -110,17 +114,68 @@
                     </g>
                 </g>
             </svg>
-
         </div>
-        <div>
-            <h2>Members</h2>
-
-            <a ng-repeat="member in vm.stateHouse.results" ng-href="/#!/member/{{member.id}}">
-                <h3>{{member.name}} ({{member.party}})</h3>
-            </a>
-
-            <a ng-repeat="member in vm.stateSenate.results" ng-href="/#!/member/{{member.id}}">
-                <h3>{{member.name}} ({{member.party}})</h3>
-            </a>
+        <div layout="row">
+            <div flex layout="column">
+                <div class="vote-list">
+                        <h2>Upcoming Legislation</h2>
+                        <div class="comment-list" ng-repeat="bill in vm.upcomingHouseBills.bills">
+                            <div class="comment-content" layout="row">
+                                <div>
+                                    <a ng-show="bill.bill_id" ng-href="/#!/bill-detail/{{bill.bill.bill_id.split('-')[0]}}/{{bill.congress}}">{{bill.bill_id | uppercase}}</a>
+                                    <p ng-show="bill.description">{{bill.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment-list" ng-repeat="bill in vm.upcomingSenateBills.bills">
+                                <div class="comment-content" layout="row">
+                                    <div>
+                                        <a ng-show="bill.bill.bill_uri" ng-href="/#!/bill-detail/{{bill.bill.bill_id.split('-')[0]}}/{{bill.congress}}">{{bill.bill.bill_id | uppercase}}</a>
+                                        <p ng-show="bill.description">{{bill.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+            <div flex layout="column">
+                <h2>Recent Votes</h2>
+                    <div class="vote-list">
+                            <div class="comment-list" ng-repeat="vote in vm.bills.votes">
+                                <div class="comment-content" layout="row">
+                                    <div>
+                                        <a ng-show="vote.bill.bill_uri" ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}</a>
+                                        <p ng-show="vote.description">{{vote.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="comment-button-bar" layout="row">
+                                    <div flex>
+                                        <p>
+                                            <strong>Result</strong>
+                                        </p>
+                                        <a href="/#!/votes/{{vote.congress}}/{{vote.chamber}}/{{vote.session}}/{{vote.roll_call}}">{{vote.result}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
         </div>
+        <div ng-show="vm.displaySearchResults" class="searchResultsContainer">
+                <div>
+                    <h2 style="display:inline-block">Representatives</h2>
+                    <button ng-click="vm.closeSearchResults()" style="float:right">Close</button>
+                </div>
+                <ul>
+                    <li ng-repeat="member in vm.stateHouse.results" class="list-item">
+                        <a ng-href="/#!/member/{{member.id}}">
+                            <img ng-src="https://theunitedstates.io/images/congress/225x275/{{member.id}}.jpg" alt="">
+                            <h3>{{member.name}} ({{member.party}})</h3>
+                        </a>
+                    </li>
+                    <li ng-repeat="member in vm.stateSenate.results" class="list-item">
+                            <a ng-href="/#!/member/{{member.id}}">
+                                <h3>{{member.name}} ({{member.party}})</h3>
+                            </a>
+                        </li>
+                </ul>
+            </div>
     </div>

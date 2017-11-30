@@ -23,9 +23,6 @@ app.config(function($routeProvider){
     }).when('/bill-detail/:id/:id',{
         templateUrl: '../views/templates/bill-detail.html',
         controller: 'BillDetailController as vm',
-    }).when('/bill',{
-        templateUrl: '../views/templates/bill.html',
-        controller: 'BillController as vm',
     }).when('/votes/:id/:id/:id/:id',{
         templateUrl: '../views/templates/votes.html',
         controller: 'VotesController as vm',

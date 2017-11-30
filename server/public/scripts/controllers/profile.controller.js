@@ -17,8 +17,8 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
             console.log('Error making updates', err);
         })
     }
-
-    self.uploadImageToAmazon = function () {
+    
+    self.uploadImageToAmazon = function(){
         let image = document.getElementById('imageUpload').files[0];
         let data = {
             user: self.userObject.id,
@@ -27,9 +27,9 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
         UploadService.uploadImageToAmazon(image, data);
     }
 
-    self.logout = function () {
+    self.logout = function(){
         UserService.logout();
-    }
+      }
 
     //RETRIEVE HOUSE MEMBERS FOR USER
     $http.get('/member/house/' + self.userObject.location).then(function (response) {
@@ -48,7 +48,7 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
     })
 
     //RETRIEVE COMMENTS FROM USER
-    self.retrieveUserComments = function () {
+    self.retrieveUserComments = function() {
         CommentService.retrieveUserComments(self.offset);
         console.log('HERE ARE THE COMMENTS:', self.comments);
     }
@@ -56,29 +56,29 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
 
     //DELETE A COMMENT
     self.deleteComment = function (value) {
-        CommentService.deleteComment(value);
+    CommentService.deleteComment(value);
     }
 
 
     //Identify bottom of page scroll -- retrieve additional comments at bottom
     function getScrollXY() {
         var scrOfX = 0, scrOfY = 0;
-        if (typeof (window.pageYOffset) == 'number') {
+        if( typeof( window.pageYOffset ) == 'number' ) {
             //Netscape compliant
             scrOfY = window.pageYOffset;
             scrOfX = window.pageXOffset;
-        } else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
+        } else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
             //DOM compliant
             scrOfY = document.body.scrollTop;
             scrOfX = document.body.scrollLeft;
-        } else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop)) {
+        } else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
             //IE6 standards compliant mode
             scrOfY = document.documentElement.scrollTop;
             scrOfX = document.documentElement.scrollLeft;
         }
-        return [scrOfX, scrOfY];
+        return [ scrOfX, scrOfY ];
     }
-
+    
     function getDocHeight() {
         var D = document;
         return Math.max(
@@ -87,14 +87,14 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
             D.body.clientHeight, D.documentElement.clientHeight
         );
     }
-
+    
     document.addEventListener("scroll", function (event) {
         if (getDocHeight() == getScrollXY()[1] + window.innerHeight) {
-            if (self.offset < self.comments.limit) {
-                self.offset += 10;
-                CommentService.appendUserComments(self.offset);
-                console.log('CONTROLLER, offset:', self.offset, 'limit:', self.comments.limit);
-            }
+                if(self.offset < self.comments.limit){
+                    self.offset += 10;
+                    CommentService.appendUserComments(self.offset);
+                    console.log('CONTROLLER, offset:', self.offset, 'limit:', self.comments.limit);
+                }
         }
     });
 })
