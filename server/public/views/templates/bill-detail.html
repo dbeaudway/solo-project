@@ -1,5 +1,5 @@
 <div ng-cloak class="container">
-    <div>
+    <div class="heading-card">
         <h1>
             <a ng-href="{{vm.bill.bill.govtrack_url}}">{{vm.bill.bill.bill}}</a>
         </h1>
@@ -37,7 +37,7 @@
                 </div>
                 <button ng-click="vm.validateSubmission()">Submit Comment</button>
             </div>
-            <div>
+            <div ng-show="vm.comments.length > 0">
                 <h2>Comments</h2>
                 <div class="comment-list" ng-repeat="comment in vm.comments.data">
                     <div class="comment-content" layout="row">

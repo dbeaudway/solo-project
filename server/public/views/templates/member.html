@@ -69,27 +69,30 @@
                 </div>
             </div>
         </div>
-        <div layout="column" flex="50">
-            <div flex class="padded">
-                <p>
-                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}
-                    is currently a {{vm.memberInfo.member.roles[0].title | lowercase}} in the {{vm.memberInfo.member.roles[0].chamber}}
-                    serving for the state of {{vm.memberInfo.member.roles[0].state}}. {{vm.memberInfo.member.first_name}}
-                    {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}'s current term began on {{vm.memberInfo.member.roles[0].start_date
-                    | date}} and ends on {{vm.memberInfo.member.roles[0].end_date | date}}.
-                </p>
-                <h2>Activity</h2>
-                <p>
-                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}
-                    has sponsored {{vm.memberInfo.member.roles[0].bills_sponsored}} bills and co-sponsored {{vm.memberInfo.member.roles[0].bills_cosponsored}}
-                    bills in the current term.
-                </p>
-                <h2>Voting Record</h2>
-                <p>
-                    {{vm.memberInfo.member.title}} {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}}
-                    has voted along party lines {{vm.memberInfo.member.roles[0].votes_with_party_pct}}% of the time and has
-                    missed {{vm.memberInfo.member.roles[0].missed_votes_pct}}% of votes.
-                </p>
+        <div layout="column" flex="50" class="padded">
+            <div layout="column" class="info-card party-{{vm.memberInfo.member.current_party}}">
+                <div layout="row">
+                    <div flex>
+                        <h2>Bills Sponsored</h2>
+                        <p class="info-card-stat">{{vm.memberInfo.member.roles[0].bills_sponsored}}</p>
+                    </div>
+                    <div flex>
+                            <h2>Bills Co-sponsored</h2>
+                            <p class="info-card-stat">{{vm.memberInfo.member.roles[0].bills_cosponsored}}</p>
+                        </div>
+                </div>
+                <div layout="row">
+                    <div flex>
+                        <h2>Votes with party</h2>
+                        <p class="info-card-stat">{{vm.memberInfo.member.roles[0].votes_with_party_pct}}%</p>
+                    </div>
+                    <div flex>
+                            <h2>Vote Attendance</h2>
+                            <p class="info-card-stat">{{100 - vm.memberInfo.member.roles[0].missed_votes_pct}}%</p>
+                        </div>
+                </div>
+            </div>
+            <div flex>
                 <div ng-show="vm.userObject.userName" class="commentContainer">
                     <div>
                         <div>
@@ -115,7 +118,7 @@
                     </div>
                     <button ng-click="vm.validateSubmission()">Submit Comment</button>
                 </div>
-                <div>
+                <div ng-show="vm.comments.data.length > 0">
                     <h2>Comments</h2>
                     <div class="comment-list" ng-repeat="comment in vm.comments.data">
                         <div class="comment-content" layout="row">
@@ -156,7 +159,7 @@
                 <div class="comment-list" ng-repeat="vote in vm.memberInfo.votes.votes">
                     <div class="comment-content" layout="row">
                         <div>
-                            <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}</a>
+                            <a ng-show="vote.bill.bill_uri" ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}</a>
                             <p ng-show="vote.description">{{vote.description}}</p>
                         </div>
                     </div>

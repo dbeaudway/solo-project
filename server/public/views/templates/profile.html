@@ -1,42 +1,175 @@
 <div ng-cloak class="container">
     <div layout="row">
         <md-switch flex layout-align="end center" ng-show="vm.userObject" class="md-primary" ng-model="vm.editing" md-no-ink aria-label="Edit Profile Switch">Edit Profile</md-switch>
-        <button  layout-align="end center" ng-click="vm.logout()">Log Out</button>
+        <button layout-align="end center" ng-click="vm.logout()">Log Out</button>
     </div>
-    <md-card>
-        <md-card-content ng-show="!vm.editing" layout="row" layout-align="space-between">
-            <div class="md-media-xl card-media">
+
+    <div layout="row">
+        <div flex="25" class="padded">
+            <div ng-show="!vm.editing" layout="column">
                 <img class="profileImage" ng-src="{{vm.userObject.profileImage}}" alt="Profile Image">
+                <div class="list-group">
+                    <div class="list-item">
+                        <h3>Username</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.userObject.userName}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <h3>State</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.userObject.location}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <h3>Joined</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.userObject.date | date}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <h3>About</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.userObject.about}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <md-card-title layout="column">
-                <md-card-title-text>
-                    <span class="md-headline">{{vm.userObject.userName}}</span>
-                    <span class="md-subhead">Location: {{vm.userObject.location}}</span>
-                    <span class="md-subhead">Joined: {{vm.userObject.date | date}}</span>
-                    <span class="md-subhead">About: {{vm.userObject.about}}</span>
-                </md-card-title-text>
-            </md-card-title>
-        </md-card-content>
-        <md-card-content ng-show="vm.editing" layout="row" layout-align="space-between">
-            <div class="md-media-xl card-media">
+            <div ng-show="vm.editing" layout="column" layout-align="space-between">
                 <img class="profileImage" ng-src="{{vm.userObject.profileImage}}" alt="Profile Image">
-                <md-input-container layout="row">
-                    <input flex type="file" id="imageUpload">
-                    <md-button flex md-no-ink class="md-primary" ng-click="vm.uploadImageToAmazon()">Upload Image</md-button>
-                </md-input-container>
+                <div class="list-group">
+                    <div class="list-item">
+                        <h3>Profile Image</h3>
+                        <div layout="column">
+                            <input type="file" id="imageUpload">
+                            <br>
+                            <button ng-click="vm.uploadImageToAmazon()">Upload Image</button>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <h3>State</h3>
+                        <div layout="column">
+                            <select name="" id="stateDropDown" ng-model="vm.userObject.location">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="IA">IA</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="ME">ME</option>
+                                <option value="MD">MD</option>
+                                <option value="MA">MA</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MS">MS</option>
+                                <option value="MO">MO</option>
+                                <option value="MT">MT</option>
+                                <option value="NE">NE</option>
+                                <option value="NV">NV</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NY">NY</option>
+                                <option value="NC">NC</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WV">WV</option>
+                                <option value="WI">WI</option>
+                                <option value="WY">WY</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <h3>About</h3>
+                        <div layout="column">
+                            <textarea rows="3" ng-model="vm.userObject.about"></textarea>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <button ng-click="vm.updateProfile()">Save Changes</button>
+                    </div>
+                </div>
             </div>
-            <md-card-title layout="column">
-                <span class="md-headline">{{vm.userObject.userName}}</span>
-                <md-input-container class="md-block">
-                    <label>Location</label>
-                    <input ng-model="vm.userObject.location">
-                </md-input-container>
-                <md-input-container class="md-block">
-                    <label>About:</label>
-                    <input ng-model="vm.userObject.about">
-                </md-input-container>
-                <md-button class="md-raised md-primary" ng-click="vm.updateProfile()" class="md-primary">Save Changes</md-button>
-            </md-card-title>
-        </md-card-content>
-    </md-card>
+        </div>
+        <div flex="50" class="padded">
+            <h2>Comments</h2>
+            <div class="comment-list" ng-repeat="comment in vm.comments.data">
+                <div class="comment-content" layout="row">
+                    <div flex="10">
+                        <a ng-href="/#!/user/{{comment.username}}">
+                            <img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo">
+                        </a>
+                    </div>
+                    <div layout="column" flex>
+                        <div flex class="comment-user">
+                            <span>Posted by
+                                <a ng-href="/#!/user/{{comment.username}}">{{comment.username}}</a> on {{comment.date | date}}</span>
+                        </div>
+                        <div layout="column">
+                            <p>{{comment.comment}}</p>
+                            <video class="comment-video" ng-show="comment.url" ng-src="{{comment.url}}" controls></video>
+                        </div>
+                    </div>
+                </div>
+                    <div class="comment-button-bar" layout="row">
+                        <div flex>
+                            This comment has {{comment.likes || 0}} likes.
+                        </div>
+                        <div flex>
+                            <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div flex="25" class="padded">
+            <div ng-show="vm.stateSenate && vm.stateHouse">
+                <h2>Representatives</h2>
+                <div class="list-group">
+                    <div class="list-item" ng-repeat="member in vm.stateSenate.results">
+                        <a ng-href="/#!/member/{{member.id}}">
+                            <h3>{{member.name}} ({{member.party}})</h3>
+                        </a>
+                    </div>
+                    <div class="list-item" ng-repeat="member in vm.stateHouse.results">
+                        <a ng-href="/#!/member/{{member.id}}">
+                            <h3>{{member.name}} ({{member.party}})</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

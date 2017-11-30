@@ -1,61 +1,42 @@
 <div ng-cloak class="container">
-        <md-card>
-            <md-card-content ng-show="!vm.editing" layout="row" layout-align="space-between">
-                <div class="md-media-xl card-media">
-                    <i style="font-size:200px;" class="material-icons">account_circle</i>
-                </div>
-                <md-card-title layout="column">
-                    <md-card-title-text>
-                        <span class="md-headline">{{vm.user.username}}</span>
-                        <span class="md-subhead">Location: {{vm.user.location}}</span>
-                        <span class="md-subhead">Joined: {{vm.user.date | date}}</span>
-                        <span class="md-subhead">About: {{vm.user.about}}</span>
-                    </md-card-title-text>
-                </md-card-title>
-            </md-card-content>
-        </md-card>
-    
-    
-        <div layout="row">
-                <div flex="50">
-                    <h3>Topics:</h3>
-                    <md-card ng-repeat="topic in vm.topics">
-                        <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline">{{topic.title}}</span>
-                                <span class="md-subhead">{{topic.description}}</span>
-                                <span class="md-subhead">{{topic.tags}}</span>
-                            </md-card-title-text>
-                            <md-card-title-media>
-                                <div class="md-media-lg card-media">
-                                    <video ng-show="topic.url" ng-src={{topic.url}} style="max-width: 150px; height: auto; border-radius: 5px;"></video>
-                                </div>
-                            </md-card-title-media>
-                        </md-card-title>
-                        <md-card-actions layout="row" layout-align="end end">
-                            <md-button href="/#!/topic/{{topic._id}}">View Topic</md-button>
-                        </md-card-actions>
-                    </md-card>
-                </div>
-                <div flex>
-                    <h3>Responses:</h3>
-                    <md-card ng-repeat="comment in vm.comments">
-                        <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline">{{comment.topicTitle}}</span>
-                                <span class="md-subhead">{{comment.comment}}</span>
-                                <span class="md-subhead">{{comment.date | date}}</span>
-                            </md-card-title-text>
-                            <md-card-title-media>
-                                <div class="md-media-lg card-media">
-                                    <video ng-show="topic.url" ng-src={{topic.url}} style="max-width: 150px; height: auto; border-radius: 5px;"></video>
-                                </div>
-                            </md-card-title-media>
-                        </md-card-title>
-                        <md-card-actions layout="row" layout-align="end end">
-                            <md-button href="/#!/topic/{{topic._id}}">View Topic</md-button>
-                        </md-card-actions>
-                    </md-card>
+    <div layout="row">
+        <div flex="25" lass="padded">
+            <div ng-show="!vm.editing" layout="column">
+                <img class="profileImage" ng-src="{{vm.userObject.profileImage}}" alt="Profile Image">
+                <div class="list-group">
+                    <div class="list-item">
+                        <h3>Username</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.user.userName}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <h3>State</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.user.location}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <h3>Joined</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.user.date | date}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <h3>About</h3>
+                        <div>
+                            <div layout="column">
+                                <p>{{vm.user.about}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>

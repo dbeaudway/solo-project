@@ -104,4 +104,26 @@ router.get('/member/:member', function (req, res) {
         )
 })
 
+//USED TO RETRIEVE COMMENTS POSTED BY A SPECIFIC USER
+router.get('/user/:id', function (req, res) {
+    let user = req.params.id;
+    let offset = parseInt(req.query.offset);
+    let total = '';
+    Comment.find({ "user": user }).count(function (err, count) {
+        total = count;
+    }).then(Comment.find({ "user": user }, null, { skip: offset, limit: 10, sort: { "date": -1 } }, function (err, foundComments) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            let data = {
+                comments: foundComments,
+                results: total
+            }
+            res.send(data);
+        }
+    })
+        )
+})
+
 module.exports = router;

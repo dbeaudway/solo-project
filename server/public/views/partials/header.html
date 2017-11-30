@@ -4,8 +4,8 @@
         <a ng-href="/#!/bill"><li class="nav-item">BILLS</li></a>
         <div class="nav-right">
             <li class="nav-item">
-                <input type="text">
-                <button>Search</button>
+                <input type="text" ng-model="vm.searchTerm">
+                <button ng-click="vm.search()">Search</button>
             </li>
             <a ng-href="/#!/register" ng-show="!vm.userObject.userName"><li class="nav-item">LOGIN</li></a>
             <a ng-href="/#!/profile" ng-show="vm.userObject.userName">
@@ -16,4 +16,19 @@
             </a>
     </div>
     </ul>
+    <div ng-show="vm.displaySearchResults" class="searchResultsContainer">
+        <div>
+            <h2 style="display:inline-block">Search Results</h2>
+            <button ng-click="vm.closeSearchResults()" style="float:right">Close</button>
+            <p ng-show="vm.bills">Found {{vm.bills.length || 0}} search results</p>
+        </div>
+        <ul>
+            <li ng-repeat="bill in vm.bills" class="list-item">
+                <a ng-href="/#!/bill-detail/{{bill.bill_slug}}/{{bill.bill_id.split('-')[1]}}">
+                    <h3><strong>{{bill.bill_id | uppercase}}</strong></h3>
+                    {{bill.title || bill.summary_short}}
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
