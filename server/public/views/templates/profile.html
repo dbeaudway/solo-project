@@ -1,6 +1,7 @@
 <div ng-cloak class="container">
     <div layout="row">
         <md-switch flex layout-align="end center" ng-show="vm.userObject" class="md-primary" ng-model="vm.editing" md-no-ink aria-label="Edit Profile Switch">Edit Profile</md-switch>
+        <button  layout-align="end center" ng-click="vm.logout()">Log Out</button>
     </div>
     <md-card>
         <md-card-content ng-show="!vm.editing" layout="row" layout-align="space-between">

@@ -1,19 +1,19 @@
-<md-content class="md-padding">
-    <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="/#!/home" name="home">
-            Home
-        </md-nav-item>
-        <md-nav-item md-nav-href="/#!/bill" name="bill">
-            Bills
-        </md-nav-item>
-        <md-nav-item md-nav-href="/#!/profile" name="profile">
-            Profile
-        </md-nav-item>
-        <md-nav-item md-nav-href="/#!/register" name="register">
-            Login
-        </md-nav-item>
-        <md-nav-item md-nav-href="/#!/search" name="search">
-            Search
-        </md-nav-item>
-    </md-nav-bar>
-</md-content>
+<div class="nav">
+    <ul class="nav-bar">
+        <a ng-href="/#!/home"><li class="nav-item">HOME</li></a>
+        <a ng-href="/#!/bill"><li class="nav-item">BILLS</li></a>
+        <div class="nav-right">
+            <li class="nav-item">
+                <input type="text">
+                <button>Search</button>
+            </li>
+            <a ng-href="/#!/register" ng-show="!vm.userObject.userName"><li class="nav-item">LOGIN</li></a>
+            <a ng-href="/#!/profile" ng-show="vm.userObject.userName">
+                <li class="nav-item">
+                    <img ng-src="{{vm.userObject.profileImage}}" alt="Profile Image">
+                    {{vm.userObject.userName}}
+                </li>
+            </a>
+    </div>
+    </ul>
+</div>

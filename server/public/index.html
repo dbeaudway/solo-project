@@ -28,6 +28,7 @@
     <script src="scripts/controllers/login.controller.js" charset="utf-8"></script>
     <script src="scripts/controllers/search.controller.js" charset="utf-8"></script>
     <script src="scripts/controllers/member.controller.js" charset="utf-8"></script>
+    <script src="scripts/controllers/header.controller.js" charset="utf-8"></script>
     <script src="scripts/services/BillService.js" charset="utf-8"></script>
     <script src="scripts/services/CommentService.js" charset="utf-8"></script>
     <script src="scripts/services/MemberService.js" charset="utf-8"></script>
@@ -37,8 +38,10 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body ng-app="app">
-    <header ng-include="'views/partials/header.html'"></header>
+    <header ng-controller="HeaderController as vm">
+        <div ng-include="'views/partials/header.html'">
+    </div>
+    </header>
         <main ng-view></main>
-    <!-- <footer ng-include="'views/partials/footer.html'"></footer> -->
 </body>
 </html>

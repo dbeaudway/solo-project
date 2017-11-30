@@ -22,4 +22,8 @@ app.controller('ProfileController', function (UserService, UploadService, $http)
         }
         UploadService.uploadImageToAmazon(image, data);
     }
+    
+    self.logout = function(){
+        UserService.logout();
+      }
 })
