@@ -38,6 +38,7 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
 
     //RETRIEVE COMMENTS FOR BILL
     self.retrieveComments = function () {
+        console.log('Retrieve bill comments controller');
         CommentService.retrieveBillComments(self.offset);
     }
     self.retrieveComments();

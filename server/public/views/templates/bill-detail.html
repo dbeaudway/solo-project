@@ -37,7 +37,7 @@
                 </div>
                 <button ng-click="vm.validateSubmission()">Submit Comment</button>
             </div>
-            <div ng-show="vm.comments.length > 0">
+            <div ng-show="vm.comments.data.length > 0">
                 <h2>Comments</h2>
                 <div class="comment-list" ng-repeat="comment in vm.comments.data">
                     <div class="comment-content" layout="row">
@@ -59,7 +59,7 @@
                         <div flex>
                             This comment has {{comment.likes || 0}} likes.
                         </div>
-                        <div flex>
+                        <div flex layout="row" layout-align="end center">
                                 <button ng-show="vm.userObject.id" ng-click="vm.likeComment(comment)">Like</button>
                                 <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
                         </div>

@@ -54,6 +54,7 @@ app.service('CommentService', function ($http, UserService) {
         self.setVariables();
         let route = '/comment/bill/' + self.billId + '/' + self.congress + '?offset=' + value;
         $http.get(route).then(function (response) {
+            console.log('Retrieved bill comments service', response);
             self.comments.data = response.data.comments;
             self.comments.limit = response.data.results;
         }).catch(function (err) {

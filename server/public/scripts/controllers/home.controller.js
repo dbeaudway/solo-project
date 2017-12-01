@@ -58,5 +58,4 @@ app.controller('HomeController', function (UserService, $http) {
         self.displaySearchResults = false;
     }
 
-
 })

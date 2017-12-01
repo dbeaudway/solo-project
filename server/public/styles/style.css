@@ -14,6 +14,37 @@ img {
     width:100%;
 }
 
+.party-icon-D {
+    background-color: #3993DD;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    width:10px;
+    height:10px;
+}
+
+.party-icon-R {
+    background-color: #c1181f;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    width:10px;
+    height:10px;
+}
+
+.party-icon-I {
+    background-color: green;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    width:10px;
+    height:10px;
+}
+
+.loader-container {
+    height: 100vh;
+}
+
 .home-banner h1 {
     font-size: 50px;
 }
@@ -27,6 +58,16 @@ img {
 }
 .container {
     padding: 0px 10px;
+}
+
+.login-container {
+    text-align: center;
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 1px rgba(0,0,0,.64);
+    margin: 100px auto;
 }
 
 .padded {
@@ -118,8 +159,11 @@ table{
 }
 
 td{
-    border: 1px solid rgba(0,0,0,0.1);
     margin: 0px 0px;
+}
+
+tr {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .vote-list{

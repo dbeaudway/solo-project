@@ -126,7 +126,7 @@ app.service('UploadService', function (CommentService, $http) {
 
   //Following successful Amazon upload, add image to users profile
   self.postProfileImage = function() {
-      console.log('Topic to upload:', self.topicToUpload);
+      console.log('Image to upload:', self.imageToUpload);
       self.imageToUpload.date = new Date();
       $http.put('/user/image/' + self.imageToUpload.user, self.imageToUpload).then(function(response){
           console.log('Image added to users profile in database', response);

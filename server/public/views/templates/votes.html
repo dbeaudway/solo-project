@@ -15,31 +15,26 @@
                                 <th></th>
                                 <th>Yes</th>
                                 <th>No</th>
-                                <th>Other</th>
                             </tr>
                             <tr>
-                                <td>R</td>
+                                <td><div class="party-icon-R"></div><strong> R</strong></td>
                                 <td>{{vm.votes.votes.vote.republican.yes}}</td>
                                 <td>{{vm.votes.votes.vote.republican.no}}</td>
-                                <td>{{vm.votes.votes.vote.republican.present + vm.votes.vote.republican.not_voting}}</td>
                             </tr>
                             <tr>
-                                <td>D</td>
+                                <td><div class="party-icon-D"></div><strong> D</strong></td>
                                 <td>{{vm.votes.votes.vote.democratic.yes}}</td>
                                 <td>{{vm.votes.votes.vote.democratic.no}}</td>
-                                <td>{{vm.votes.votes.vote.democratic.present + vm.votes.vote.democratic.not_voting}}</td>
                             </tr>
                             <tr>
-                                <td>I</td>
-                                <td>{{vm.votes.votes.vote.total.yes}}</td>
+                                <td><div class="party-icon-I"></div><strong> I</strong></td>
+                                <td>{{vm.votes.votes.vote.independent.yes}}</td>
                                 <td>{{vm.votes.votes.vote.independent.no}}</td>
-                                <td>{{vm.votes.votes.vote.independent.present + vm.votes.votes.vote.independent.not_voting}}</td>
                             </tr>
                             <tr>
-                                <td>Total</td>
+                                <td><strong>Total</strong></td>
                                 <td>{{vm.votes.votes.vote.total.yes}}</td>
                                 <td>{{vm.votes.votes.vote.total.no}}</td>
-                                <td>{{vm.votes.votes.vote.total.present + vm.votes.votes.vote.total.not_voting}}</td>
                             </tr>
                         </table>
                     </div>
@@ -600,7 +595,6 @@
             </div>
             <div class="info-card">
                 <h2>Roll Call</h2>
-
                 <table>
                     <tr>
                         <th>Member</th>
@@ -610,6 +604,7 @@
                     </tr>
                     <tr ng-repeat="member in vm.votes.votes.vote.positions">
                         <td>
+                            <div class="party-icon-{{member.party}}"></div>
                             <a ng-href="/#!/member/{{member.member_id}}">{{member.name}}</a>
                         </td>
                         <td>{{member.vote_position}}</td>

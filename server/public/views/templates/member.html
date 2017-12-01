@@ -1,7 +1,7 @@
 <div ng-cloak class="container">
     <div layout="column">
         <div>
-            <h1>{{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} ({{vm.memberInfo.member.current_party}})
+            <h1><div class="party-icon-{{vm.memberInfo.member.current_party}}"></div> {{vm.memberInfo.member.first_name}} {{vm.memberInfo.member.middle_name}} {{vm.memberInfo.member.last_name}} ({{vm.memberInfo.member.current_party}})
                 - {{vm.memberInfo.member.roles[0].state}}</h1>
         </div>
     </div>
@@ -143,7 +143,7 @@
                             <div flex>
                                 This comment has {{comment.likes || 0}} likes.
                             </div>
-                            <div flex>
+                            <div flex layout="row" layout-align="end center">
                                 <button ng-show="vm.userObject.id" ng-click="vm.likeComment(comment)">Like</button>
                                 <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
                             </div>
