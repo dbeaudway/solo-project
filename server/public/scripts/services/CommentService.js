@@ -57,6 +57,8 @@ app.service('CommentService', function ($http, UserService) {
             console.log('Retrieved bill comments service', response);
             self.comments.data = response.data.comments;
             self.comments.limit = response.data.results;
+            self.comments.supporters = response.data.supporters;
+            self.comments.opposers = response.data.opposers;
         }).catch(function (err) {
             console.log('Error retrieving bill comments:', err);
         })

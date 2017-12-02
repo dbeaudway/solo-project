@@ -12,6 +12,26 @@
     </div>
     <div layout="column" layout-gt-sm="row">
         <div class="padded" flex-gt-sm="75">
+            <div layout="column" class="info-card">
+                <div layout="row">
+                    <div flex>
+                        <h2>Comments</h2>
+                        <p class="info-card-stat">{{vm.comments.limit}}</p>
+                    </div>
+                    <div flex>
+                        <h2>Support</h2>
+                        <p class="info-card-stat support-text">{{(vm.comments.supporters / vm.comments.limit) * 100 || 0 | number: 1}}%</p>
+                    </div>
+                    <div flex>
+                        <h2>Oppose</h2>
+                        <p class="info-card-stat oppose-text">{{(vm.comments.opposers / vm.comments.limit) * 100 || 0 | number: 1}}%</p>
+                    </div>
+                    <div flex>
+                        <h2>Undecided</h2>
+                        <p class="info-card-stat">{{((vm.comments.limit - vm.comments.supporters - vm.comments.opposers) / vm.comments.limit) * 100 || 0 | number: 1}}%</p>
+                    </div>
+                </div>
+            </div>
             <div class="commentContainer" ng-show="vm.userObject.id">
                 <div>
                     <div>
@@ -39,31 +59,37 @@
             </div>
             <div ng-show="vm.comments.data.length > 0">
                 <h2>Comments</h2>
-                <div class="comment-list" ng-repeat="comment in vm.comments.data">
+                <div ng-repeat="comment in vm.comments.data">
+                    <div class="comment-list comment-position-{{comment.position}}">
                     <div class="comment-content" layout="row">
                         <div flex="10">
-                                <a ng-href="/#!/user/{{comment.username}}"><img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo"></a>
+                            <a ng-href="/#!/user/{{comment.username}}">
+                                <img ng-src="{{comment.userProfileImage}}" class="commentProfileImage" alt="Profile photo">
+                            </a>
                         </div>
                         <div layout="column" flex>
                             <div flex class="comment-user">
-                                <span>Posted by <a ng-href="/#!/user/{{comment.username}}">{{comment.username}}</a> on {{comment.date | date}}</span>
+                                <span>Posted by
+                                    <a ng-href="/#!/user/{{comment.username}}">{{comment.username}}</a> on {{comment.date | date}}</span>
                             </div>
                             <div layout="column">
                                 <p>{{comment.comment}}</p>
                                 <video class="comment-video" ng-show="comment.url" ng-src="{{comment.url}}" controls></video>
                             </div>
                         </div>
-                    </div>
+                        </div>
+                    
 
                     <div class="comment-button-bar" layout="row">
                         <div flex>
                             This comment has {{comment.likes || 0}} likes.
                         </div>
                         <div flex layout="row" layout-align="end center">
-                                <button ng-show="vm.userObject.id" ng-click="vm.likeComment(comment)">Like</button>
-                                <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
+                            <button ng-show="vm.userObject.id" ng-click="vm.likeComment(comment)">Like</button>
+                            <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -87,15 +113,15 @@
                         </div>
                     </div>
                     <div class="list-item">
-                            <h3>Latest Vote</h3>
-                            <div>
-                                <div layout="column">
-                                    <a ng-href="/#!/votes/{{vm.bill.bill.congress}}/{{vm.bill.bill.votes[0].chamber}}/1/{{vm.bill.bill.votes[0].roll_call}}">
-                                        <p>{{vm.bill.bill.votes[0].question}}</p>
-                                    </a>
-                                </div>
+                        <h3>Latest Vote</h3>
+                        <div>
+                            <div layout="column">
+                                <a ng-href="/#!/votes/{{vm.bill.bill.congress}}/{{vm.bill.bill.votes[0].chamber}}/1/{{vm.bill.bill.votes[0].roll_call}}">
+                                    <p>{{vm.bill.bill.votes[0].question}}</p>
+                                </a>
                             </div>
                         </div>
+                    </div>
                     <div class="list-item">
                         <h3>Latest Major Action</h3>
                         <div>
@@ -109,7 +135,8 @@
                         <div>
                             <div layout="column">
                                 <a ng-href="/#!/member/{{vm.bill.bill.sponsor_id}}">
-                                    <p>{{vm.bill.bill.sponsor_title}} {{vm.bill.bill.sponsor}}, {{vm.bill.bill.sponsor_party}} - {{vm.bill.bill.sponsor_state}}</p>
+                                    <p>{{vm.bill.bill.sponsor_title}} {{vm.bill.bill.sponsor}}, {{vm.bill.bill.sponsor_party}}
+                                        - {{vm.bill.bill.sponsor_state}}</p>
                                 </a>
                             </div>
                         </div>

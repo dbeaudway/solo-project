@@ -84,11 +84,11 @@
                 <div layout="row">
                     <div flex>
                         <h2>Votes with party</h2>
-                        <p class="info-card-stat">{{vm.memberInfo.member.roles[0].votes_with_party_pct}}%</p>
+                        <p class="info-card-stat">{{vm.memberInfo.member.roles[0].votes_with_party_pct | number: 1}}%</p>
                     </div>
                     <div flex>
                             <h2>Vote Attendance</h2>
-                            <p class="info-card-stat">{{100 - vm.memberInfo.member.roles[0].missed_votes_pct}}%</p>
+                            <p class="info-card-stat">{{100 - vm.memberInfo.member.roles[0].missed_votes_pct | number: 1}}%</p>
                         </div>
                 </div>
             </div>
@@ -105,11 +105,6 @@
                                     <button ng-click="vm.stopRecording()" ng-show="vm.video.recording" id="stop">Stop Recording</button>
                                     <button ng-click="vm.play()" id="play" ng-disabled="!vm.video.videoAvailable">Play</button>
                                 </div>
-                            </div>
-                            <div layout="row" layout-align="start center">
-                                <input type="radio" ng-model="vm.commentToAdd.position" name="position" value="support">Support
-                                <input type="radio" ng-model="vm.commentToAdd.position" name="position" value="oppose">Oppose
-                                <input type="radio" ng-model="vm.commentToAdd.position" name="position" value="undecided">Undecided
                             </div>
                         </div>
                         <md-switch class="md-primary" md-no-ink aria-label="Include Video Switch" ng-model="vm.commentToAdd.video" ng-click="vm.accessCamera()">
