@@ -6,13 +6,16 @@
     </div>
     <form ng-submit="vm.login()" ng-show="!vm.userObject.userName && !vm.register">
         <h2>Login</h2>
+        <br><br>
         <div>
-            <label for="username">Username:</label>
+            <p>Username:</p>
             <input type="text" ng-model="vm.user.username" />
+            <br>
         </div>
         <div>
-            <label for="password">Password:</label>
+            <p for="password">Password:</p>
             <input type="password" ng-model="vm.user.password" />
+            <br>
         </div>
         <div>
             <input class="btn btn-default" type="submit" name="submit" value="Log In" />
@@ -21,13 +24,16 @@
     </form>
     <form ng-submit="vm.registerUser()" ng-show="vm.register">
         <h2 class="lead">Register User</h2>
+        <br><br>
         <div>
-            <label for="username">Username:</label>
+            <p for="username">Username:</p>
             <input type="text" ng-model="vm.user.username" />
+            <br>
         </div>
         <div>
-            <label for="password">Password:</label>
+            <p for="password">Password:</p>
             <input type="password" ng-model="vm.user.password" />
+            <br>
         </div>
         <input class="btn btn-default" type="submit" name="submit" value="Register" />
         <a class="btn btn-default" href="" type="submit" ng-click="vm.registerClick()">Return to login</a>

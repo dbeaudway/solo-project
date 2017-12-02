@@ -14,14 +14,10 @@ router.get('/', function(req, res, next) {
 // Handles POST request with new user data
 router.post('/', function(req, res, next) {
   console.log('post /register route');
-  /*
-  username: {type: String, required: true, index: {unique: true}},
-  password: {type: String, required: true},
-  recipes: {type: Array}
-  */
     var userToSave = {
       username : req.body.username,
       password : req.body.password,
+      profileImage: '../../styles/images/person.png',
       date : new Date()
     };
 

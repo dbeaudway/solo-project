@@ -61,13 +61,17 @@ img {
 }
 
 .login-container {
-    text-align: center;
+    text-align: left;
     width: 400px;
     background-color: white;
     padding: 20px;
     border-radius: 3px;
     box-shadow: 0px 0px 1px rgba(0,0,0,.64);
     margin: 100px auto;
+}
+
+.login-container input {
+    margin-bottom:20px;
 }
 
 .padded {
@@ -180,6 +184,10 @@ tr {
     border-top: 5px solid rgba(0,0,0,.64);
 }
 
+.commentContainer input{
+    -webkit-appearance: radio;
+}
+
 .comment-list{
     box-shadow: 0px 1px 1px rgba(0,0,0,.24);
     border-radius: 3px;
@@ -276,4 +284,29 @@ textarea{
     display: inline-block;
     max-width: 50px;
     vertical-align: middle;
+}
+
+input {
+    -webkit-appearance: none;
+    border: 1px rgba(0,0,0,.24);
+    border-radius: 3px;
+    box-shadow: 0px 0px 1px rgba(0,0,0,.64);
+}
+
+button {
+    -webkit-appearance: none;
+    border: 1px rgba(0,0,0,.24);
+    border-radius: 3px;
+    box-shadow: 0px 0px 1px rgba(0,0,0,.64);
+}
+
+.edit-bar {
+    background-color: white;
+    box-shadow: 0px 1px 1px rgba(0,0,0,.1);
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 3px;
+    margin-bottom: 16px;
+}
+.edit-bar button{
+    margin: 16px 10px;
 }

@@ -143,7 +143,7 @@
                             <div class="comment-list" ng-repeat="vote in vm.bills.votes">
                                 <div class="comment-content" layout="row">
                                     <div>
-                                        <a ng-show="vote.bill.bill_uri" ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}</a>
+                                        <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}</a>
                                         <p ng-show="vote.description">{{vote.description}}</p>
                                     </div>
                                 </div>

@@ -8,16 +8,17 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
     self.comments = CommentService.comments;
     self.offset = 0;
 
+    //UPDATE PROFILE FROM EDITING
     self.updateProfile = function () {
         $http.put('/user/' + self.userObject.id, self.userObject).then(function (response) {
             console.log('User update success');
-            self.getProfile();
             self.editing = !self.editing;
         }).catch(function (err) {
             console.log('Error making updates', err);
         })
     }
     
+    //CHANGE USER PROFILE PICTURE
     self.uploadImageToAmazon = function(){
         let image = document.getElementById('imageUpload').files[0];
         let data = {
@@ -27,6 +28,7 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
         UploadService.uploadImageToAmazon(image, data);
     }
 
+    //LOGOUT
     self.logout = function(){
         UserService.logout();
       }

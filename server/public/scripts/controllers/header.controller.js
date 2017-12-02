@@ -11,6 +11,7 @@ app.controller('HeaderController', function (UserService, $http) {
             self.displaySearchResults = true;
             self.bills = response.data.results[0].bills;
             console.log('Search results for bills:', self.bills);
+            self.searchTerm = '';
         }).catch(function (error) {
             console.log('Search failed', error);
         });
