@@ -1,5 +1,4 @@
 app.controller('BillDetailController', function (UserService, UploadService, CommentService, BillService, VideoService, $http) {
-    console.log('BillDetailController loaded');
     var self = this;
     self.userObject = UserService.userObject;
     self.bill = BillService.data;

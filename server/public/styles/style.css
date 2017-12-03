@@ -341,6 +341,10 @@ button {
     color: red
 }
 
+.home-map {
+    margin-bottom: 50px;
+}
+
 .home-map path {
     transition: fill linear 1s;
     fill-opacity: 0.5;

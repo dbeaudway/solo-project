@@ -1,5 +1,4 @@
 app.controller('MemberController', function (UserService, UploadService, CommentService, MemberService, VideoService, $http) {
-    console.log('MemberController loaded');
     var self = this;
     self.userObject = UserService.userObject;
     self.memberInfo = MemberService.memberInfo;
