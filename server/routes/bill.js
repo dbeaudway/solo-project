@@ -13,7 +13,6 @@ router.get('/votes/:id', function(req, res){
         }
     }).then(function(response){
         info = response.data;
-        console.log(info);
         res.send(info);
     }).catch(function(error){
         console.log('Error', error);
@@ -31,7 +30,6 @@ router.get('/bills/:id', function(req, res){
         }
     }).then(function(response){
         info = response.data;
-        console.log(info);
         res.send(info);
     }).catch(function(error){
         console.log('Error', error);
@@ -49,7 +47,6 @@ router.get('/search/:id', function(req, res){
         }
     }).then(function(response){
         info = response.data;
-        console.log(info);
         res.send(info);
     }).catch(function(error){
         console.log('Error', error);

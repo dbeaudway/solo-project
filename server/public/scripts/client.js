@@ -1,5 +1,3 @@
-console.log('Client.js loaded');
-
 var app = angular.module('app', ['ngRoute', 'ngMaterial', 'ngMessages']);
 
 app.config(function($routeProvider){

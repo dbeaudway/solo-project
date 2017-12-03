@@ -1,5 +1,4 @@
 app.service('UploadService', function (CommentService, $http) {
-  console.log('UploadService loaded');
   let self = this;
 
   //Generate random string to create unique video files
@@ -126,10 +125,8 @@ app.service('UploadService', function (CommentService, $http) {
 
   //Following successful Amazon upload, add image to users profile
   self.postProfileImage = function() {
-      console.log('Image to upload:', self.imageToUpload);
       self.imageToUpload.date = new Date();
       $http.put('/user/image/' + self.imageToUpload.user, self.imageToUpload).then(function(response){
-          console.log('Image added to users profile in database', response);
       }).catch(function(error){
           console.log('Error adding image to users profile in database', error);
       })

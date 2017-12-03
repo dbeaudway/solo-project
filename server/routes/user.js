@@ -65,7 +65,6 @@ router.put('/image/:id', function(req,res){
           console.log('Error updating database', err);
           res.sendStatus(500);
         } else {
-          console.log('Success updating database', response);
           res.sendStatus(200)
         }
       })
@@ -94,7 +93,6 @@ router.get('/search/:id', function(req, res){
           console.log(err);
           res.sendStatus(500);
       } else {
-          console.log(foundUsers);
           res.send(foundUsers);
       }
   })

@@ -1,5 +1,4 @@
 app.controller('ProfileController', function (UserService, UploadService, CommentService, $http) {
-    console.log('ProfileController loaded');
     var self = this;
     self.userObject = UserService.userObject;
     self.editing = false;
@@ -11,7 +10,6 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
     //UPDATE PROFILE FROM EDITING
     self.updateProfile = function () {
         $http.put('/user/' + self.userObject.id, self.userObject).then(function (response) {
-            console.log('User update success');
             self.editing = !self.editing;
         }).catch(function (err) {
             console.log('Error making updates', err);
@@ -36,7 +34,6 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
     //RETRIEVE HOUSE MEMBERS FOR USER
     $http.get('/member/house/' + self.userObject.location).then(function (response) {
         self.stateHouse = response.data;
-        console.log(self.stateHouse);
     }).catch(function (error) {
         console.log('Error', error);
     })
@@ -44,7 +41,6 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
     //RETRIEVE SENATE MEMERS FOR USER
     $http.get('/member/senate/' + self.userObject.location).then(function (response) {
         self.stateSenate = response.data;
-        console.log(self.stateSenate);
     }).catch(function (error) {
         console.log('Error', error);
     })
@@ -52,7 +48,6 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
     //RETRIEVE COMMENTS FROM USER
     self.retrieveUserComments = function() {
         CommentService.retrieveUserComments(self.offset);
-        console.log('HERE ARE THE COMMENTS:', self.comments);
     }
     self.retrieveUserComments();
 
@@ -95,7 +90,6 @@ app.controller('ProfileController', function (UserService, UploadService, Commen
                 if(self.offset < self.comments.limit){
                     self.offset += 10;
                     CommentService.appendUserComments(self.offset);
-                    console.log('CONTROLLER, offset:', self.offset, 'limit:', self.comments.limit);
                 }
         }
     });

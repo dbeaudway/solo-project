@@ -17,7 +17,6 @@ router.get('/:id/:congress', function (req, res) {
             'X-Api-Key': key
         }
     }).then(function (response) {
-        console.log('THIS IS THE bill RESPONSE', response);
         info = response.data;
         res.send(info);
     }).catch(function (error) {
@@ -48,7 +47,6 @@ router.get('/cosponsors/:id/:congress', function (req, res) {
 router.post('/', function (req, res) {
     if (req.isAuthenticated()) {
         if (req.user.id === req.body.user) {
-            console.log(req.body);
             var commentToAdd = new BillComment(req.body);
             commentToAdd.save(function (err, data) {
                 if (err) {
@@ -103,7 +101,6 @@ router.get('/comments/:bill/:congress', function (req, res) {
             console.log(err);
             res.sendStatus(500);
         } else {
-            console.log(foundComments);
             res.send(foundComments);
         }
     })

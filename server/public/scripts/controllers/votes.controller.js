@@ -1,5 +1,4 @@
 app.controller('VotesController', function (UserService, UploadService, $http) {
-    console.log('VotesController loaded');
     var self = this;
     self.userObject = UserService.userObject;
     self.votes = '';
@@ -13,7 +12,6 @@ app.controller('VotesController', function (UserService, UploadService, $http) {
     let route = `/votes/${congress}/${chamber}/${session}/${rollcall}`;
     $http.get(route).then(function (response) {
         self.votes = response.data.results;
-        console.log('HERE ARE THE VOTES', self.votes);
         addColors();
     }).catch(function (error) {
         console.log('Error', error);

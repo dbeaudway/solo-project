@@ -1,5 +1,4 @@
 app.service('VideoService', function($http){
-    console.log('VideoService loaded');
     let self = this;
     self.video = {};
     self.setVideo = function() {
@@ -37,7 +36,6 @@ app.service('VideoService', function($http){
 
 
     function handleSuccess(stream) {
-        console.log('getUserMedia() got stream: ', stream);
         window.stream = stream;
         if (window.URL) {
             videoPlayer.src = window.URL.createObjectURL(stream);
@@ -51,13 +49,10 @@ app.service('VideoService', function($http){
     }
 
     function handleSourceOpen(event) {
-        console.log('MediaSource opened');
         sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
-        console.log('Source buffer: ', sourceBuffer);
     }
 
     videoPlayer.addEventListener('error', function(ev) {
-        console.error('MediaRecording.recordedMedia.error()');
         alert('Your browser can not play\n\n' + videoPlayer.src
             + '\n\n media clip. event: ' + JSON.stringify(ev));
     }, true);
@@ -117,7 +112,6 @@ app.service('VideoService', function($http){
         recordButton.disabled = false;
         window.stream.getTracks()[0].stop()
         window.stream.getTracks()[1].stop()
-        console.log('Recorded Blobs: ', self.video.recordedBlobs);
     }
 
     self.play = function() {

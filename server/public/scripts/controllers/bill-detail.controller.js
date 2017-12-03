@@ -38,7 +38,6 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
 
     //RETRIEVE COMMENTS FOR BILL
     self.retrieveComments = function () {
-        console.log('Retrieve bill comments controller');
         CommentService.retrieveBillComments(self.offset);
     }
     self.retrieveComments();
@@ -61,12 +60,10 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
         self.commentToAdd.username = self.userObject.userName;
         self.commentToAdd.userProfileImage = self.userObject.profileImage;
         if (self.video.videoAvailable === true) {
-            console.log('Upload to amazon fired');
             self.uploadToAmazon();
             self.setComment();
             VideoService.setVideo();
         } else {
-            console.log('CommentService.postComment called');
             self.postComment();
         }
     }
@@ -136,7 +133,6 @@ app.controller('BillDetailController', function (UserService, UploadService, Com
                 if(self.offset < self.comments.limit){
                     self.offset += 10;
                     CommentService.appendBillComments(self.offset);
-                    console.log('CONTROLLER, offset:', self.offset, 'limit:', self.comments.limit);
                 }
         }
     });

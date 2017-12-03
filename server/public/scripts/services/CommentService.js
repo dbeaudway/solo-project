@@ -1,5 +1,4 @@
 app.service('CommentService', function ($http, UserService) {
-    console.log('CommentService loaded');
     let self = this;
     self.userObject = UserService.userObject;
     self.billId = '';
@@ -54,7 +53,6 @@ app.service('CommentService', function ($http, UserService) {
         self.setVariables();
         let route = '/comment/bill/' + self.billId + '/' + self.congress + '?offset=' + value;
         $http.get(route).then(function (response) {
-            console.log('Retrieved bill comments service', response);
             self.comments.data = response.data.comments;
             self.comments.limit = response.data.results;
             self.comments.supporters = response.data.supporters;
@@ -107,7 +105,6 @@ app.service('CommentService', function ($http, UserService) {
         self.setVariables();
         let route = '/comment/user/' + self.userObject.id + '?offset=' + value;
         $http.get(route).then(function (response) {
-            console.log('THIS IS THE RESPONSE FROM ROUTER', response);
             self.comments.data = response.data.comments;
             self.comments.limit = response.data.results;
         }).catch(function (err) {
@@ -131,7 +128,6 @@ app.service('CommentService', function ($http, UserService) {
     //LIKE A COMMENT
     self.likeComment = function (value) {
         let comment = value;
-        console.log(comment);
         $http.put('/comment', comment).then(function (response) {
             if (self.memberId) {
                 self.retrieveMemberComments();

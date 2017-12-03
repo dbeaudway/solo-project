@@ -11,7 +11,6 @@ var Comment = mongoose.model('Comment', CommentSchema, 'comments');
 router.post('/', function (req, res) {
     if (req.isAuthenticated()) {
         if (req.user.id === req.body.user) {
-            console.log(req.body);
             var commentToAdd = new Comment(req.body);
             commentToAdd.save(function (err, data) {
                 if (err) {
@@ -31,10 +30,8 @@ router.put('/', function (req, res) {
     if (req.isAuthenticated()) {
         Comment.findByIdAndUpdate({ "_id": comment._id }, { $inc: { likes: 1 } }, function (err, data) {
             if (err) {
-                console.log('Like Comment Error', err);
                 res.sendStatus(500);
             } else {
-                console.log('Like Comment Success');
                 res.sendStatus(200);
             }
         })
@@ -67,15 +64,12 @@ router.get('/bill/:bill/:congress', function (req, res) {
     let support = '';
     let oppose = '';
     Comment.find({ "billId": bill, "congress": congress }).count(function (err, count) {
-        console.log("Number of docs:", count)
         total = count;
     })
     .then(Comment.find({ "billId": bill, "congress": congress, "position": "support" }).count(function (err, count) {
-        console.log("Number of docs:", count)
         support = count;
     }))
     .then(Comment.find({ "billId": bill, "congress": congress, "position": "oppose" }).count(function (err, count) {
-        console.log("Number of docs:", count)
         oppose = count;
     }))
     .then(Comment.find({ "billId": bill, "congress": congress }, null, { skip: offset, limit: 10, sort: { "date": -1 } }, function (err, foundComments) {

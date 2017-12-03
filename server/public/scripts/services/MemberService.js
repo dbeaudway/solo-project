@@ -1,5 +1,4 @@
 app.service('MemberService', function ($http) {
-    console.log('MemberService loaded');
     let self = this;
     self.memberInfo = {
         congress: '',
@@ -20,7 +19,6 @@ app.service('MemberService', function ($http) {
         $http.get('/member/' + self.memberId).then(function (response) {
             self.memberInfo.member = response.data.results[0];
             self.memberInfo.congress = response.data.results[0].roles[0].congress;
-            console.log('Member result:', self.memberInfo.member);
         }).catch(function (error) {
             console.log('Error', error);
         })
@@ -32,7 +30,6 @@ app.service('MemberService', function ($http) {
         self.memberInfo.votes = '';
         $http.get('/member/votes/' + self.memberId).then(function (response) {
             self.memberInfo.votes = response.data.results[0];
-            console.log('Member votes:', self.memberInfo.votes);
         }).catch(function (error) {
             console.log('Error', error);
         })

@@ -34,8 +34,6 @@ app.controller('MemberController', function (UserService, UploadService, Comment
     self.postComment = function() {
         CommentService.postMemberComment(self.commentToAdd).then(function(){
             self.setComment();
-            console.log('COMMENT:', self.commentToAdd);
-            console.log('VIDEO:', self.video);
         });
     }
 
@@ -61,12 +59,10 @@ app.controller('MemberController', function (UserService, UploadService, Comment
         self.commentToAdd.username = self.userObject.userName;
         self.commentToAdd.userProfileImage = self.userObject.profileImage;
         if(self.video.videoAvailable === true){
-            console.log('Upload to amazon fired');
             self.uploadToAmazon();
             self.setComment();
             VideoService.setVideo();
         } else {
-            console.log('CommentService.postComment called');
             self.postComment();
         }
     }
@@ -136,7 +132,6 @@ app.controller('MemberController', function (UserService, UploadService, Comment
                 if(self.offset < self.comments.limit){
                     self.offset += 10;
                     CommentService.appendMemberComments(self.offset);
-                    console.log('CONTROLLER, offset:', self.offset, 'limit:', self.comments.limit);
                 }
         }
     });

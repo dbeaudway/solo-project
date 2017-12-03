@@ -1,5 +1,4 @@
 app.controller('UserController', function ($http, UserService) {
-  console.log('UserController created');
   var self = this;
   self.userObject = UserService.userObject;
   self.user = '';
@@ -7,7 +6,6 @@ app.controller('UserController', function ($http, UserService) {
 
   self.getUser = function () {
     $http.get('/user/' + self.userName).then(function (response) {
-      console.log(response);
       self.user = response.data;
     }).catch(function (error) {
       console.log(error);
