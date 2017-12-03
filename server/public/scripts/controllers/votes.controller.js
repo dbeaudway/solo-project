@@ -23,11 +23,9 @@ app.controller('VotesController', function (UserService, UploadService, $http) {
         let position = 0;
         let circle;
         if (chamber === "House") {
-            console.log('fired house');
             circle = document.getElementById('houseSeats').querySelectorAll('circle');
             fillCircles();
         } else if (chamber === "Senate") {
-            console.log('fired senate');
             circle = document.getElementById('senateSeats').querySelectorAll('circle');
             fillCircles();
         }
@@ -38,7 +36,6 @@ app.controller('VotesController', function (UserService, UploadService, $http) {
                 circle[i].style.fill = '#28d428'
             }
         }
-        console.log(circle);
     }
 
 })

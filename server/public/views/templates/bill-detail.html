@@ -3,7 +3,7 @@
         <h1>
             <a ng-href="{{vm.bill.bill.govtrack_url}}">{{vm.bill.bill.bill}}</a>
         </h1>
-        <p>{{vm.bill.title}}</p>
+        <p>{{vm.bill.bill.title}}</p>
         <br>
         <div ng-show="vm.bill.bill.summary">
             <h2>Bill Description</h2>
@@ -86,6 +86,10 @@
                         </div>
                         <div flex layout="row" layout-align="end center">
                             <button ng-show="vm.userObject.id" ng-click="vm.likeComment(comment)">Like</button>
+                            <a class="twitter-share-button"
+                            href="https://twitter.com/intent/tweet?text={{comment.comment}}"
+                            data-size="small">
+                             <button>Tweet</button></a>
                             <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
                         </div>
                     </div>

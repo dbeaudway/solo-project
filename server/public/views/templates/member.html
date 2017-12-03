@@ -140,6 +140,7 @@
                             </div>
                             <div flex layout="row" layout-align="end center">
                                 <button ng-show="vm.userObject.id" ng-click="vm.likeComment(comment)">Like</button>
+                                <a href="https://twitter.com/intent/tweet?screen_name={{vm.memberInfo.member.twitter_account}}&text={{comment.comment}}" class="twitter-mention-button" data-show-count="false"><button>Tweet</button></a>
                                 <button ng-show="vm.userObject.id === comment.user" ng-click="vm.deleteComment(comment)">Delete</button>
                             </div>
                         </div>

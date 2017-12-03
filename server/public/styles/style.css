@@ -2,7 +2,7 @@
 /* Blue: #3993DD */
 /* Red: #c1181f */
 
-body {
+main {
     margin: 0 auto;
     max-width: 1100px;
     min-width: 700px;
@@ -80,6 +80,10 @@ img {
 }
 
 .nav-bar {
+    box-shadow: 0px 1px 1px rgba(0,0,0,.64);
+    background-color: #3993DD;
+    height: 40px;
+    margin-top: 0px;
     list-style: none;
     padding: 0px;
     font-size:16px;
@@ -90,14 +94,16 @@ img {
 }
 
 .nav-item {
+    color: white;
+    font-weight: 500;
     display: inline-block;
     vertical-align: middle;
-    line-height: 50px;
-    padding: 10px 15px;
+    line-height: 40px;
+    padding: 0px 15px;
 }
 
 .nav-item img {
-    max-width: 50px;
+    max-width: 30px;
     vertical-align: middle;
 }
 
@@ -186,11 +192,11 @@ tr {
 
 .commentContainer input{
     -webkit-appearance: radio;
+    box-shadow: none;
 }
 
 .comment-list{
     box-shadow: 0px 1px 1px rgba(0,0,0,.24);
-    border-left: 5px solid rgba(0,0,0,.24);
     border-top: 1px solid rgba(0,0,0,.1);
     border-right: 1px solid rgba(0,0,0,.1);
     border-radius: 3px;
@@ -204,6 +210,14 @@ tr {
 
 .comment-position-oppose {
     border-left: 5px solid rgba(255, 0, 0, 0.596);
+}
+
+.comment-position-undecided {
+    border-left: 5px solid rgba(0,0,0,.24);
+}
+
+.comment-position- {
+    border-left: 5px solid rgba(0,0,0,.24);
 }
 
 .commentProfileImage{
@@ -223,13 +237,6 @@ tr {
     padding: 5px;
     background-color: rgba(0,0,0,.05);
     min-height:30px;
-}
-
-.home-map path:hover{
-    fill: rgba(0,0,0,0.44);
-    stroke: rgba(0,0,0,0.44);
-    cursor: pointer;
-    transition: all .3s;
 }
 
 textarea{
@@ -306,9 +313,13 @@ input {
 
 button {
     -webkit-appearance: none;
+    color: rgba(0,0,0,.8);
+    font-size: 14px;
     border: 1px rgba(0,0,0,.24);
     border-radius: 3px;
     box-shadow: 0px 0px 1px rgba(0,0,0,.64);
+    margin: 0px 3px;
+    font-weight: 700;
 }
 
 .edit-bar {
@@ -328,4 +339,14 @@ button {
 
 .oppose-text {
     color: red
+}
+
+.home-map path {
+    transition: fill linear 1s;
+    fill-opacity: 0.5;
+}
+
+.home-map path:hover{
+    fill-opacity: 1;
+    cursor: pointer;
 }

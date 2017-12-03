@@ -11,14 +11,6 @@ app.controller('HomeController', function (UserService, $http) {
     self.displaySearchResults = false;
     var states = document.querySelectorAll('path');
 
-    //GET RECENTLY VOTED ON BILLS
-    $http.get('/bill/votes/' + self.chamber).then(function (response) {
-        console.log('Recently Voted Bills', response.data.results);
-        self.bills = response.data.results;
-    }).catch(function (error) {
-        console.log('Error', error);
-    })
-
     //GET UPCOMING HOUSE BILLS
     $http.get('/bill/bills/house').then(function (response) {
         self.upcomingHouseBills = response.data.results[0];
@@ -57,5 +49,23 @@ app.controller('HomeController', function (UserService, $http) {
     self.closeSearchResults = function() {
         self.displaySearchResults = false;
     }
+
+    setInterval(function(){
+            let position = 0;
+            let random;
+            let states;
+            states = document.querySelectorAll('path');
+            for (var i = 0; i < states.length; i++) {
+                position = i;
+                random = Math.random();
+                if(random > .5){
+                    states[i].style.fill = '#3993DD'
+                } else {
+                    states[i].style.fill = '#c1181f'
+                }
+            }
+            
+        
+    }, 2000);
 
 })

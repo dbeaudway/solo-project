@@ -115,49 +115,26 @@
                 </g>
             </svg>
         </div>
-        <div layout="row">
-            <div flex layout="column">
-                <div class="vote-list">
-                        <h2>Upcoming Legislation</h2>
-                        <div class="comment-list" ng-repeat="bill in vm.upcomingHouseBills.bills">
+        <div>
+                <h2>Upcoming Legislation</h2>
+                <div class="vote-list" layout="row" layout-wrap>
+                        <div flex="25" class="comment-list" ng-repeat="bill in vm.upcomingHouseBills.bills">
                             <div class="comment-content" layout="row">
                                 <div>
-                                    <a ng-show="bill.bill_id" ng-href="/#!/bill-detail/{{bill.bill.bill_id.split('-')[0]}}/{{bill.congress}}">{{bill.bill_id | uppercase}}</a>
+                                    <a ng-show="bill.bill_id" ng-href="/#!/bill-detail/{{bill.bill_id.split('-')[0]}}/{{bill.congress}}">{{bill.bill_id | uppercase}}</a>
                                     <p ng-show="bill.description">{{bill.description}}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="comment-list" ng-repeat="bill in vm.upcomingSenateBills.bills">
+                        <div flex="25" class="comment-list" ng-repeat="bill in vm.upcomingSenateBills.bills">
                                 <div class="comment-content" layout="row">
                                     <div>
-                                        <a ng-show="bill.bill.bill_uri" ng-href="/#!/bill-detail/{{bill.bill.bill_id.split('-')[0]}}/{{bill.congress}}">{{bill.bill.bill_id | uppercase}}</a>
+                                        <a ng-show="bill.bill.bill_uri" ng-href="/#!/bill-detail/{{bill.bill_id.split('-')[0]}}/{{bill.congress}}">{{bill.bill.bill_id | uppercase}}</a>
                                         <p ng-show="bill.description">{{bill.description}}</p>
                                     </div>
                                 </div>
                             </div>
                     </div>
-            </div>
-            <div flex layout="column">
-                <h2>Recent Votes</h2>
-                    <div class="vote-list">
-                            <div class="comment-list" ng-repeat="vote in vm.bills.votes">
-                                <div class="comment-content" layout="row">
-                                    <div>
-                                        <a ng-href="/#!/bill-detail/{{vote.bill.bill_id.split('-')[0]}}/{{vote.congress}}">{{vote.bill.bill_id | uppercase}}</a>
-                                        <p ng-show="vote.description">{{vote.description}}</p>
-                                    </div>
-                                </div>
-                                <div class="comment-button-bar" layout="row">
-                                    <div flex>
-                                        <p>
-                                            <strong>Result</strong>
-                                        </p>
-                                        <a href="/#!/votes/{{vote.congress}}/{{vote.chamber}}/{{vote.session}}/{{vote.roll_call}}">{{vote.result}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
         </div>
         <div ng-show="vm.displaySearchResults" class="searchResultsContainer">
                 <div>
