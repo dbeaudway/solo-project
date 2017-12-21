@@ -5,11 +5,11 @@ Users have the option to register which allows them to start conversations on re
 
 ## Built With
 
--MongoDB
--Express.js
--AngularJS
--Node.js
--Amazon Web Services S3
+- MongoDB
+- Express.js
+- AngularJS
+- Node.js
+- Amazon Web Services S3
 
 ## Getting Started
 
