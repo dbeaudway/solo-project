@@ -30,11 +30,9 @@ Once you've created an Amazon Web Services account you will need to create a S3 
 3. Enter ```npm start``` into terminal to spin up local
 4. Visit localhost:5000 in your browser to view the website
 
-## Screen Shot
+## Screen Shots
 
-Include one or two screen shots of your project here (optional). Remove if unused.
-![Alt text](/blob/master/screenshots.bill-page.png?raw=true "Bill Page")
-https://github.com/dbeaudway/solo-project/blob/master/screenshots/bill-page.png
+![Alt text](https://github.com/dbeaudway/solo-project/blob/master/screenshots/bill-page.png "Bill Page")
 
 ### Primary Application Features
 
