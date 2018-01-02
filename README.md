@@ -33,6 +33,8 @@ Once you've created an Amazon Web Services account you will need to create a S3 
 ## Screen Shot
 
 Include one or two screen shots of your project here (optional). Remove if unused.
+![Alt text](/blob/master/screenshots.bill-page.png?raw=true "Bill Page")
+https://github.com/dbeaudway/solo-project/blob/master/screenshots/bill-page.png
 
 ### Primary Application Features
 
