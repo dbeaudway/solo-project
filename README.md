@@ -31,8 +31,18 @@ Once you've created an Amazon Web Services account you will need to create a S3 
 4. Visit localhost:5000 in your browser to view the website
 
 ## Screen Shots
+Home Page:
+![Alt text](https://github.com/dbeaudway/solo-project/blob/master/screenshots/home-page.png "Home Page")
 
+Congress Member Page:
+![Alt text](https://github.com/dbeaudway/solo-project/blob/master/screenshots/profile-page.png "Congress Member Page")
+
+Bill Page:
 ![Alt text](https://github.com/dbeaudway/solo-project/blob/master/screenshots/bill-page.png "Bill Page")
+
+Vote Page:
+![Alt text](https://github.com/dbeaudway/solo-project/blob/master/screenshots/vote-page.png "Vote Page")
+
 
 ### Primary Application Features
 
