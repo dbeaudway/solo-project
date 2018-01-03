@@ -53,10 +53,6 @@ Vote Page:
 - [x] Ability for users to comment and vote on pages
 - [x] Ability for users to leave video comments (content hosted using Amazon S3)
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Authors
 
 * David Beaudway
